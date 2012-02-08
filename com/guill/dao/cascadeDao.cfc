@@ -1137,7 +1137,7 @@
 					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchiveid#" /> /* backuparchiveid */
 					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userid#" /> /* userid */
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logmessage#" /> /* logmessage */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" /> /* logdatetime */
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.logDateTime#" /> /* logdatetime */
 				)        	
         	</cfquery>
         <cfcatch>
