@@ -1,0 +1,835 @@
+html,body 
+{
+	margin:0;
+	padding:0;
+	background-color:#fff;
+	height:auto;
+	text-align: left;
+	font:10pt/14pt Helvetica, Arial, Tahoma, Verdana, sans-serif; 
+}
+		
+/* --- clearFix --- */
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: block;}
+
+pre 
+{
+	padding:0;
+	margin:0;
+}
+	
+a:link, a:hover, a:visited {
+	color: #003399;
+}
+
+a.button 
+{
+	background-color:#eaeaea;
+	border:1px solid #666;
+	padding-right:4px;
+	padding-left:4px;
+	text-decoration:none;
+	color:#000;
+	font-weight:bold;
+}
+
+a.bigButton 
+{
+	background-color:#eaeaea;
+	border:1px solid #666;
+	padding:2px 6px;
+	text-decoration:none;
+	color:#000;
+	font-weight:bold;
+	font-size:larger;
+	margin-left:3px;
+	/*
+	border-bottom:2px solid #666;
+	border-right:2px solid #666;
+	*/
+}
+
+a.headerLink
+{
+	text-decoration:none;
+	color:#000;
+}
+
+.notImportaint
+{
+	color:#a6a6a6;
+	font-style: italic;
+}
+
+input.button
+{
+	background-color:#eaeaea;
+	border:1px solid #666;
+	width:0;
+	overflow:visible;
+	margin-left:3px;
+	padding:2px 6px;
+	color:#000;
+	font-weight:bold;
+	font-size:larger;
+}
+
+input.button[class]
+{
+	width: auto;
+}
+
+
+
+#container 
+{
+	width:1575px;
+	margin:0 auto;
+}
+		
+	#header
+	{
+		text-align:right;
+		width: 1550px;
+		margin: 0 auto;
+		
+	}
+	
+		#hTitle {
+			background-color:#0039E6;
+			color:#fff;
+			margin: 0;
+			padding: 0;
+		
+			}
+	
+		#hTitle h1 {
+			margin: 0 0 0 10px;
+			padding: 5px;
+			font-size:16px;
+		}
+	
+		#hMenu {
+			padding: 5px 5px;
+			white-space: nowrap;
+			background-color:#000099;
+			color:#fff;
+	
+		}
+		
+		#hMenu ul, #hMenu li, #hMenu a 
+		{
+			margin: 0;
+			padding: 3px 5px;
+			display:inline;
+			list-style-type: none;
+			font-size:14px;
+			font-weight:bold;
+		}
+		
+		#hMenu a, #hMenu a:hover, #hMenu a:visited
+		{
+			color: #fff;
+			text-decoration:none;
+		}
+		
+		#hMenu a:hover {
+			background-color:#0039E6;
+		}
+		
+			
+	#main
+	{
+		width: 1550px;
+		margin: 0 auto 5px auto;
+		background-color:#eaeaea;
+		
+		
+	}
+	
+		#nav
+		{
+			width:175px;
+			float:left;
+			margin: 0 5px 0 4px;
+			background-color:#eaeaea;
+			color:#000;
+			
+		}
+			#nMenu {
+				width: 100%; 
+						
+			}
+				
+				#nMenu ul {
+					margin: 0;
+					padding: 0;
+					list-style-type: none;
+					
+				}
+				
+				#nMenu a {
+					display: block;
+					padding: 3px 0px 3px 5px;
+					background-color: #eaeaea;
+					border-bottom: 1px solid #eee;
+					font-weight:bold;
+					text-decoration:none;
+					color:#000;
+				}
+				
+				#nMenu a:hover {
+					background-color: #bbb;
+				}
+				
+			.nSec
+			{
+				margin: 5px 0 3px 0px;
+				padding-bottom:5px;
+				border-bottom:3px double #eee;
+				text-align:justify;
+				
+				
+			}
+			
+				.nSec .title
+				{
+					padding: 1px 0 1px 3px;
+					text-align:left;
+					font-weight:bold;
+					font-size:10pt;
+					font-family: Helvetica, Arial, Tahoma, Verdana, sans-serif; 
+				}
+				
+				.nSec p
+				{
+					padding:0;
+					margin:3px 0 0 0;
+					
+				}
+				
+				.nSec ul 
+				{
+					padding: 2px;
+					margin: 2px 5px;
+					list-style-type:none;
+					border-left:5px solid #000;
+					
+				}
+				
+					.nSec ul li
+					{
+						font-size:10pt;
+						padding:1px 3px;
+						color:#000;
+					}
+					
+					.nSec ul li a
+					{
+						color:#000;
+					}
+					
+					
+			
+		#content
+		{
+			width:1350px;
+			float:right;
+			text-align:justify;
+			background-color:#fff;
+			padding-left:7px;
+			
+		}
+			
+			.contentSection
+			{
+				margin:25px 0;
+			}
+			
+				ul.menuIndex
+				{
+					list-style-type:none;
+					font-weight:bold;
+					font-size:20pt;
+				}
+				
+					ul.menuIndex li
+					{
+						margin:14px;
+					}
+					
+						ul.menuIndex li a
+						{
+							text-decoration:none;
+						}
+					
+						ul.menuIndex li a:hover
+						{
+							text-decoration:underline;
+						}
+			
+			
+			h2.sectionTitle
+			{
+				margin:10px 0 5px 0;
+				padding:5px;
+				background-color:#000099;
+				/*background-color:#0039E6;*/
+				color:#fff;
+			}
+			
+				h2.sectionTitle a:hover
+				{
+					color:#fff;
+				}
+			
+			h3.sectionTitle
+			{
+				margin:10px 0 5px 0;
+				padding:3px;
+				background-color:#000099;
+				/*background-color:#0039E6;*/
+				color:#fff;
+			}
+			
+			h4.sectionTitle
+			{
+				margin:2px 0;
+				padding:2px;
+				background-color:#646464;
+				/*background-color:#0039E6;*/
+				color:#fff;
+			}			
+			
+			table
+			{
+				/*
+					border:1px solid #ccc;
+				*/
+			}
+			
+				table tr th
+				{
+					background-color:#646464;
+					color:#fff;
+					text-align:left;
+					padding-left:4px;
+				}
+					
+				table tr td
+				{
+					border:1px solid #ccc;
+					padding:3px 0px 3px 4px;
+				}
+				
+				table tr.alt
+				{
+					background-color:#D5E6F7;
+				}
+				
+					th.center, td.center
+					{
+						text-align:center;
+						padding-right:0;
+						padding-left:0;
+					}
+					
+					th.monospace, td.monospace
+					{
+						font-family:     "Courier New",
+                    						Courier,
+                    						monospace;
+                    	font-weight:bold;
+					}
+					
+					th.right, td.right
+					{
+						text-align:right;
+						padding-right:5px;
+						padding-left:0;
+					}
+					
+					th.left, td.left
+					{
+						text-align:left;
+						padding-right:0;
+						padding-left:0;
+					}
+					
+					a.coloredTDLink
+					{
+						color:#fff;
+						text-decoration:none;
+						font-weight:bold;
+					}
+					
+					td.note
+					{
+						background-color:#ddd;
+					}
+					
+					td.pass
+					{
+						
+						background-color:#228653;
+						color:#fff;
+						font-weight:bold;
+					}
+						
+						
+					
+					td.fail
+					{
+						
+						background-color:#BF0D34;
+						color:#fff;
+						font-weight:bold;
+					}
+					
+					td.oenhance
+					{
+						
+						background-color:#062ba3;
+						color:#fff;
+						font-weight:bold;
+					}
+					
+					td.completed
+					{
+						background-color:#062ba3;
+						color:#fff;
+						font-weight:bold;
+					}
+					
+					td.rejected
+					{
+						background-color:#040404;
+						color:#fff;
+						font-weight:bold;
+					}
+										
+					td.open
+					{
+						background-color:#228653;
+						color:#fff;
+						font-weight:bold;
+					}
+					
+					
+					td.date
+					{
+						text-align:center;
+					}
+					
+					td.noBorder
+					{
+						border:none;
+					}
+					
+					th.date
+					{
+						text-align:center;
+					}
+		
+			#projectHeading
+			{
+				
+			}
+			
+				#projectHeading h1
+				{
+					padding:5px;
+					font-size:18pt;
+				}
+				
+				#projectHeading #statusStage
+				{
+					margin-left:5px;
+				}
+			
+			#projectOverview
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+			
+			
+			
+			#projectDescription
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+				
+			
+			#projectInformation
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+				
+				#projectInformation table tr th
+				{
+					text-align:right;
+					padding-right:4px;
+				}
+			
+			#projectResources
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+					
+			
+			#projectEvents
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+		
+			#projectIssues
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+			
+			#projectTasks
+			{
+				/*border:1px solid #ccc;*/	
+				padding:0 4px;
+			}
+				
+				
+				
+				.ptDescription
+				{
+					margin:2px 0 2px 15px;	
+				}
+				
+				.ptHeader
+				{
+					border-bottom:1px solid #333;
+					
+				}
+				
+				.ptFooter
+				{
+					border-top:1px solid #333;
+					font-size:smaller;
+				}
+				
+				.ptAttributes table tr td
+				{
+					background-color:#fff;
+				}
+				
+				
+				.ptCycle
+				{
+					border-top:1px solid #333;	
+					border-left:1px solid #333;	
+					border-bottom:1px solid #333;
+					margin-left:0px;
+					margin-bottom:4px;
+					
+				}
+				
+					.ptCycle .ptHeader
+					{
+						background-color:#62D99C;
+						color:#000;
+						font-size:larger;
+						padding:2px;
+					}
+					.ptCycle .ptFooter
+					{
+						background-color:#62D99C;
+					}
+				
+					.ptCycle .ptTitle
+					{
+						margin:5px;
+						font-weight:bold;
+					}
+					
+					.ptDeliverable
+					{
+						border-top:1px solid #333;	
+						border-left:1px solid #333;
+						border-bottom:1px solid #333;
+						margin-bottom:4px;
+					}
+
+					.ptCycle .ptDeliverable
+					{
+						margin-left:25px;
+						margin-top:4px;
+					}
+					
+						.ptDeliverable .ptHeader
+						{
+							background-color:#6B90D4;
+							color:#000;
+							font-size:larger;
+							padding:2px;
+						}
+						.ptDeliverable .ptFooter
+						{
+							background-color:#6B90D4;
+						}
+					
+						.ptDeliverable .ptHeader .ptAttributes
+						{
+							/*
+								border:1px solid #ccc;
+							*/
+							float:right;
+						}
+							
+							.ptAttributes table
+							{
+								margin:0;
+							}
+
+							.ptAttributes table tr th
+							{
+								background-color:#ccc;
+								color:#000;
+								padding:1px 2px;
+							}
+							
+							.ptAttributes table tr td
+							{
+								/*border-bottom:1px solid #ccc;*/
+								border:none;
+								border-bottom:1px solid #ccc;
+								border-right:1px solid #ccc;
+								padding:0 3px;
+								margin:0;
+								
+							}
+						
+						.ptDeliverable .ptFooter .ptAttributes
+						{
+							float:right;
+						}
+						
+							
+					
+						.ptDeliverable .ptTitle
+						{
+							margin:5px;
+							font-weight:bold;
+						}
+						
+						
+						.ptTask
+						{
+							border-top:1px solid #333;	
+							border-left:1px solid #333;
+							margin-left:25px;
+							margin-top:4px;
+							margin-bottom:4px;
+							border-bottom:1px solid #333;
+						}
+							.ptTask .ptHeader
+							{
+								background-color:#FFCE73;
+								color:#000;
+							}
+							.ptTask .ptFooter
+							{
+								background-color:#FFCE73;
+							}
+							
+							.ptTask .ptHeader .ptAttributes
+							{
+								float:right;
+							}
+							
+							.ptTask .ptFooter .ptAttributes
+							{
+								float:right;
+							}
+						
+							.ptTask .ptTitle
+							{
+								margin:5px;
+								font-weight:bold;
+							}
+							
+							.ptResolution
+							{
+								border-top:1px solid #333;	
+								border-left:1px solid #333;	
+								margin-left:25px;
+								border-bottom:1px solid #333;
+							}
+								
+								.ptResolution .ptHeader
+								{
+									background-color:#228653;
+								}
+								
+								.ptResolution .ptTitle
+								{
+									margin:5px;
+									font-weight:bold;
+								}
+								
+								.ptResolution p
+								{
+									margin:5px;
+								}
+							
+							.ptDiscussion
+							{
+								border-top:1px solid #333;	
+								border-left:1px solid #333;	
+								margin-left:50px;
+							}
+								
+								.ptDiscussion .ptHeader
+								{
+									background-color:#ff9473;
+								}
+							
+								.ptDiscussion .ptTitle
+								{
+									margin:5px;
+									font-weight:bold;
+								}
+								
+								.ptDiscussion table tr td
+								{
+										
+								}
+								
+								.ptDiscussion p
+								{
+									margin:2px;
+								}
+								
+								.ptDiscussion td.postInfo
+								{
+									width:100px;
+									text-align:center;
+									border-right:1px solid #ccc;
+									border-bottom:1px solid #ccc;
+								}
+								
+								.ptDiscussion td.alt
+								{
+									background-color:#D5E6F7;
+								}
+			#projectDiscussion
+			{
+				/*border:1px solid #ccc;*/
+				padding:0 4px;
+			}
+			
+				
+				
+				#projectDiscussion td.postInfo
+				{
+					width:100px;
+					text-align:center;
+					border-right:1px solid #ccc;
+					border-bottom:1px solid #ccc;
+				}
+				
+				#projectDiscussion td.alt
+				{
+					background-color:#D5E6F7;
+				}				
+					
+					
+			#projectAcceptance
+			{
+				/*border:1px solid #ccc;*/
+				padding:0 4px;
+			}
+				
+				#projectAcceptance table tr th
+				{
+					text-align:center;
+					padding-right:0;
+					padding-left:0;
+				}
+				
+			#projectTesting
+			{
+				/*border:1px solid #ccc;*/
+				padding:0 4px;
+			}
+			
+				.testingSection
+				{
+					padding-bottom:10px;
+					margin-bottom:5px;
+					border-bottom:1px solid #ccc;
+				}
+			
+						
+					
+#lowerContainer
+	{
+		
+		background-color:#003399;
+		color:#fff;
+
+		margin: 0px 0 0 0;
+	}	
+		
+	#footer
+	{
+		width: 750px;
+		margin: 0 auto;
+		text-align:justify;
+		
+		padding: 0px 0 0 0;
+	}
+	
+		
+		
+	#notice
+	{
+		width:750px;
+		margin: 0 auto;
+		
+		border-top:3px double #fff;
+		margin-bottom: 5px;
+		padding-bottom:5px;
+		text-align:justify;
+	}
+	
+	#notice a
+	{
+		color:#fff;
+	}
+	
+	.notice
+	{
+		
+		margin: 5px auto;
+		
+		border-top:3px double #ccc;
+		border-bottom:3px double #ccc;
+		margin-bottom: 2px;
+		padding-bottom:2px;
+		text-align:center;
+		background-color:#eaeaea;
+	}
+	
+	.notice a
+	{
+		color:#ccc;
+	}

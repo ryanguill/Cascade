@@ -1,0 +1,108 @@
+<cfoutput>
+	<h2 class="sectionTitle">Archive Info</h2>
+	
+	<table width="100%" class="dataTable">
+		<tr>
+			<th width="15%">
+				Archive ID:
+			</th>
+			<td class="monospace" width="35%">
+				#variables.archive.archiveID#
+			</td>
+			<th width="15%">
+				SHA Hash:
+			</th>
+			<td width="35%" class="monospace <cfif variables.archive.archiveSHAHash NEQ variables.currentSHAHash> fail<cfelse> pass</cfif>">
+				#lcase(variables.archive.archiveSHAHash)#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Build System Name:
+			</th>
+			<td>
+				#variables.archive.buildSystemName#
+			</td>
+			<th>
+				File Count:
+			</th>
+			<td>
+				#variables.archive.fileCount#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Application:
+			</th>
+			<td>
+				#variables.archive.applicationName#
+			</td>
+			<th>
+				Version:
+			</th>
+			<td>
+				#variables.archive.versionName#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Project Name / Number:
+			</th>
+			<td>
+				#variables.archive.projectName# / #variables.archive.projectNumber#
+			</td>
+			<th>
+				Ticket / Issue Numbers:
+			</th>
+			<td>
+				#variables.archive.ticketNumber#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Author(s):
+			</th>
+			<td>
+				#variables.archive.author#
+			</td>
+			<th>
+				Change Reason:
+			</th>
+			<td>
+				#variables.archive.changeReason#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Build By:
+			</th>
+			<td>
+				#variables.archive.buildByUserFullname# (#variables.archive.buildByUserEmail#)
+			</td>
+			<th>
+				Build On:
+			</th>
+			<td>
+				#application.objs.global.formatDate(variables.archive.buildOn)# #application.objs.global.formatTime(variables.archive.buildOn)#
+			</td>
+		</tr>
+		<tr>
+			<th>
+				Change Description:
+			</th>
+			<td colspan="3">
+				#variables.archive.changeDescription#
+			</td>										
+		</tr>
+		<cfif variables.archive.isBackupArchive>
+			<tr>
+				<th>
+					Backup For Archive:
+				</th>
+				<td colspan="3">
+					<a href="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#variables.archive.backupForArchiveID#">#variables.archive.backupForArchiveID#</a>
+				</td>										
+			</tr>
+		</cfif>
+	</table>
+</cfoutput>

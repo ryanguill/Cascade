@@ -1,0 +1,1 @@
+<cflocation url="#application.settings.appBaseDir#/index.cfm" />
