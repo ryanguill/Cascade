@@ -51,13 +51,20 @@
 		</cfoutput>
 		
 		<script type="text/javascript">
-		/*
 			Event.observe(window, 'load', init, false);
 	
 			function init() {
 			
 			}		
-		*/	
+			
+			function selectAll () {
+				$$('.filecheckbox').each(function(s){s.checked = true});				
+			}
+			function selectNone () {
+				$$('.filecheckbox').each(function(s){s.checked = false});				
+			}
+			
+			
 		</script>
 		
 		<style type="text/css">
@@ -110,6 +117,10 @@
 							
 							<cfif variables.showFiles>
 								<form action="action.cfm" method="post">
+									
+									<input type="button" value="Select All" onclick="selectAll();" />
+									<input type="button" value="Select None" onclick="selectNone();" />
+									
 									<table class="dataTable" width="100%">
 										<tr>
 											<th>
@@ -177,7 +188,7 @@
 												
 													<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
 														<td>
-															<input name="file" type="checkbox" value="#variables.results.directory##application.settings.pathSeperator##variables.results.name#" id="file_#variables.row#" <cfif variables.temp.checked>checked="True"</cfif> />
+															<input class="filecheckbox" name="file" type="checkbox" value="#variables.results.directory##application.settings.pathSeperator##variables.results.name#" id="file_#variables.row#" <cfif variables.temp.checked>checked="True"</cfif> />
 														</td>
 														<td>
 															<label for="file_#variables.row#">#replaceNoCase(variables.results.directory,url.dir,".")##application.settings.pathSeperator#</label>

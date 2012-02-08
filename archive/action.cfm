@@ -212,7 +212,7 @@
 					
 			<cfswitch expression="#form.nameFormat#">
 				<cfcase value="application">
-					<cfset variables.filename = variables.archive.applicationName & "-" & variables.archive.versionName & "-" & dateformat(variables.archive.buildOn,"yyyymmdd") & ".zip" />
+					<cfset variables.filename = replaceNoCase(variables.archive.applicationName," ","-","all") & "-" & replaceNoCase(variables.archive.versionName," ","-","all") & "-" & dateformat(variables.archive.buildOn,"yyyymmdd") & ".zip" />
 				</cfcase>
 				<cfdefaultcase>	
 					<cfset variables.filename = form.archiveID & ".zip" />

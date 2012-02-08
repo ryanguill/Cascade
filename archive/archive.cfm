@@ -148,7 +148,7 @@
 							<table width="100%">
 								<tr>
 									<td colspan="50" class="noBorder">
-										<a href="#application.settings.appBaseDir#/archive/action.cfm?action=downloadArchive&archiveID=#variables.archive.archiveID#&nameFormat=application" class="bigButton">Download Archive as #variables.archive.applicationName#-#variables.archive.versionName#-#dateformat(variables.archive.buildOn,"yyyymmdd")#.zip</a> 
+										<a href="#application.settings.appBaseDir#/archive/action.cfm?action=downloadArchive&archiveID=#variables.archive.archiveID#&nameFormat=application" class="bigButton">Download Archive as #replaceNoCase(variables.archive.applicationName," ","-","all")#-#replaceNoCase(variables.archive.versionName," ","-","all")#-#dateformat(variables.archive.buildOn,"yyyymmdd")#.zip</a> 
 									</td>
 									<td colspan="50" class="right noBorder">
 										<a href="#application.settings.appBaseDir#/archive/action.cfm?action=downloadArchive&archiveID=#variables.archive.archiveID#" class="bigButton">Download Archive as #variables.archive.archiveID#.zip</a> 
