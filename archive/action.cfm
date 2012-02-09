@@ -44,8 +44,9 @@
 			</cfif>
 			
 			<cfset populateTempFormVariables(form,"buildArchiveForm") />
+			<cfset populateTempFormVariables(form,"buildStep2Form") />
 			
-			<cfdump var="#session.tempFormVars["buildArchiveForm"]#" />
+			<!--- <cfdump var="#session.tempFormVars["buildArchiveForm"]#" /> --->
 			
 			<cfset variables.dir = session.tempFormVars["buildArchiveForm"]["dir"] />
 			<cfset variables.files = session.tempFormVars["buildArchiveForm"]["fileList"] />
@@ -164,6 +165,7 @@
 			</cfinvoke>
 			
 			<cfset structClear(session.tempFormVars.buildArchiveForm) />
+			<cfset structClear(session.tempFormVars.buildStep2Form) />
 			
 			<cfset saveDataToManifest(variables.zipFilePath,variables.archiveID) />
 

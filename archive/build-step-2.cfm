@@ -13,7 +13,8 @@
 		OR NOT structKeyExists(session.tempFormVars,"buildArchiveForm") 
 		OR NOT structKeyExists(session.tempformVars.buildArchiveForm,"fileList")
 		OR NOT structKeyExists(session.tempformVars.buildArchiveForm,"dir")
-		OR NOT arrayLen(session.tempFormVars.buildArchiveForm.filelist)>
+		OR NOT arrayLen(session.tempFormVars.buildArchiveForm.filelist)
+		OR NOT structKeyExists(session.tempFormVars.buildArchiveForm,"previousArchiveID")>
 		
 		<cflocation url="build.cfm" />
 		
@@ -24,8 +25,46 @@
 		
 		
 	<cfset variables.changeTypes = application.daos.referenceTables.getAllChangeTypes(application.config.dsn) />	
+	
+	
+	<cfparam name="session.tempFormVars" default="#structNew()#" />
+	<cfparam name="session.tempFormVars.buildStep2Form" default="#structNew()#" />
+	
+	<cfif NOT structKeyExists(session.tempFormVars.buildStep2Form,"populateTime") OR abs(dateDiff("n",now(),session.tempFormVars.buildStep2Form.populateTime)) GT 7>
+		<cfset structClear(session.tempFormVars.buildStep2Form) />
+	</cfif>
 		
-		
+	<cfparam name="session.tempFormVars.buildStep2Form.applicationName" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.versionNumber" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.projectName" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.projectNumber" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.ticketNumber" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.author" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.changeReason" default="" />
+	<cfparam name="session.tempFormVars.buildStep2Form.changeDescription" default="" />	
+	
+	<cfset variables.basedOnPreviousArchive = false />
+	
+	<cfif isValid("UUID",session.tempFormVars.buildArchiveForm.previousArchiveID)>
+		<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.archive">
+			<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+			<cfinvokeargument name="archiveID" value="#session.tempFormVars.buildArchiveForm.previousArchiveID#" />	<!---Type:string  --->
+		</cfinvoke>
+	
+		<cfif variables.archive.recordCount>
+			<cfset variables.basedOnPreviousArchive = true />
+	
+			<cfset session.tempFormVars.buildStep2Form.applicationName = variables.archive.applicationName />
+			<cfset session.tempFormVars.buildStep2Form.versionNumber = "" />
+			<cfset session.tempFormVars.buildStep2Form.projectName = variables.archive.projectName />
+			<cfset session.tempFormVars.buildStep2Form.projectNumber = variables.archive.projectNumber />
+			<cfset session.tempFormVars.buildStep2Form.ticketNumber = variables.archive.ticketNumber />
+			<cfset session.tempFormVars.buildStep2Form.author = variables.archive.author />
+			<cfset session.tempFormVars.buildStep2Form.changeReason = variables.archive.changeReason />
+			<cfset session.tempFormVars.buildStep2Form.changeDescription = variables.archive.changeDescription />	
+		</cfif>
+	</cfif>
+
 </cfsilent>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -96,6 +135,11 @@
 							
 							<h2 class="sectionTitle">Archive Details</h2>
 							
+							<cfif variables.basedOnPreviousArchive>
+								<p style="color:blue;">The data below is based on the previous archive: <a href="archive.cfm?archiveid=#session.tempFormVars.buildArchiveForm.previousArchiveID#">#session.tempFormVars.buildArchiveForm.previousArchiveID#</a>.  Please check all of the information to ensure its accuracy to this archive.</p>
+							</cfif>
+							
+							
 							<form action="action.cfm" method="post">
 								<table class="formTable" width="100%">
 									<tr>
@@ -103,7 +147,7 @@
 											Application Name:
 										</th>
 										<td>
-											<input type="text" name="applicationName" id="applicationName" value="" size="45" />
+											<input type="text" name="applicationName" id="applicationName" value="#session.tempFormVars.buildStep2Form.applicationName#" size="45" />
 										</td>
 									</tr>
 									<tr>
@@ -111,7 +155,10 @@
 											Version Number:
 										</th>
 										<td>
-											<input type="text" name="versionNumber" id="versionNumber" value="" size="15" />
+											<input type="text" name="versionNumber" id="versionNumber" value="#session.tempFormVars.buildStep2Form.versionNumber#" size="15" />
+											<cfif variables.basedOnPreviousArchive>
+												<em>Previous version was: #variables.archive.versionName#</em>
+											</cfif>
 										</td>
 									</tr>
 									<tr>
@@ -119,7 +166,7 @@
 											Project Name:
 										</th>
 										<td>
-											<input type="text" name="projectName" id="projectName" value="" size="45" />
+											<input type="text" name="projectName" id="projectName" value="#session.tempFormVars.buildStep2Form.projectName#" size="45" />
 										</td>
 									</tr>
 									<tr>
@@ -127,7 +174,7 @@
 											Project Number:
 										</th>
 										<td>
-											<input type="text" name="projectNumber" id="projectNumber" value="" size="45" />
+											<input type="text" name="projectNumber" id="projectNumber" value="#session.tempFormVars.buildStep2Form.projectNumber#" size="45" />
 										</td>
 									</tr>
 									<tr>
@@ -135,7 +182,7 @@
 											Ticket/Issue Number(s):
 										</th>
 										<td>
-											<input type="text" name="ticketNumber" id="ticketNumber" value="" size="45" />
+											<input type="text" name="ticketNumber" id="ticketNumber" value="#session.tempFormVars.buildStep2Form.ticketNumber#" size="45" />
 										</td>
 									</tr>
 									<tr>
@@ -143,7 +190,7 @@
 											Change Author(s):
 										</th>
 										<td>
-											<input type="text" name="author" id="author" value="" size="45" />
+											<input type="text" name="author" id="author" value="#session.tempFormVars.buildStep2Form.author#" size="45" />
 										</td>
 									</tr>
 									<tr>
@@ -153,7 +200,7 @@
 										<td>
 											<select name="changeReason" id="changeReason">
 												<cfloop query="variables.changeTypes">
-													<option value="#variables.changeTypes.changeTypeName#">#variables.changeTypes.changeTypeName#</option>
+													<option value="#variables.changeTypes.changeTypeName#" <cfif variables.changeTypes.changeTypeName EQ session.tempFormVars.buildStep2Form.changeReason>selected="True"</cfif>>#variables.changeTypes.changeTypeName#</option>
 												</cfloop>
 											</select>
 										</td>
@@ -163,7 +210,7 @@
 											Change Description:
 										</th>
 										<td>
-											<textarea name="changeDescription" id="changeDescription" cols="100" rows="10"></textarea>
+											<textarea name="changeDescription" id="changeDescription" cols="100" rows="10">#session.tempFormVars.buildStep2Form.changeDescription#</textarea>
 										</td>
 									</tr>
 									<tr>

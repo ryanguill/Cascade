@@ -11,9 +11,20 @@
 	
 	<cfparam name="url.dir" default="-1" />
 	<cfparam name="url.includeHidden" default="false" />
-	
+	<cfparam name="url.previousArchiveID" default="" />
 	
 	<cfset variables.showFiles = false />
+	<cfset variables.previouslySelectedFiles = "" />
+	
+	
+	<cfif len(trim(url.previousArchiveID)) and isValid("UUID",url.previousArchiveID)>
+		<cfinvoke component="#application.daos.cascade#" method="getFilesForArchiveID" returnvariable="variables.files">
+			<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+			<cfinvokeargument name="archiveID" value="#url.previousArchiveID#" />	<!---Type:string  --->
+		</cfinvoke>
+		
+		<cfset variables.previouslySelectedFiles = valueList(variables.files.filepath) />
+	</cfif>
 	
 	<cfif url.dir EQ -1>
 		<cfset variables.appBaseDirDepth = listLen(expandPath(application.settings.appBaseDir),application.settings.pathSeperator)>
@@ -103,6 +114,7 @@
 											<input type="text" name="dir" value="#url.dir#" size="90" />
 										</td>
 										<td>
+											<input type="hidden" name="previousArchiveID" value="#url.previousArchiveID#" />
 											<input type="submit" value="List Directory Contents" />
 										</td>
 									</tr>
@@ -114,6 +126,10 @@
 									</tr>
 								</table>
 							</form>
+							
+							<cfif listLen(variables.previouslySelectedFiles)>
+								<p style="color:blue;">Only files included in the previous archive: <a href="archive.cfm?archiveid=#url.previousArchiveID#">#url.previousArchiveID#</a> are being selected below.  Please ensure that all files you want to include are selected.</p>
+							</cfif>
 							
 							<cfif variables.showFiles>
 								<form action="action.cfm" method="post">
@@ -180,11 +196,20 @@
 														</td>
 													</tr>
 												<cfelse>
-													<cfset variables.temp.checked = true />
-													
-													<cfif left(variables.results.name,1) EQ "." OR findNoCase(".",variables.results.directory)>
+													<cfif listLen(variables.previouslySelectedFiles)>
 														<cfset variables.temp.checked = false />
-													</cfif> 
+														
+														<cfif listContains(variables.previouslySelectedFiles,variables.results.directory & application.settings.pathSeperator & variables.results.name)>
+															<cfset variables.temp.checked = true />
+														</cfif>
+													<cfelse>
+														<cfset variables.temp.checked = true />
+															
+														<cfif left(variables.results.name,1) EQ "." OR findNoCase(".",variables.results.directory)>
+															<cfset variables.temp.checked = false />
+														</cfif> 
+													</cfif>
+													
 												
 													<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
 														<td>
@@ -216,6 +241,7 @@
 											<td colspan="5" class="right">
 												<input type="hidden" name="dir" value="#url.dir#" />
 												<input type="hidden" name="action" value="buildArchive" />
+												<input type="hidden" name="previousArchiveID" value="#url.previousArchiveID#" />
 												<input type="submit" value="Select Files and Continue" />
 											</td>
 										</tr>

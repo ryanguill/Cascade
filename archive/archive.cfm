@@ -160,11 +160,18 @@
 							
 						</div>
 						
-						<cfif session.login.isUserInGroup("deploy")>
-							<div class="contentSection">
+						
+						<div class="contentSection">
+							<cfif session.login.isUserInGroup("deploy")>
 								<a href="#application.settings.appBaseDir#/archive/deploy.cfm?archiveID=#variables.archive.archiveID#" class="bigButton">Deploy This Archive</a>
-							</div>
-						</cfif>
+							</cfif>
+									
+							<cfif session.login.isUserInGroup("build") and variables.archive.buildSystemName EQ application.config.serverName>
+								<a href="#application.settings.appBaseDir#/archive/build.cfm?dir=#URLEncodedFormat(variables.archive.builddir)#&previousArchiveID=#variables.archive.archiveID#" class="bigButton">Re-Build This Archive (New Version)</a>
+							</cfif>
+					
+						</div>
+						
 						
 						<cfinclude template="#application.settings.appBaseDir#/archive/inc/_archiveCertifications.cfm" />
 
