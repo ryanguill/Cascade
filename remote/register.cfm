@@ -63,16 +63,24 @@
 							<form action="action.cfm" method="post">
 								<table width="100%" class="formTable">
 									<tr>
-										<th width="200">
-											Server Remote Service URL:
+										<th width="400">
+											Paste Remote Server Remote Service URL:
 										</th>
 										<td>
 											<input type="text" name="serverURL" size="100" value="#session.tempFormVars.registerRemoteServerForm.serverURL#" />
 										</td>
 									</tr>
 									<tr>
+										<th width="200">
+											Copy this server's ServerID:
+										</th>
+										<td>
+											#application.config.cascadeID#
+										</td>
+									</tr>
+									<tr>
 										<th>
-											Validation Code:
+											Paste the Validation Code you received:
 										</th>
 										<td>
 											<input type="text" name="validationCode" size="60" value="#session.tempFormVars.registerRemoteServerForm.validationCode#" />

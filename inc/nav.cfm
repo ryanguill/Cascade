@@ -76,10 +76,19 @@
 							<h3 class="title">Remote Servers:</h3>
 							<ul>
 								<li><a href="#application.settings.appBaseDir#/remote/index.cfm">Remote Servers Home</a></li>
-								<li><a href="#application.settings.appBaseDir#/remote/browse.cfm">Browse Remote Servers</a></li>
 								<cfif session.login.isUserInGroup("admin")>
 									<li><a href="#application.settings.appBaseDir#/remote/register.cfm">Register Remote Server</a></li>
 								</cfif>	
+							</ul>
+						</div>
+						<div class="nSec">
+							<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />
+							<!---<cfset variables.remoteServersList = valueList(variables.remoteServers.serverName) />--->
+							<h3 class="title">Remote Server Listing:</h3>
+							<ul>
+								<cfloop query="variables.remoteServers">
+									<li><cftooltip tooltip="#variables.remoteServers.serverName#"><a href="#application.settings.appBaseDir#/remote/server.cfm?serverid=#variables.remoteServers.serverID#">#left(variables.remoteServers.serverName,20)#<cfif len(variables.remoteServers.serverName) GT 20>...</cfif></a></cftooltip></li>
+								</cfloop>
 							</ul>
 						</div>
 					</cfif>

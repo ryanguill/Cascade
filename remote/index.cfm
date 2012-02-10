@@ -63,15 +63,18 @@
 								</cfif>
 							</ul>
 							
+							<hr />
 							
 							<h2>This server's remote service URL:</h2>
 							
 							<input type="text" size="100%" value="#request.baseLink##application.settings.appBaseDir#/com/remoteService.cfc?wsdl" />
 							
-							
+							<!--
 							<h2>This server's ServerID:</h2>
 							
 							<input type="text" size="100%" value="#application.config.cascadeID#" />
+							-->
+							
 							
 							<h2>Enter Remote Server's ID to get a validation Code:</h2>
 							
@@ -81,10 +84,15 @@
 										<th width="125">
 											Server ID:
 										</th>
-										<td width="400">
-											<input type="text" name="serverID" value="#url.serverID#" size="40" />
+										<td width="400" class="noBorder">
+											<input type="text" name="serverID" value="#url.serverID#" size="60" />
 										</td>
-										<cfif structKeyExists(url,"serverID") AND len(trim(url.serverID)) AND isValid("uuid",url.serverID)>
+										<td class="noBorder">											
+											<input type="submit" value="Get Validation Code" class="bigButton" />
+										</td>
+									</tr>
+									<cfif structKeyExists(url,"serverID") AND len(trim(url.serverID)) AND isValid("uuid",url.serverID)>
+										<tr>
 											<cfinvoke component="#application.objs.remoteService#" method="createValidationCodeForServerID" returnvariable="variables.validationCode">
 												<cfinvokeargument name="serverID" value="#trim(url.serverID)#" />
 												<cfinvokeargument name="createdbyuserid" value="#session.login.getUserID()#" />	<!---Type:String Hint:  - CHAR (35) --->
@@ -96,16 +104,12 @@
 											<th width="125">
 												Validation Code:
 											</th>
-											<td>
-												<input type="text" size="100%" value="#formatValidationCode(variables.validationCode.validationCode)#" />
+											<td class="noBorder">
+												<input type="text" size="60" value="#formatValidationCode(variables.validationCode.validationCode)#" />
 											</td>
+										</tr>
+									</cfif>
 									
-										<cfelse>
-											<td>											
-												<input type="submit" value="Get Validation Code" class="bigButton" />
-											</td>
-										</cfif>
-									</tr>
 								</table>
 							</form>
 							

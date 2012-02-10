@@ -21,7 +21,7 @@
 		<cfset application.settings.appTitle = "Cascade" />
 		
 		<cfset application.settings.dateFormat = "yyyy-mm-dd" />
-		<cfset application.settings.timeFormat = "h:mm tt" />
+		<cfset application.settings.timeFormat = "HH:mm" />
 		<cfset application.settings.never = createDateTime(1970,1,1,0,0,0) />
 		
 		<cfset application.daos = structNew() />

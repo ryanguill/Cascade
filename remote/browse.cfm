@@ -5,7 +5,7 @@
 	
 	<cfset session.login.setCurrentArea("remote") />
 	
-	<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />
+	<!---<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />--->
 	
 </cfsilent>
 
@@ -68,7 +68,7 @@
 												<a href="#application.settings.appBaseDir#/remote/server.cfm?serverID=#variables.remoteServers.serverID#">#variables.remoteServers.serverName#</a>
 											</td>
 											<td>
-												#variables.remoteServers.serverURL#
+												<a href="#variables.remoteServers.serverURL#">#variables.remoteServers.serverURL#</a>
 											</td>
 										</tr>
 									</cfloop>

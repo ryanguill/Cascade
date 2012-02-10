@@ -19,11 +19,19 @@
 		<cflocation url="#application.settings.appBaseDir#/remote/index.cfm" />
 	</cfif>
 	
+	<cftry>
 	<cfinvoke webservice="#variables.server.serverURL#" method="getAvailableArchives" returnvariable="variables.archives">
 	<!---<cfinvoke component="#application.objs.remoteService#" method="getAvailableArchives" returnvariable="variables.archives">--->
 		<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
 		<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
 	</cfinvoke>
+	<cfcatch>
+		<cfdump var="#variables#" />
+		<cfdump var="#application.config.cascadeID#" />
+		<cfabort />
+	</cfcatch>
+	</cftry>
+
 
 </cfsilent>
 
@@ -85,19 +93,19 @@
 									<th>
 										Application
 									</th>
-									<th>
+									<th width="80">
 										Version
 									</th>
-									<th width="75" class="right">
-										File&nbsp;Count
+									<th width="50" class="right">
+										Files
 									</th>
 									<th>
 										Build By
 									</th>
-									<th width="130" class="center">
+									<th width="120" class="center">
 										Built On
 									</th>
-									<th width="130">
+									<th width="170">
 										Built System
 									</th>
 								</tr>
@@ -117,7 +125,7 @@
 												#variables.archives.versionName#
 											</td>
 											<td class="right">
-												#variables.archives.fileCount#
+												#numberFormat(variables.archives.fileCount)#
 											</td>
 											<td>
 												#variables.archives.buildByUserFullname#
@@ -126,7 +134,7 @@
 												#application.objs.global.formatDate(variables.archives.buildOn)# #application.objs.global.formatTime(variables.archives.buildOn)#
 											</td>
 											<td>
-												#variables.archives.buildSystemName#
+												<cftooltip tooltip="#variables.archives.buildSystemName#">#left(variables.archives.buildSystemName,20)#<cfif len(variables.archives.buildSystemName) GT 20>...</cfif></a></cftooltip>
 											</td>
 										</tr>
 									</cfloop>
