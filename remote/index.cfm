@@ -9,7 +9,13 @@
 	
 	<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />
 	
-	
+	<cfif findNoCase("localhost",request.baseLink)>
+		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/remote/index.cfm" />
+			<cfinvokeargument name="messageType" value="Warning" />
+			<cfinvokeargument name="messageText" value="You are currently accessing Cascade through localhost, the server's remote service URL provided below will not be accessible from other servers." />
+		</cfinvoke>
+	</cfif>
 	
 </cfsilent>
 
