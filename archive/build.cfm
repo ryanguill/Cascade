@@ -10,6 +10,7 @@
 	</cfif>
 	
 	<cfparam name="url.dir" default="-1" />
+	<cfparam name="url.excludeExtensions" default="" />
 	<cfparam name="url.includeHidden" default="false" />
 	<cfparam name="url.previousArchiveID" default="" />
 	
@@ -110,18 +111,34 @@
 										<th>
 											Directory:
 										</th>
-										<td>
+										<td class="noBorder">
 											<input type="text" name="dir" value="#url.dir#" size="90" />
 										</td>
-										<td>
-											<input type="hidden" name="previousArchiveID" value="#url.previousArchiveID#" />
-											<input type="submit" value="List Directory Contents" />
+										<td class="noBorder">
+											&nbsp;
 										</td>
 									</tr>
 									<tr>
-										
-										<td colspan="3">
+										<th>
+											Exclude File Extensions:
+										</th>
+										<td class="noBorder">
+											<input type="text" name="excludeExtensions" value="#url.excludeExtensions#" size="30" />
+										</td>
+										<td class="noBorder">
+											<em>Comma Delimited list of extensions - do not include the period (ex: pdf,txt)</em>
+										</td>
+									</tr>
+									<tr>
+										<th>
+											&nbsp;
+										</th>
+										<td class="noBorder">
 											<input type="checkbox" name="includeHidden" id="includeHidden" value="true" <cfif url.includeHidden>checked="True"</cfif>><lable for="includeHidden">Include Hidden Files and Directories</lable>
+										</td>
+										<td class="noBorder">
+											<input type="hidden" name="previousArchiveID" value="#url.previousArchiveID#" />
+											<input type="submit" value="List Directory Contents" />
 										</td>
 									</tr>
 								</table>
@@ -170,6 +187,13 @@
 														</cfif>
 													</cfloop>
 													<cfif variables.continue>
+														<cfcontinue />
+													</cfif>
+												</cfif>
+												
+												<cfif listLen(url.excludeExtensions)>
+													<cfset url.excludeExtensions = replaceNoCase(url.excludeExtensions,".","","all") />
+													<cfif listContainsNoCase(url.excludeExtensions,listLast(variables.results.name,"."))>
 														<cfcontinue />
 													</cfif>
 												</cfif>
