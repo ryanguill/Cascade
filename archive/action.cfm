@@ -454,7 +454,7 @@
 					<cfinvokeargument name="buildbyuserfullname" value="#session.login.getFullname()#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 					<cfinvokeargument name="buildbyuseremail" value="#session.login.getEmail()#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 					<cfinvokeargument name="builddir" value="#variables.deploydir#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
-					<cfinvokeargument name="deployDirSuggestions" value="#variables.deployDirSuggestions#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
+					<cfinvokeargument name="deployDirSuggestions" value="#variables.deploydir#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
 					<cfinvokeargument name="filecount" value="#arrayLen(variables.files)#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 					<cfinvokeargument name="isnativebuild" value="1" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 					<cfinvokeargument name="isbackuparchive" value="1" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
