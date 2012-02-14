@@ -296,6 +296,8 @@
 				</cfinvoke>	
 			</cfif>
 			
+			<cfparam name="variables.manifest.deployDirSuggestions" default="" />
+			<cfparam name="variables.manifest.isObsolete" default="0" />			
 			
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempFilePath#" />				
@@ -380,9 +382,11 @@
 				<cfinvokeargument name="buildbyuserfullname" value="#variables.manifest.buildByUserFullname#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 				<cfinvokeargument name="buildbyuseremail" value="#variables.manifest.buildByUserEmail#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 				<cfinvokeargument name="builddir" value="#variables.manifest.buildDir#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+				<cfinvokeargument name="deployDirSuggestions" value="#variables.manifest.deployDirSuggestions#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
 				<cfinvokeargument name="filecount" value="#variables.fileCounter#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isnativebuild" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="isObsolete" value="#variables.manifest.isObsolete#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="backupforarchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->				
 			</cfinvoke>
 			

@@ -26,6 +26,7 @@
 		
 	<cfset variables.changeTypes = application.daos.referenceTables.getAllChangeTypes(application.config.dsn) />	
 	
+	<cfset variables.newLine = chr(10) />
 	
 	<cfparam name="session.tempFormVars" default="#structNew()#" />
 	<cfparam name="session.tempFormVars.buildStep2Form" default="#structNew()#" />
@@ -65,7 +66,7 @@
 			<cfset session.tempFormVars.buildStep2Form.author = variables.archive.author />
 			<cfset session.tempFormVars.buildStep2Form.changeReason = variables.archive.changeReason />
 			<cfset session.tempFormVars.buildStep2Form.changeDescription = variables.archive.changeDescription />	
-			<cfset session.tempFormVars.buildStep2Form.deployDirSuggestions = variables.archive.deployDirSuggestions />	
+			<cfset session.tempFormVars.buildStep2Form.deployDirSuggestions = replaceNoCase(variables.archive.deployDirSuggestions,",",variables.newline,"all") />	
 		</cfif>
 	</cfif>
 
