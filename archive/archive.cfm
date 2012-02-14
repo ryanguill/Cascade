@@ -193,6 +193,14 @@
 										<cfelse>
 											<a href="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#variables.archive.archiveID#&action=deleteArchive" class="bigButton">Delete Archive</a>
 										</cfif>
+										
+									</td>
+									<td width="200" class="noBorder">
+										<cfif variables.archive.isObsolete>
+											<a href="#application.settings.appBaseDir#/archive/action.cfm?archiveID=#variables.archive.archiveID#&action=unmarkAsObsolete" class="bigButton">Unmark as Obsolete</a>
+										<cfelse>
+											<a href="#application.settings.appBaseDir#/archive/action.cfm?archiveID=#variables.archive.archiveID#&action=markAsObsolete" class="bigButton">Mark as Obsolete</a>
+										</cfif>
 									</td>
 								</tr>
 							</table>

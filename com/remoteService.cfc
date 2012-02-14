@@ -270,9 +270,11 @@
 			<cfinvokeargument name="buildonAfter" value="1970-01-01" />	<!---Type:date Hint: pass 1970-01-01 to ignore --->
 			<cfinvokeargument name="buildonBefore" value="1970-01-01" />	<!---Type:date Hint: pass 1970-01-01 to ignore --->
 			<cfinvokeargument name="builddir" value="-1" />	<!---Type:String Hint: pass -1 to ignore. --->
+			<cfinvokeargument name="deployDirSuggestions" value="-1" />	<!---Type:String Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="filecount" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="isnativebuild" value="-1" />	<!---Type:numeric Hint:  pass -1 to ignore. --->
 			<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
+			<cfinvokeargument name="isObsolete" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="backupForArchiveID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 		</cfinvoke>
     	

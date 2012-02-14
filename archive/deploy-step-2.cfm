@@ -52,6 +52,10 @@
 	
 	<cfparam name="url.createDeployDir" default="false">
 	
+	<cfif url.deployDir EQ "deployDir_custom">
+		<cfset url.deployDir = trim(url.customDeployDir) />
+	</cfif>
+	
 	<cfif NOT directoryExists(url.deployDir) AND NOT url.createDeployDir>
 		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
 			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/deploy-step-2.cfm" />
@@ -119,6 +123,9 @@
 						</div>
 						
 						<div class="contentSection">
+							
+							<h1>Deploy Dir: #variables.deployDir#</h1>
+							
 							<h2 class="sectionTitle">File Deployement Details (#variables.files.recordCount# file<cfif variables.files.recordCount NEQ 1>s</cfif>)</h2>
 							
 							<table class="dataTable" width="100%">
@@ -168,9 +175,9 @@
 										<th width="200">
 											Deploy Directory:
 										</th>
-										<td>
+										<td <cfif directoryExists(variables.deployDir)>class="pass"<cfelse>class="fail"</cfif>>
 											#variables.deployDir#
-											(<a href="#application.settings.appBaseDir#/archive/deploy.cfm?archiveID=#variables.archive.archiveID#&deployDir=#url.deployDir#">Change</a>)
+											(<a href="#application.settings.appBaseDir#/archive/deploy.cfm?archiveID=#variables.archive.archiveID#&deployDir=#url.deployDir#" style="color:white;">Change</a>)
 											<cfif NOT directoryExists(variables.deployDir) AND url.createDeployDir>
 												<em>This directory does not already exist, but will be created.</em>
 											<cfelse>

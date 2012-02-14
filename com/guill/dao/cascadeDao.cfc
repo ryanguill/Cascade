@@ -25,9 +25,11 @@
 					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
 					, archives.buildon		/*  - TIMESTAMP (26)*/
 					, archives.builddir		/*  - VARCHAR (1000)*/
+					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
 					, archives.filecount		/*  - INTEGER (10)*/
 					, archives.isnativebuild		/*  - INTEGER (10)*/
 					, archives.isbackuparchive	/*  - INTEGER (10)*/
+					, archives.isObsolete		/*  - INTEGER (10)*/	
 					, archives.backupforarchiveid	/*  - CHAR (35)*/
 					
 				FROM archives  
@@ -64,9 +66,11 @@
 		<cfargument name="buildonAfter" type="date" required="true" hint="pass 1970-01-01 to ignore" />
 		<cfargument name="buildonBefore" type="date" required="true" hint="pass 1970-01-01 to ignore" />
 		<cfargument name="builddir" type="String" required="true" hint="pass -1 to ignore." />
+		<cfargument name="deployDirSuggestions" type="String" required="true" hint="pass -1 to ignore." />
 		<cfargument name="filecount" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="isnativebuild" type="numeric" required="true" hint=" pass -1 to ignore." />
 		<cfargument name="isbackuparchive" type="numeric" required="true" hint="pass -1 to ignore." />
+		<cfargument name="isObsolete" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="backupForArchiveID" type="string" required="true" hint="pass -1 to ignore" />
 		
 		<cfset var qSearchArchives = "" />
@@ -91,9 +95,11 @@
 					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
 					, archives.buildon		/*  - TIMESTAMP (26)*/
 					, archives.builddir		/*  - VARCHAR (1000)*/
+					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
 					, archives.filecount		/*  - INTEGER (10)*/
 					, archives.isnativebuild		/*  - INTEGER (10)*/
 					, archives.isbackuparchive	/*  - INTEGER (10)*/
+					, archives.isObsolete		/*  - INTEGER (10)*/	
 					, archives.backupforarchiveid	/*  - CHAR (35)*/
 					
 				FROM archives  
@@ -152,6 +158,9 @@
 				<cfif arguments.builddir NEQ -1>	
 					AND builddir LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.builddir#%" />		/*  - VARCHAR (1000)*/
 				</cfif>
+				<cfif arguments.deployDirSuggestions NEQ -1>	
+					AND deployDirSuggestions LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.deployDirSuggestions#%" />		/*  - VARCHAR (5000)*/
+				</cfif>
 				<cfif arguments.filecount NEQ -1>	
 					AND filecount = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />		/*  - INTEGER (10)*/
 				</cfif>
@@ -160,6 +169,9 @@
 				</cfif>
 				<cfif arguments.isbackuparchive NEQ -1>	
 					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
+				</cfif>
+				<cfif arguments.isObsolete NEQ -1>	
+					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
 				</cfif>
 				<cfif arguments.backupforarchiveid NEQ -1>	
 					AND backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.backupforarchiveid#%" />	/*  - CHAR (35)*/
@@ -202,9 +214,11 @@
 					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
 					, archives.buildon		/*  - TIMESTAMP (26)*/
 					, archives.builddir		/*  - VARCHAR (1000)*/
+					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
 					, archives.filecount		/*  - INTEGER (10)*/
 					, archives.isnativebuild		/*  - INTEGER (10)*/
 					, archives.isbackuparchive	/*  - INTEGER (10)*/
+					, archives.isObsolete		/*  - INTEGER (10)*/	
 					, archives.backupforarchiveid	/*  - CHAR (35)*/
 					
 				FROM archives 
@@ -248,9 +262,11 @@
 					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
 					, archives.buildon		/*  - TIMESTAMP (26)*/
 					, archives.builddir		/*  - VARCHAR (1000)*/
+					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
 					, archives.filecount		/*  - INTEGER (10)*/
 					, archives.isnativebuild		/*  - INTEGER (10)*/
 					, archives.isbackuparchive	/*  - INTEGER (10)*/
+					, archives.isObsolete		/*  - INTEGER (10)*/	
 					, archives.backupforarchiveid	/*  - CHAR (35)*/
 					
 				FROM archives 
@@ -286,9 +302,11 @@
 		<cfargument name="buildbyuserfullname" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="buildbyuseremail" type="String" required="true" hint=" - VARCHAR (255)" />
 		<cfargument name="builddir" type="String" required="true" hint=" - VARCHAR (1000)" />
+		<cfargument name="deployDirSuggestions" type="String" required="true" hint=" - VARCHAR (5000)" />
 		<cfargument name="filecount" type="Numeric" required="true" hint=" - INTEGER (10)" />
 		<cfargument name="isnativebuild" type="Numeric" required="true" hint=" - INTEGER (10)" />
 		<cfargument name="isbackuparchive" type="Numeric" required="true" hint=" - INTEGER (10)" />
+		<cfargument name="isObsolete" type="Numeric" required="true" hint=" - INTEGER (10)" />
 		<cfargument name="backupforarchiveid" type="String" required="true" hint=" - CHAR (35)" />
 
 		<cfset var qCreateArchive = "" />
@@ -314,10 +332,12 @@
 					, buildbyuseremail	/*  - VARCHAR (255)*/
 					, buildon		/*  - TIMESTAMP (26)*/
 					, builddir		/*  - VARCHAR (1000)*/
+					, deployDirSuggestions		/*  - VARCHAR (5000)*/
 					, filecount		/*  - INTEGER (10)*/
 					, isnativebuild		/*  - INTEGER (10)*/
 					, isbackuparchive	/*  - INTEGER (10)*/
-					, backupforarchiveid	/*  - CHAR (35)*/					
+					, isObsolete		/*  - INTEGER (10)*/	
+					, backupforarchiveid	/*  - CHAR (35)*/		
 				)
 				VALUES
 				(
@@ -338,9 +358,11 @@
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyuseremail#" /> /* buildbyuseremail */
 					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" /> /* buildon */
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.builddir#" /> /* builddir */
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployDirSuggestions#" /> /* deployDirSuggestions */
 					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" /> /* filecount */
 					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" /> /* isnativebuild */
 					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" /> /* isbackuparchive */
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" /> /* isObsolete */
 					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupforarchiveid#" /> /* backupforarchiveid */					
 				)
         	</cfquery>
@@ -362,6 +384,28 @@
         	<cfquery name="qDeleteArchive" datasource="#arguments.dsn#">
         		DELETE
 				FROM archives
+				WHERE
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+
+    <cfreturn True />
+    </cffunction>
+	
+	<cffunction name="setArchiveIsObsolete" access="public" returntype="boolean" output="false" hint="">
+    	<cfargument name="dsn" type="string" required="True" />
+    	<cfargument name="archiveID" type="string" required="true" />
+    	<cfargument name="isObsolete" type="boolean" required="true" />
+		
+		<cfset var qMarkAsObsolete = "" />
+        <cftry>
+        	<cfquery name="qDeleteArchive" datasource="#arguments.dsn#">
+        		UPDATE archives
+				SET isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />
 				WHERE
 					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
         	</cfquery>

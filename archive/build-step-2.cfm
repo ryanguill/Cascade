@@ -42,8 +42,10 @@
 	<cfparam name="session.tempFormVars.buildStep2Form.author" default="" />
 	<cfparam name="session.tempFormVars.buildStep2Form.changeReason" default="" />
 	<cfparam name="session.tempFormVars.buildStep2Form.changeDescription" default="" />	
+	<cfparam name="session.tempFormVars.buildStep2Form.deployDirSuggestions" default="" />	
 	
 	<cfset variables.basedOnPreviousArchive = false />
+	<cfset variables.previousArchiveID = "" />
 	
 	<cfif isValid("UUID",session.tempFormVars.buildArchiveForm.previousArchiveID)>
 		<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.archive">
@@ -53,6 +55,7 @@
 	
 		<cfif variables.archive.recordCount>
 			<cfset variables.basedOnPreviousArchive = true />
+			<cfset variables.previousArchiveID = session.tempFormVars.buildArchiveForm.previousArchiveID />
 	
 			<cfset session.tempFormVars.buildStep2Form.applicationName = variables.archive.applicationName />
 			<cfset session.tempFormVars.buildStep2Form.versionNumber = "" />
@@ -62,6 +65,7 @@
 			<cfset session.tempFormVars.buildStep2Form.author = variables.archive.author />
 			<cfset session.tempFormVars.buildStep2Form.changeReason = variables.archive.changeReason />
 			<cfset session.tempFormVars.buildStep2Form.changeDescription = variables.archive.changeDescription />	
+			<cfset session.tempFormVars.buildStep2Form.deployDirSuggestions = variables.archive.deployDirSuggestions />	
 		</cfif>
 	</cfif>
 
@@ -214,10 +218,34 @@
 										</td>
 									</tr>
 									<tr>
+										<th valign="top">
+											Deployment Directory Suggestions: (one per line)
+										</th>
+										<td>
+											<textarea name="deployDirSuggestions" id="deployDirSuggestions" cols="100" rows="10">#session.tempFormVars.buildStep2Form.deployDirSuggestions#</textarea>
+										</td>
+									</tr>
+									<cfif variables.basedOnPreviousArchive>
+									<tr>
+										<th>
+											Mark Previous Version as Obsolete?
+										</th>
+										<td>
+											<select name="markPreviousArchiveAsObsolete">
+												<option value="true">Yes</option>
+												<option value="false">No</option>
+											</select>
+										</td>
+									</tr>
+									<cfelse>
+										<input type="hidden" name="markPreviousArchiveAsObsolete" value="false" />
+									</cfif>
+									<tr>
 										<th>
 										
 										</th>
 										<td>
+											<input type="hidden" name="previousArchiveID" value="#variables.previousArchiveID#" />
 											<input type="hidden" name="action" value="buildArchive2" />
 											<input type="submit" value="Create Archive" />
 										</td>

@@ -85,11 +85,13 @@
 							<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />
 							<!---<cfset variables.remoteServersList = valueList(variables.remoteServers.serverName) />--->
 							<h3 class="title">Remote Server Listing:</h3>
-							<ul>
-								<cfloop query="variables.remoteServers">
-									<li><cftooltip tooltip="#variables.remoteServers.serverName#"><a href="#application.settings.appBaseDir#/remote/server.cfm?serverid=#variables.remoteServers.serverID#">#left(variables.remoteServers.serverName,20)#<cfif len(variables.remoteServers.serverName) GT 20>...</cfif></a></cftooltip></li>
-								</cfloop>
-							</ul>
+							<cfif variables.remoteServers.recordCount>
+								<ul>
+									<cfloop query="variables.remoteServers">
+										<li><cftooltip tooltip="#variables.remoteServers.serverName#"><a href="#application.settings.appBaseDir#/remote/server.cfm?serverid=#variables.remoteServers.serverID#">#left(variables.remoteServers.serverName,20)#<cfif len(variables.remoteServers.serverName) GT 20>...</cfif></a></cftooltip></li>
+									</cfloop>
+								</ul>
+							</cfif>
 						</div>
 					</cfif>
 					

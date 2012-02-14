@@ -3,7 +3,7 @@
 
 <cfif structKeyExists(url,"action")>
 	<cfswitch expression="#url.action#">
-		<cfcase value="downloadArchive,removeCertification">
+		<cfcase value="downloadArchive,removeCertification,markAsObsolete,unmarkAsObsolete">
 			<cfloop collection="#url#" item="variables.item">
 				<cfset form[item] = url[item] />
 			</cfloop>
@@ -50,6 +50,11 @@
 			
 			<cfset variables.dir = session.tempFormVars["buildArchiveForm"]["dir"] />
 			<cfset variables.files = session.tempFormVars["buildArchiveForm"]["fileList"] />
+
+			<cfset variables.newLine = chr(10) />
+
+			<cfset variables.deployDirSuggestions = replaceNoCase(form.deployDirSuggestions,variables.newline,",","all") />
+			
 			<cfset variables.filesHashes = structNew() />
 			
 			<!--- create the archiveID --->
@@ -103,7 +108,9 @@
 				<cfset variables.manifest.buildByUserEmail = session.login.getEmail() />
 				<cfset variables.manifest.buildOn = now() />
 				<cfset variables.manifest.buildDir = variables.dir />
+				<cfset variables.manifest.deployDirSuggestions = variables.deployDirSuggestions />
 				<cfset variables.manifest.backupOfArchiveID = '' />
+				<cfset variables.manifest.isObsolete = false />
 				<cfset variables.manifest.archiveSHAHash = variables.archiveSHAHash />
 				<cfset variables.manifest.certifications = queryNew("certificationid,archiveid,archiveshahash,userid,userfullname,useremail,certificationtypename,certificationnotes,certificationhash,certificationon,certificationsystemname",
 																	"VarChar,VarChar,VarChar,VarChar,VarChar,VarChar,VarChar,VarChar,VarChar,Date,VarChar") />
@@ -143,9 +150,11 @@
 				<cfinvokeargument name="buildbyuserfullname" value="#session.login.getFullname()#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 				<cfinvokeargument name="buildbyuseremail" value="#session.login.getEmail()#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 				<cfinvokeargument name="builddir" value="#variables.dir#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+				<cfinvokeargument name="deployDirSuggestions" value="#variables.deployDirSuggestions#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
 				<cfinvokeargument name="filecount" value="#arrayLen(variables.files)#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isnativebuild" value="1" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="isObsolete" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="backupforarchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->				
 			</cfinvoke>
 			
@@ -168,6 +177,42 @@
 			<cfset structClear(session.tempFormVars.buildStep2Form) />
 			
 			<cfset saveDataToManifest(variables.zipFilePath,variables.archiveID) />
+			
+			<cfif form.markPreviousArchiveAsObsolete AND isValid("UUID",form.previousArchiveID)>
+				<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.previousArchive">
+					<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+					<cfinvokeargument name="archiveID" value="#form.previousArchiveID#" />	<!---Type:string  --->
+				</cfinvoke>
+			
+				<cfif variables.previousArchive.recordCount>
+					<cfinvoke component="#application.daos.cascade#" method="setArchiveIsObsolete">
+						<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+						<cfinvokeargument name="archiveID" value="#variables.previousArchive.archiveID#" />	<!---Type:String Hint:  - CHAR (35) --->
+						<cfinvokeargument name="isObsolete" value="1" />
+					</cfinvoke>
+					
+					<cfset variables.zipFilePath = application.config.archiveDirectory & application.settings.pathSeperator & variables.previousArchive.archiveID & ".zip" />
+					<cfset variables.archiveSHAHash = application.objs.global.getFileSHAHash(variables.zipFilePath) />
+					
+					<cfinvoke component="#application.daos.cascade#" method="insertArchiveLog">
+						<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+						<cfinvokeargument name="archiveid" value="#variables.previousArchive.archiveid#" />	<!---Type:String Hint:  - CHAR (35) --->
+						<cfinvokeargument name="archiveshahash" value="#variables.archiveshahash#" />	<!---Type:String Hint:  - CHAR (40) --->
+						<cfinvokeargument name="buildsystemname" value="#variables.previousArchive.buildSystemName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+						<cfinvokeargument name="logSystemName" value="#application.config.serverName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+						<cfinvokeargument name="logaction" value="OBSOLETEARCHIVE" />	<!---Type:String Hint:  - VARCHAR (50) --->
+						<cfinvokeargument name="deployflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+						<cfinvokeargument name="backupcreatedflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+						<cfinvokeargument name="backuparchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->
+						<cfinvokeargument name="userid" value="#session.login.getUserID()#" />	<!---Type:String Hint:  - CHAR (35) --->
+						<cfinvokeargument name="logmessage" value="#variables.previousArchive.archiveID# (#lcase(left(variables.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#) version: #variables.previousArchive.versionName# made obsolete by archive #variables.archiveID# version #form.versionNumber#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+						<cfinvokeargument name="logDateTime" value="#now()#" />
+					</cfinvoke>
+					
+					<cfset saveDataToManifest(variables.zipFilePath,variables.previousArchive.archiveID) />
+					
+				</cfif>
+			</cfif>
 
 			<cflocation url="#application.settings.appBasedir#/archive/archive.cfm?archiveID=#variables.archiveID#" />
 		
@@ -375,8 +420,10 @@
 					<cfset variables.manifest.buildByUserEmail = '' />
 					<cfset variables.manifest.buildOn = now() />
 					<cfset variables.manifest.buildDir = variables.deployDir />
+					<cfset variables.manifest.deployDirSuggestions = variables.deployDir />
 					<cfset variables.manifest.backupOfArchiveID = form.archiveID />
 					<cfset variables.manifest.archiveSHAHash = variables.archiveSHAHash />
+					<cfset variables.manifest.isObsolete = 0 />
 				
 				<cfwddx action="cfml2wddx" input="#variables.manifest#" output="variables.manifestWDDX" />
 				
@@ -407,9 +454,11 @@
 					<cfinvokeargument name="buildbyuserfullname" value="#session.login.getFullname()#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 					<cfinvokeargument name="buildbyuseremail" value="#session.login.getEmail()#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 					<cfinvokeargument name="builddir" value="#variables.deploydir#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+					<cfinvokeargument name="deployDirSuggestions" value="#variables.deployDirSuggestions#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
 					<cfinvokeargument name="filecount" value="#arrayLen(variables.files)#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 					<cfinvokeargument name="isnativebuild" value="1" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 					<cfinvokeargument name="isbackuparchive" value="1" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+					<cfinvokeargument name="isObsolete" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 					<cfinvokeargument name="backupforarchiveid" value="#form.archiveID#" />	<!---Type:String Hint:  - CHAR (35) --->				
 				</cfinvoke>
 				
@@ -785,6 +834,9 @@
 				</cfinvoke>	
 			</cfif>
 			
+			<cfparam name="variables.manifest.deployDirSuggestions" default="" />
+			<cfparam name="variables.manifest.isObsolete" default="0" />
+			
 			
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory##application.settings.pathSeperator##variables.tempZipFileResult.serverFile#" />				
@@ -869,9 +921,11 @@
 				<cfinvokeargument name="buildbyuserfullname" value="#variables.manifest.buildByUserFullname#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 				<cfinvokeargument name="buildbyuseremail" value="#variables.manifest.buildByUserEmail#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 				<cfinvokeargument name="builddir" value="#variables.manifest.buildDir#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+				<cfinvokeargument name="deployDirSuggestions" value="#variables.manifest.deployDirSuggestions#" />	<!---Type:String Hint:  - VARCHAR (5000) --->
 				<cfinvokeargument name="filecount" value="#variables.fileCounter#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isnativebuild" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="isObsolete" value="#variables.manifest.isObsolete#" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
 				<cfinvokeargument name="backupforarchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->				
 			</cfinvoke>
 			
@@ -1239,6 +1293,128 @@
 			
 			
 		</cfcase>
+		
+		<cfcase value="markAsObsolete">
+		
+			<cfif NOT structKeyExists(form,"archiveID") OR NOT isValid("UUID",form.archiveID)>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="archiveID is required." />
+				</cfinvoke>
+			</cfif>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/archive/browse.cfm" />
+			</cfif>
+			
+			<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.archive">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveID" value="#form.archiveID#" />	<!---Type:string  --->
+			</cfinvoke>
+		
+			<cfif NOT variables.archive.recordCount>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="archiveID #form.archiveID# is not valid." />
+				</cfinvoke>
+			</cfif>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/archive/browse.cfm" />
+			</cfif>
+			
+			<cfinvoke component="#application.daos.cascade#" method="setArchiveIsObsolete">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveID" value="#variables.archive.archiveID#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="isObsolete" value="1" />
+			</cfinvoke>
+			
+			<cfset variables.zipFilePath = application.config.archiveDirectory & application.settings.pathSeperator & variables.archive.archiveID & ".zip" />
+			<cfset variables.archiveSHAHash = application.objs.global.getFileSHAHash(variables.zipFilePath) />
+			
+			<cfinvoke component="#application.daos.cascade#" method="insertArchiveLog">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveid" value="#variables.archive.archiveid#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="archiveshahash" value="#variables.archiveshahash#" />	<!---Type:String Hint:  - CHAR (40) --->
+				<cfinvokeargument name="buildsystemname" value="#variables.archive.buildSystemName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+				<cfinvokeargument name="logSystemName" value="#application.config.serverName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+				<cfinvokeargument name="logaction" value="OBSOLETEARCHIVE" />	<!---Type:String Hint:  - VARCHAR (50) --->
+				<cfinvokeargument name="deployflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="backupcreatedflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="backuparchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="userid" value="#session.login.getUserID()#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="logmessage" value="#variables.archive.archiveID# (#lcase(left(variables.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#) version: #variables.archive.versionName# set as obsolete by #session.login.getUsername()#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+				<cfinvokeargument name="logDateTime" value="#now()#" />
+			</cfinvoke>
+			
+			<cfset saveDataToManifest(variables.zipFilePath,variables.archive.archiveID) />
+				
+			<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#form.archiveID#" />	
+				
+		</cfcase>
+		
+		<cfcase value="unmarkAsObsolete">
+		
+			<cfif NOT structKeyExists(form,"archiveID") OR NOT isValid("UUID",form.archiveID)>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="archiveID is required." />
+				</cfinvoke>
+			</cfif>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/archive/browse.cfm" />
+			</cfif>
+			
+			<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.archive">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveID" value="#form.archiveID#" />	<!---Type:string  --->
+			</cfinvoke>
+		
+			<cfif NOT variables.archive.recordCount>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="archiveID #form.archiveID# is not valid." />
+				</cfinvoke>
+			</cfif>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/archive/browse.cfm" />
+			</cfif>
+			
+			<cfinvoke component="#application.daos.cascade#" method="setArchiveIsObsolete">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveID" value="#variables.archive.archiveID#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="isObsolete" value="0" />
+			</cfinvoke>
+			
+			<cfset variables.zipFilePath = application.config.archiveDirectory & application.settings.pathSeperator & variables.archive.archiveID & ".zip" />
+			<cfset variables.archiveSHAHash = application.objs.global.getFileSHAHash(variables.zipFilePath) />
+			
+			<cfinvoke component="#application.daos.cascade#" method="insertArchiveLog">
+				<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+				<cfinvokeargument name="archiveid" value="#variables.archive.archiveid#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="archiveshahash" value="#variables.archiveshahash#" />	<!---Type:String Hint:  - CHAR (40) --->
+				<cfinvokeargument name="buildsystemname" value="#variables.archive.buildSystemName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+				<cfinvokeargument name="logSystemName" value="#application.config.serverName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+				<cfinvokeargument name="logaction" value="DE-OBSOLETEARCHIVE" />	<!---Type:String Hint:  - VARCHAR (50) --->
+				<cfinvokeargument name="deployflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="backupcreatedflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+				<cfinvokeargument name="backuparchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="userid" value="#session.login.getUserID()#" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="logmessage" value="#variables.archive.archiveID# (#lcase(left(variables.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#) version: #variables.archive.versionName# obsolete designation removed by #session.login.getUsername()#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+				<cfinvokeargument name="logDateTime" value="#now()#" />
+			</cfinvoke>
+			
+			<cfset saveDataToManifest(variables.zipFilePath,variables.archive.archiveID) />
+				
+			<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#form.archiveID#" />	
+				
+		</cfcase>
 				
 		<cfdefaultcase>
 			<cflocation url="#application.settings.appBaseDir#/" />
@@ -1274,6 +1450,12 @@
 	<cfset local.manifest = application.objs.global.getZipManifest(arguments.zipFilePath) />
 	
 	<!--- get the certifications, deployments and log to append to the manifest --->		
+	<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="local.archiveData">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+		<cfinvokeargument name="archiveID" value="#arguments.archiveID#" />	<!---Type:string  --->
+	</cfinvoke>
+	
+	<cfset local.manifest.isObsolete = local.archiveData.isObsolete />	
 			
 	<cfinvoke component="#application.daos.cascade#" method="getArchiveCertificationsForArchiveID" returnvariable="local.certifications">
 		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->

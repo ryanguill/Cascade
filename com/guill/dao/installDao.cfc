@@ -156,9 +156,11 @@
 					, buildByUserEmail			varchar(255)	NOT NULL
 					, buildOn					timestamp		NOT NULL
 					, buildDir					varchar(1000)	NOT NULL
+					, deployDirSuggestions		varchar(5000)	NOT NULL
 					, fileCount					integer			NOT NULL
 					, isNativeBuild				integer			NOT NULL
 					, isBackupArchive			integer			NOT NULL
+					, isObsolete				integer			NOT NULL
 					, backupForArchiveID		char(35)		NOT NULL				
 				
 					, PRIMARY KEY (archiveID)	

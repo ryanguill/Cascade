@@ -40,8 +40,8 @@
 			<th>
 				Version:
 			</th>
-			<td>
-				#variables.archive.versionName#
+			<td class="<cfif variables.archive.isObsolete>fail</cfif>">
+				#variables.archive.versionName# <cfif variables.archive.isObsolete><em>(obsolete)</em</cfif>
 			</td>
 		</tr>
 		<tr>

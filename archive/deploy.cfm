@@ -49,28 +49,7 @@
 	</cfif>
 	
 	
-	<cfset variables.buildDirExists = true />
-	<cfparam name="variables.deployDir" default="#variables.archive.buildDir#" />
 	
-	<cfif NOT directoryExists(variables.archive.buildDir)>
-		<cfset variables.buildDirExists = false />
-		<cfset variables.deployDir = expandPath("/") />
-	</cfif>
-	
-	<cfif right(variables.deployDir,1) EQ application.settings.pathSeperator>
-		<cfset variables.deployDir = left(variables.deployDir,len(variables.deployDir)-1) />
-	</cfif>
-	
-	<cfset variables.userDefinedDir = false />
-	<cfif structKeyExists(url,"deployDir") AND len(trim(url.deployDir))>
-		<cfif right(url.deployDir,1) EQ application.settings.pathSeperator>
-			<cfset url.deployDir = left(url.deployDir,len(url.deployDir)-1) />
-		</cfif>
-	 	<cfif url.deployDir NEQ variables.deployDir>
-			<cfset variables.deployDir = url.deployDir />
-			<cfset variables.userDefinedDir = true />
-		</cfif>
-	</cfif>
 	
 	<cfparam name="url.createDeployDir" default="false" />
 	
@@ -128,7 +107,7 @@
 							
 							<form action="deploy-step-2.cfm" method="get">
 								<table width="100%" class="formTable">
-									<tr>
+									<!---<tr>
 										<th>
 											Deploy Directory:
 										</th>
@@ -146,12 +125,81 @@
 												</cfif>
 											</cfif>
 										</td>
+									</tr>--->
+									<tr>
+										<th valign="top">
+											Deploy Directory:
+										</th>
+										<td>
+											<table width="100%">
+												<cfset variables.dirFound = false />
+												<cfset variables.selected = false />
+												
+												<cfloop from="1" to="#listLen(variables.archive.deployDirSuggestions)#" index="variables.i">
+													<cfset variables.tempDir = trim(listGetAt(variables.archive.deployDirSuggestions,variables.i)) />
+													<cfset variables.tempDirExists = directoryExists(variables.tempDir)>
+													
+													<cfif variables.tempDirExists AND NOT variables.dirFound>
+														<cfset variables.dirFound = true />
+														<cfset variables.selected = true />
+													</cfif>
+													
+													<tr>
+														<td class="<cfif variables.tempDirExists>pass<cfelse>fail</cfif>">
+															<input type="radio" value="#variables.tempDir#" name="deployDir" id="deployDir_#variables.i#" <cfif variables.selected>checked="true"</cfif>>
+															<label for="deployDir_#variables.i#">#variables.tempDir#</label><br />
+														</td>
+														<td class="<cfif variables.tempDirExists>pass<cfelse>fail</cfif>">
+															Suggested Deploy Dir #variables.i#
+														</td>
+													</tr>
+													<cfset variables.selected = false />
+												</cfloop>
+												<cfif NOT listContains(variables.archive.deployDirSuggestions,variables.archive.buildDir)>
+													<cfset variables.tempDirExists = directoryExists(variables.archive.buildDir) />
+												
+													<cfif variables.tempDirExists AND NOT variables.dirFound>
+														<cfset variables.dirFound = true />
+														<cfset variables.selected = true />
+													</cfif>
+												
+													<tr>
+														<td class="<cfif variables.tempDirExists>pass<cfelse>fail</cfif>">
+															<input type="radio" value="#variables.archive.buildDir#" name="deployDir" id="deployDir_0" <cfif variables.selected>checked="true"</cfif>>
+															<label for="deployDir_0">#variables.archive.buildDir#</label>
+														</td>
+														<td class="<cfif variables.tempDirExists>pass<cfelse>fail</cfif>">
+															Build Dir
+														</td>
+													</tr>
+													<cfset variables.selected = false />
+												</cfif>
+												<cfset variables.webroot = expandPath("/") />
+												
+												<cfif NOT variables.dirFound>
+													<cfset variables.selected = true />
+												</cfif>
+												
+												<tr>
+													<td>
+														<input type="radio" value="deployDir_custom" name="deployDir" id="deployDir_custom" <cfif variables.selected>checked="True"</cfif>>
+														<input type="text" name="customDeployDir" value="#variables.webroot#" size="70" />
+													</td>
+													<td>
+														Custom Deploy Dir
+													</td>
+												</tr>
+											
+											</table>
+											
+		
+										</td>
 									</tr>
 									<tr>
 										<th>
 											&nbsp;
 										</th>
-										<td colspan="2">
+										<td>
 											<input type="checkbox" value="true" name="createDeployDir" id="createDeployDir" <cfif url.createDeployDir>checked="true"</cfif>>
 											<lable for="createDeployDir">Create Deploy Dir If It Doesn't Already Exist</label>
 										</td>
@@ -160,7 +208,7 @@
 										<th>
 											&nbsp;
 										</th>
-										<td colspan="2">
+										<td>
 											<input type="checkbox" value="true" name="skipBackupArchive" id="skipBackupArchive">
 											Skip Backup Archive
 											<em>Do this at your own risk! Not recommended!</em>
