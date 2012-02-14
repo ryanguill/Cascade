@@ -171,7 +171,7 @@
 					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
 				</cfif>
 				<cfif arguments.isObsolete NEQ -1>	
-					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
+					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />	/*  - INTEGER (10)*/
 				</cfif>
 				<cfif arguments.backupforarchiveid NEQ -1>	
 					AND backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.backupforarchiveid#%" />	/*  - CHAR (35)*/
@@ -187,6 +187,95 @@
 		
     <cfreturn qSearchArchives />
     </cffunction>
+	
+	<cffunction name="simpleSearchArchives" access="public" returntype="query" output="false" hint="">
+    	<cfargument name="dsn" type="string" required="True" />
+    	<cfargument name="applicationname" type="String" required="true" hint="pass -1 to ignore." />
+		<cfargument name="projectname" type="String" required="true" hint="pass -1 to ignore." />
+		<cfargument name="author" type="String" required="true" hint="pass -1 to ignore." />
+		<cfargument name="isbackuparchive" type="numeric" required="true" hint="pass -1 to ignore." />
+		<cfargument name="isObsolete" type="numeric" required="true" hint="pass -1 to ignore." />
+		<cfargument name="searchString" type="string" required="true" hint="" />
+		
+		<cfset var qSearchArchives = "" />
+		
+        <cftry>
+        	<cfquery name="qSearchArchives" datasource="#arguments.dsn#" result="result">
+        		SELECT
+					  archives.archiveid		/*  - CHAR (35)*/
+					, archives.archiveshahash	/*  - CHAR (40)*/
+					, archives.buildsystemname	/*  - VARCHAR (255)*/
+					, archives.applicationname	/*  - VARCHAR (255)*/
+					, archives.versionname		/*  - VARCHAR (50)*/
+					, archives.projectname		/*  - VARCHAR (255)*/
+					, archives.projectnumber		/*  - VARCHAR (50)*/
+					, archives.ticketnumber		/*  - VARCHAR (150)*/
+					, archives.changereason		/*  - VARCHAR (50)*/
+					, archives.author		/*  - VARCHAR (255)*/
+					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
+					, archives.buildbyuserid		/*  - CHAR (35)*/
+					, archives.buildbyusername	/*  - VARCHAR (100)*/
+					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
+					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
+					, archives.buildon		/*  - TIMESTAMP (26)*/
+					, archives.builddir		/*  - VARCHAR (1000)*/
+					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
+					, archives.filecount		/*  - INTEGER (10)*/
+					, archives.isnativebuild		/*  - INTEGER (10)*/
+					, archives.isbackuparchive	/*  - INTEGER (10)*/
+					, archives.isObsolete		/*  - INTEGER (10)*/	
+					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					
+				FROM archives  
+				WHERE 1 = 1
+			
+				<cfif arguments.applicationname NEQ -1>	
+					AND applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.applicationname#%" />	/*  - VARCHAR (255)*/
+				</cfif>
+				<cfif arguments.projectname NEQ -1>	
+					AND projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectname#%" />		/*  - VARCHAR (255)*/
+				</cfif>
+				
+				<cfif arguments.author NEQ -1>	
+					AND author LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.author#%" />		/*  - VARCHAR (255)*/
+				</cfif>
+				<cfif arguments.isbackuparchive NEQ 1>	
+					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	/*  - INTEGER (10)*/
+				</cfif>
+				<cfif arguments.isObsolete NEQ 1>	
+					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	/*  - INTEGER (10)*/
+				</cfif>
+				
+				
+				<cfif len(trim(arguments.searchString))>
+					AND
+						(
+							 archiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />		/*  - CHAR (35)*/
+							OR archiveshahash LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />	/*  - CHAR (40)*/
+							OR backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />	/*  - CHAR (35)*/
+							OR deployDirSuggestions LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (5000)*/
+							OR changedescription LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.searchString#%" />	/*  - LONG VARCHAR (32700)*/
+							OR changereason LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
+							OR versionname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
+							OR projectnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
+							OR ticketnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (150)*/
+							OR applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />	/*  - VARCHAR (255)*/
+							OR projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (255)*/
+						)
+				</cfif>
+				
+				ORDER BY
+					archives.buildOn DESC        	
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+    <cfreturn qSearchArchives />
+    </cffunction>
+	
 	
 	<cffunction name="getArchiveByArchiveID" access="public" returntype="query" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />

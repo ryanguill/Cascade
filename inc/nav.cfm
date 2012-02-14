@@ -66,6 +66,7 @@
 									<li><a href="#application.settings.appBaseDir#/archive/upload.cfm">Upload an Archive</a></li>
 								</cfif>
 								<li><a href="#application.settings.appBaseDir#/archive/browse.cfm">Browse Archives</a></li>
+								<li><a href="#application.settings.appBaseDir#/archive/search.cfm">Search Archives</a></li>
 							</ul>
 						</div>
 					</cfif>
