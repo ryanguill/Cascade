@@ -350,6 +350,31 @@
 		
     <cfreturn qGetArchiveByArchiveID />
     </cffunction>
+
+	<cffunction name="searchArchivesByApplicationNameNonObsolete" access="public" returntype="query" output="false" hint="">
+    	<cfargument name="dsn" type="string" required="True" />
+		<cfargument name="applicationName" type="string" required="True" />
+    	
+		<cfset var qGearchArchivesByApplicationNameNonObsolete = "" />
+		
+        <cftry>
+        	<cfquery name="qGearchArchivesByApplicationNameNonObsolete" datasource="#arguments.dsn#">
+        		SELECT
+					  archives.archiveid		/*  - CHAR (35)*/
+				FROM archives 
+				WHERE
+					upper(archives.applicationname) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#ucase(arguments.applicationName)#" />
+				AND
+					archives.isObsolete = 0       	
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+    <cfreturn qGearchArchivesByApplicationNameNonObsolete />
+    </cffunction>
 	
 	<cffunction name="getArchiveByArchiveSHAHash" access="public" returntype="query" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />

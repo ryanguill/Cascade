@@ -52,11 +52,28 @@
 		<cfinvokeargument name="archiveID" value="#url.archiveID#" />	<!---Type:string  --->
 	</cfinvoke>
 	
+	<cfinvoke component="#application.daos.cascade#" method="searchArchivesByApplicationNameNonObsolete" returnvariable="variables.nonObsoleteAppArchives">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+		<cfinvokeargument name="applicationName" value="#variables.archive.applicationName#" />	<!---Type:string  --->
+	</cfinvoke>
+	
+	<cfif variables.nonObsoleteAppArchives.recordCount GT 1>
+		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/action.cfm" />
+			<cfinvokeargument name="messageType" value="Information" />
+			<cfinvokeargument name="messageText" value="There is more than one non-obsolete version of this application." />
+			<cfinvokeargument name="messageDetail" value="<a href=""#application.settings.appBaseDir#/archive/search.cfm?appName=#variables.archive.applicationName#&inclObsolete=1"">Click here</a> to see all of the versions for this application." />
+		</cfinvoke>
+	</cfif>
+	
 	<cfinvoke component="#application.daos.referenceTables#" method="getAllCertificationTypes" returnvariable="variables.certificationTypes">
 		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->		
 	</cfinvoke>
 
 	<cfset variables.isLocalArchive = true />
+	
+	
+	
 	
 </cfsilent>
 
