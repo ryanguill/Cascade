@@ -52,6 +52,20 @@
 	
 	<cfset variables.isLocalArchive = false />
 	
+	<!--- check to see if we already have this archive in this system --->
+	<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.localArchive">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+		<cfinvokeargument name="archiveID" value="#url.archiveID#" />	<!---Type:string  --->
+	</cfinvoke>
+	
+	<cfif variables.localArchive.recordCount>
+		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/action.cfm" />
+			<cfinvokeargument name="messageType" value="Information" />
+			<cfinvokeargument name="messageText" value="This archive already exists on this system." />
+		</cfinvoke>
+	</cfif>
+	
 </cfsilent>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -125,7 +139,11 @@
 						
 						<cfif session.login.isUserInGroup("deploy")>
 							<div class="contentSection">
-								<a href="action.cfm?action=downloadArchive&serverID=#url.serverID#&archiveID=#variables.archive.archiveID#" class="bigButton">Retrieve this Archive</a>
+								<cfif variables.localArchive.recordCount>
+									<a href="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#variables.archive.archiveID#" class="bigButton">Go to Local Copy of this Archive</a>
+								<cfelse>
+									<a href="action.cfm?action=downloadArchive&serverID=#url.serverID#&archiveID=#variables.archive.archiveID#" class="bigButton">Retrieve this Archive</a>	
+								</cfif>
 							</div>
 						</cfif>
 						

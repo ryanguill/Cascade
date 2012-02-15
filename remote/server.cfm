@@ -113,6 +113,12 @@
 								</tr>
 								<cfif variables.archives.recordCount>
 									<cfloop query="variables.archives">
+										<!--- check to see if we already have this archive in this system --->
+										<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.localArchive">
+											<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+											<cfinvokeargument name="archiveID" value="#variables.archives.archiveID#" />	<!---Type:string  --->
+										</cfinvoke>
+										
 										<tr <cfif variables.archives.currentRow MOD 2 EQ 0>class="alt"</cfif>>
 											<td class="monospace">
 												<a href="#application.settings.appBaseDir#/remote/archive.cfm?serverID=#url.serverID#&archiveID=#variables.archives.archiveID#">#variables.archives.archiveID#</a>
@@ -122,10 +128,10 @@
 												<cftooltip tooltip="#lcase(variables.archives.archiveSHAHAsh)#">#lcase(left(variables.archives.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#</cftooltip>
 											</td>
 											--->
-											<td>
+											<td class="<cfif variables.localArchive.recordCount>pass</cfif>">
 												#variables.archives.applicationName#
 											</td>
-											<td class="<cfif variables.archives.isObsolete>fail</cfif>">
+											<td class="<cfif variables.localArchive.recordCount>pass<cfelseif variables.archives.isObsolete>fail</cfif>">
 												#variables.archives.versionName#
 											</td>
 											<td class="right">
