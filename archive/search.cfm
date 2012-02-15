@@ -135,7 +135,7 @@
 										</th>
 										<td>
 											<input type="checkbox" value="1" name="inclBackup" id="inclBackup" <cfif url.inclBackup>checked="true"</cfif>  />
-											<label for="inclBackup">Include Backup Archivess</label>
+											<label for="inclBackup">Include Backup Archives</label>
 										</td>
 									</tr>
 									<tr>

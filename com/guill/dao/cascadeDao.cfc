@@ -365,7 +365,9 @@
 				WHERE
 					upper(archives.applicationname) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#ucase(arguments.applicationName)#" />
 				AND
-					archives.isObsolete = 0       	
+					archives.isObsolete = 0     
+				AND
+					archives.isbackuparchive = 0 	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />

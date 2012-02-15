@@ -53,7 +53,7 @@
 							#variables.deployments.deploymentDir#
 						</td>
 						<td class="monospace">
-							<cfif variables.isLocalArchive>
+							<cfif variables.isLocalArchive AND variables.deployments.deployedSystemName EQ application.config.serverName>
 								<a href="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#variables.deployments.backupArchiveID#">#variables.deployments.backupArchiveID#</a>
 							<cfelse>
 								#variables.deployments.backupArchiveID#
@@ -68,7 +68,7 @@
 							</cfif>
 						</td>
 						--->
-						<cfif variables.isLocalArchive>
+						<cfif variables.isLocalArchive AND variables.deployments.deployedSystemName EQ application.config.serverName>
 							<td width="100">
 								<cfif session.login.isUserInGroup("deploy") AND variables.deployments.wasBackupTaken>
 									<form action="#application.settings.appBaseDir#/archive/revertDeployment.cfm" method="get">
