@@ -44,6 +44,32 @@
 		
     <cfreturn qGetAllArchives />
     </cffunction>
+
+	<cffunction name="getApplicationNames" access="public" returntype="query" output="false" hint="">
+    	<cfargument name="dsn" type="string" required="True" />
+    	
+		<cfset var qGetApplicationNames = "" />
+		
+        <cftry>
+        	<cfquery name="qGetApplicationNames" datasource="#arguments.dsn#">
+        		SELECT
+					  count(*) cnt
+					, archives.applicationname	/*  - VARCHAR (255)*/
+					
+				FROM archives  
+				GROUP BY 
+					archives.applicationname	/*  - VARCHAR (255)*/
+				ORDER BY
+					archives.applicationName DESC        	
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+    <cfreturn qGetApplicationNames />
+    </cffunction>
 	
 	
 	<cffunction name="searchArchives" access="public" returntype="query" output="false" hint="">
@@ -111,7 +137,7 @@
 					AND archiveshahash LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.archiveshahash#%" />	/*  - CHAR (40)*/
 				</cfif>
 				<cfif arguments.buildsystemname NEQ -1>	
-					AND buildsystemname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildsystemname#%" />	/*  - VARCHAR (255)*/
+					AND upper(buildsystemname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.buildsystemname)#%" />	/*  - VARCHAR (255)*/
 				</cfif>
 				<cfif arguments.applicationname NEQ -1>	
 					AND applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.applicationname#%" />	/*  - VARCHAR (255)*/
@@ -230,14 +256,14 @@
 				WHERE 1 = 1
 			
 				<cfif arguments.applicationname NEQ -1>	
-					AND applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.applicationname#%" />	/*  - VARCHAR (255)*/
+					AND upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.applicationname)#%" />	/*  - VARCHAR (255)*/
 				</cfif>
 				<cfif arguments.projectname NEQ -1>	
-					AND projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectname#%" />		/*  - VARCHAR (255)*/
+					AND upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.projectname)#%" />		/*  - VARCHAR (255)*/
 				</cfif>
 				
 				<cfif arguments.author NEQ -1>	
-					AND author LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.author#%" />		/*  - VARCHAR (255)*/
+					AND upper(author) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.author)#%" />		/*  - VARCHAR (255)*/
 				</cfif>
 				<cfif arguments.isbackuparchive NEQ 1>	
 					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	/*  - INTEGER (10)*/
@@ -250,17 +276,17 @@
 				<cfif len(trim(arguments.searchString))>
 					AND
 						(
-							 archiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />		/*  - CHAR (35)*/
-							OR archiveshahash LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />	/*  - CHAR (40)*/
-							OR backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.searchString#%" />	/*  - CHAR (35)*/
-							OR deployDirSuggestions LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (5000)*/
-							OR changedescription LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.searchString#%" />	/*  - LONG VARCHAR (32700)*/
-							OR changereason LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
-							OR versionname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
-							OR projectnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (50)*/
-							OR ticketnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (150)*/
-							OR applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />	/*  - VARCHAR (255)*/
-							OR projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.searchString#%" />		/*  - VARCHAR (255)*/
+							   upper(archiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />		/*  - CHAR (35)*/
+							OR upper(archiveshahash) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	/*  - CHAR (40)*/
+							OR upper(backupforarchiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	/*  - CHAR (35)*/
+							OR upper(deployDirSuggestions) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (5000)*/
+							OR upper(changedescription) LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#ucase(arguments.searchString)#%" />	/*  - LONG VARCHAR (32700)*/
+							OR upper(changereason) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
+							OR upper(versionname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
+							OR upper(projectnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
+							OR upper(ticketnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (150)*/
+							OR upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />	/*  - VARCHAR (255)*/
+							OR upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (255)*/
 						)
 				</cfif>
 				

@@ -35,7 +35,7 @@
 				Application:
 			</th>
 			<td>
-				#variables.archive.applicationName#
+				<a href="#application.settings.appBaseDir#/archive/search.cfm?appName=#variables.archive.applicationName#&inclObsolete=1">#variables.archive.applicationName#</a>
 			</td>
 			<th>
 				Version:

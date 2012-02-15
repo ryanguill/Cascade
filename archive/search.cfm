@@ -44,6 +44,13 @@
 		<cfinvokeargument name="isObsolete" value="#url.inclObsolete#" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 		<cfinvokeargument name="searchString" value="#url.searchString#" />	<!---Type:string Hint:  --->
 	</cfinvoke>
+	
+	
+	<cfinvoke component="#application.daos.cascade#" method="getApplicationNames" returnvariable="variables.applicationNames">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+	</cfinvoke>
+	
+	
 
 	
 </cfsilent>
@@ -94,6 +101,25 @@
 										</th>
 										<td colspan="3">
 											<input type="text" name="searchString" value="#url.searchString#" size="100" />
+										</td>
+									</tr>
+									<tr>
+										<th>
+											Application:
+										</th>
+										<td>
+											<select name="appName">
+												<option value="" <cfif url.appName EQ -1>selected="True"</cfif>>All Applications</option>
+												<cfloop query="variables.applicationNames">
+													<option value="#variables.applicationNames.applicationName#" <cfif url.appName EQ variables.applicationNames.applicationName>selected="True"</cfif>>#variables.applicationNames.applicationName#</option>
+												</cfloop>
+											</select>
+										</td>
+										<th width="200">
+											&nbsp;
+										</th>
+										<td>
+											&nbsp;
 										</td>
 									</tr>
 									<tr>
