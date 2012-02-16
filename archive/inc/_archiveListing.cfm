@@ -44,7 +44,7 @@
 							#variables.archives.applicationName#
 						</td>
 						<td class="<cfif variables.archives.isObsolete>fail</cfif>">
-							#variables.archives.versionName#
+							<cfif variables.archives.isBackupArchive>BACKUP<cfelse>#variables.archives.versionName#</cfif>
 						</td>
 						<td class="right">
 							#numberFormat(variables.archives.fileCount)#
