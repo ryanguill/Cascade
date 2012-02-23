@@ -52,6 +52,12 @@
 								<li><a href="#application.settings.appBaseDir#/admin/userManagement/userGroups.cfm">User Groups</a></li>	
 							</ul>
 						</div>
+						<div class="nSec">
+							<h3 class="title">Other Admin:</h3>
+							<ul>
+								<li><a href="#application.settings.appBaseDir#/admin/viewConfig.cfm">View Config</a></li>	
+							</ul>
+						</div>
 					</cfif>
 					
 					
