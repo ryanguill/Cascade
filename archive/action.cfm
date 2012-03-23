@@ -21,6 +21,10 @@
 				<cflocation url="#application.settings.appBaseDir#/index.cfm" />
 			</cfif>
 			
+			<cfif right(form.dir,1) EQ application.settings.pathSeperator>
+				<cfset form.dir = left(form.dir,len(form.dir)-1) />
+			</cfif>	
+			
 			<cfset populateTempFormVariables(form,"buildArchiveForm") />
 			
 			<cfif NOT listLen(form.file)>
@@ -31,7 +35,7 @@
 			
 			<cfloop from="1" to="#listLen(form.file)#" index="i">
 				<cfset session.tempFormVars["buildArchiveForm"]["fileList"][i] = listGetAt(form.file,i) />
-			</cfloop>			
+			</cfloop>		
 						
 			<cflocation url="build-step-2.cfm" />
 			
@@ -50,6 +54,10 @@
 			
 			<cfset variables.dir = session.tempFormVars["buildArchiveForm"]["dir"] />
 			<cfset variables.files = session.tempFormVars["buildArchiveForm"]["fileList"] />
+
+			<cfif right(variables.dir,1) EQ application.settings.pathSeperator>
+				<cfset variables.dir = left(variables.dir,len(variables.dir)-1) />
+			</cfif>	
 
 			<cfset variables.newLine = chr(10) />
 

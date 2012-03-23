@@ -23,7 +23,6 @@
 	<cfset variables.dir = session.tempFormVars.buildArchiveForm.dir />
 	<cfset variables.files = session.tempFormVars.buildArchiveForm.fileList />
 		
-		
 	<cfset variables.changeTypes = application.daos.referenceTables.getAllChangeTypes(application.config.dsn) />	
 	
 	<cfset variables.newLine = chr(10) />
