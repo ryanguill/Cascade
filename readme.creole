@@ -1,0 +1,32 @@
+== Welcome to Cascade! ==
+
+Cascade is a ColdFusion application whose primary objective is to facilitate promotion of code from one place to another, securely and quickly. The goals for the project are:
+
+* create a portable archive of files
+* cryptographically sign the archives and their files to ensure security and protect against data corruption
+* manage the deployment of the archives against target systems
+* facilitate backups of existing files affected by the deployments
+* provide the ability to quickly revert a deployment
+* provide an audit trail for all actions
+
+The current version of Cascade meets all of these goals and is considered functional, but there are lots of improvements and polishing left to do. 
+
+==Back Story==
+
+Where I work, we were constantly having to move files from one environment to another, then another, then finally to production.  We tried using SVN for a while, but that is not what it is meant for and never worked properly, usually causing more headaches than it was worth.  
+
+Some custom scripts were written at one point, but with new servers coming on-line all of the time they were always out of date, and they relied on mounted drives that were error prone.
+
+Most of the time, code was being moved over the network manually through finder or explorer windows, which was error prone, and also prone to corruption, especially of large files.  Most of the time that corruption wasn't immediately known either.  Plus we had no audit trail for these moves.
+
+We were also going back a lot of times to try and find how the code looked before and after a code promotion, because of an issue, or just for understanding (sometimes we were looking back years).
+
+So with those things in mind I set out to write Cascade.  While not perfect, we have been using it for several weeks so far (march, 2012) and it has worked well.  There are many UI improvements and other niceties to be added for sure, but it has handled everything we have tried with it.  We have build archives of a single file, and archives with thousands of files.  It certainly beats manual file moves or FTP in my book.
+
+So try it out.  Use it, modify it, have fun.  I am certainly interested in patches, feature improvements, or if nothing else, ideas.  Submit issues, help clean up this documentation (or lack thereof), or just let me know if it is useful to you or not.  
+
+Author: Ryan Guill
+Special thanks to:
+Andy Humphreys
+Cedric Dupuy
+Link McKinney
