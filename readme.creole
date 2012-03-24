@@ -11,6 +11,8 @@ Cascade is a ColdFusion application whose primary objective is to facilitate pro
 
 The current version of Cascade meets all of these goals and is considered functional, but there are lots of improvements and polishing left to do. 
 
+Check out the documentation here: [[https://github.com/ryanguill/Cascade/wiki]]
+
 ==Back Story==
 
 Where I work, we were constantly having to move files from one environment to another, then another, then finally to production.  We tried using SVN for a while, but that is not what it is meant for and never worked properly, usually causing more headaches than it was worth.  
@@ -26,7 +28,11 @@ So with those things in mind I set out to write Cascade.  While not perfect, we 
 So try it out.  Use it, modify it, have fun.  I am certainly interested in patches, feature improvements, or if nothing else, ideas.  Submit issues, help clean up this documentation (or lack thereof), or just let me know if it is useful to you or not.  
 
 Author: Ryan Guill
+
 Special thanks to:
+
 Andy Humphreys
+
 Cedric Dupuy
+
 Link McKinney
