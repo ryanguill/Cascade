@@ -172,6 +172,17 @@ Copyright 2012 Ryan Guill
 	<cfreturn output />
     </cffunction>
 
+	<!--- Credit: http://www.cflib.org/index.cfm?event=page.udfbyid&udfid=1003 --->
+	<cffunction name="getServerIPAddress" access="public" returntype="string" output="false">
+    	
+    	<cfset var local = structNew() />
+		
+		<cfset local.inet = createObject("java","java.net.InetAddress") />
+		<cfset local.host = local.inet.getLocalHost() />
+		
+	<cfreturn local.host.getHostAddress() />
+    </cffunction>
+
 	
 
 

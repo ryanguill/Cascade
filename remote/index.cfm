@@ -26,10 +26,16 @@ Copyright 2012 Ryan Guill
 	<cfinvoke component="#application.objs.remoteService#" method="getRemoteServers" returnvariable="variables.remoteServers" />
 	
 	<cfif findNoCase("localhost",request.baseLink)>
+		
+		<cfset variables.serverIP = application.objs.global.getServerIPAddress() />
+		
+		
+	
 		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
 			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/remote/index.cfm" />
 			<cfinvokeargument name="messageType" value="Warning" />
-			<cfinvokeargument name="messageText" value="You are currently accessing Cascade through localhost, the server's remote service URL provided below will not be accessible from other servers." />
+			<cfinvokeargument name="messageText" value="You are currently accessing Cascade through localhost,<br /> the server's remote service URL provided below will not be accessible from other servers." />
+			<cfinvokeargument name="messageDetail" value="Use this link to access cascade using the IP address: <a href=""http://#variables.serverIP##application.settings.appBaseDir#/remote/"">http://#variables.serverIP##application.settings.appBaseDir#/remote/</a>" />
 		</cfinvoke>
 	</cfif>
 	
