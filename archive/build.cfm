@@ -191,84 +191,85 @@ Copyright 2012 Ryan Guill
 										<cfif variables.results.recordCount>
 											<cfset variables.row = 0 />
 											<cfloop query="variables.results">
-												<cfif NOT url.includeHidden>
-													<cfif left(variables.results.name,1) EQ ".">
-														<cfcontinue />
-													</cfif>
-													<cfset variables.continue = 0 />
-													<cfloop from="1" to="#listLen(variables.results.directory,application.settings.pathSeperator)#" index="i">
-														<cfif left(listGetAt(variables.results.directory,i,application.settings.pathSeperator),1) EQ ".">
-															<cfset variables.continue = 1 />
-															<cfbreak />
+												<cftry>
+													<cfif NOT url.includeHidden>
+														<cfif left(variables.results.name,1) EQ ".">
+															<!--- cf8 doesnt have cfcontinue, so have to use an old hack - if we ever drop support for cf8, change this back to cfcontinue instead --->
+															<cfthrow type="cfcontinue_hack" />
 														</cfif>
-													</cfloop>
-													<cfif variables.continue>
-														<cfcontinue />
+														<cfloop from="1" to="#listLen(variables.results.directory,application.settings.pathSeperator)#" index="i">
+															<cfif left(listGetAt(variables.results.directory,i,application.settings.pathSeperator),1) EQ ".">
+																<cfthrow type="cfcontinue_hack" />
+															</cfif>
+														</cfloop>
 													</cfif>
-												</cfif>
-												
-												<cfif listLen(url.excludeExtensions)>
-													<cfset url.excludeExtensions = replaceNoCase(url.excludeExtensions,".","","all") />
-													<cfif listContainsNoCase(url.excludeExtensions,listLast(variables.results.name,"."))>
-														<cfcontinue />
-													</cfif>
-												</cfif>
-												
-												<cfset variables.row = variables.row + 1 />
-												
-												<cfif variables.results.type EQ "DIR">
 													
-													<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
-														<td>
-															&nbsp;
-														</td>
-														<td>
-															#replaceNoCase(variables.results.directory,url.dir,".")##application.settings.pathSeperator#
-														</td>
-														<td>
-															#variables.results.name##application.settings.pathSeperator#
-														</td>
-														<td class="center">
-															#application.objs.global.formatDate(variables.results.datelastModified)#
-														</td>
-														<td class="right">
-															#application.objs.global.formatFileSize(variables.results.size)#
-														</td>
-													</tr>
-												<cfelse>
-													<cfif listLen(variables.previouslySelectedFiles)>
-														<cfset variables.temp.checked = false />
+													<cfif listLen(url.excludeExtensions)>
+														<cfset url.excludeExtensions = replaceNoCase(url.excludeExtensions,".","","all") />
+														<cfif listContainsNoCase(url.excludeExtensions,listLast(variables.results.name,"."))>
+															<cfthrow type="cfcontinue_hack" />
+														</cfif>
+													</cfif>
+													
+													<cfset variables.row = variables.row + 1 />
+													
+													<cfif variables.results.type EQ "DIR">
 														
-														<cfif listContains(variables.previouslySelectedFiles,variables.results.directory & application.settings.pathSeperator & variables.results.name)>
-															<cfset variables.temp.checked = true />
-														</cfif>
+														<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
+															<td>
+																&nbsp;
+															</td>
+															<td>
+																#replaceNoCase(variables.results.directory,url.dir,".")##application.settings.pathSeperator#
+															</td>
+															<td>
+																#variables.results.name##application.settings.pathSeperator#
+															</td>
+															<td class="center">
+																#application.objs.global.formatDate(variables.results.datelastModified)#
+															</td>
+															<td class="right">
+																#application.objs.global.formatFileSize(variables.results.size)#
+															</td>
+														</tr>
 													<cfelse>
-														<cfset variables.temp.checked = true />
-															
-														<cfif left(variables.results.name,1) EQ "." OR findNoCase(".",variables.results.directory)>
+														<cfif listLen(variables.previouslySelectedFiles)>
 															<cfset variables.temp.checked = false />
-														</cfif> 
-													</cfif>
+															
+															<cfif listContains(variables.previouslySelectedFiles,variables.results.directory & application.settings.pathSeperator & variables.results.name)>
+																<cfset variables.temp.checked = true />
+															</cfif>
+														<cfelse>
+															<cfset variables.temp.checked = true />
+																
+															<cfif left(variables.results.name,1) EQ "." OR findNoCase(".",variables.results.directory)>
+																<cfset variables.temp.checked = false />
+															</cfif> 
+														</cfif>
+														
 													
-												
-													<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
-														<td>
-															<input class="filecheckbox" name="file" type="checkbox" value="#variables.results.directory##application.settings.pathSeperator##variables.results.name#" id="file_#variables.row#" <cfif variables.temp.checked>checked="True"</cfif> />
-														</td>
-														<td>
-															<label for="file_#variables.row#">#replaceNoCase(variables.results.directory,url.dir,".")##application.settings.pathSeperator#</label>
-														</td>
-														<td>
-															<label for="file_#variables.row#">#variables.results.name#<cfif variables.results.type EQ "DIR">#application.settings.pathSeperator#</cfif></label>
-														</td>
-														<td class="center">
-															#application.objs.global.formatDate(variables.results.datelastModified)#
-														</td>
-														<td class="right">
-															#application.objs.global.formatFileSize(variables.results.size)#
-														</td>
-													</tr>
-												</cfif>
+														<tr <cfif variables.row MOD 2 EQ 0>class="alt"</cfif>>
+															<td>
+																<input class="filecheckbox" name="file" type="checkbox" value="#variables.results.directory##application.settings.pathSeperator##variables.results.name#" id="file_#variables.row#" <cfif variables.temp.checked>checked="True"</cfif> />
+															</td>
+															<td>
+																<label for="file_#variables.row#">#replaceNoCase(variables.results.directory,url.dir,".")##application.settings.pathSeperator#</label>
+															</td>
+															<td>
+																<label for="file_#variables.row#">#variables.results.name#<cfif variables.results.type EQ "DIR">#application.settings.pathSeperator#</cfif></label>
+															</td>
+															<td class="center">
+																#application.objs.global.formatDate(variables.results.datelastModified)#
+															</td>
+															<td class="right">
+																#application.objs.global.formatFileSize(variables.results.size)#
+															</td>
+														</tr>
+													</cfif>
+												<cfcatch type="cfcontinue_hack">
+													<!--- do nothing, this is just a continue for cf8 --->
+												</cfcatch>
+												</cftry>
 											</cfloop>
 										<cfelse>
 											<tr>
