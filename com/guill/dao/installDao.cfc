@@ -323,7 +323,7 @@ Copyright 2012 Ryan Guill
 					, deployedFilePath			varchar(255)	NOT NULL		
 					, backupArchiveID			char(35)		NOT NULL
 					, backupArchiveFileID		char(35)		NOT NULL		
-					, previousFileSHAHash		char(40)		NOT NULL /*leave empty if file did not previously exist */
+					, previousFileSHAHash		char(40)		NOT NULL -- leave empty if file did not previously exist
 					
 					, PRIMARY KEY (deploymentFileManifestID)	
 				

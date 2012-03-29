@@ -24,9 +24,9 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserGroups" datasource="#arguments.dsn#">
         		SELECT
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
 					, COUNT(userGroupMemberID) memberCount
 				FROM userGroups 
@@ -34,9 +34,9 @@ Copyright 2012 Ryan Guill
 					JOIN userGroupMembers 
 					ON userGroups.userGroupID = userGroupMembers.userGroupID        
 				GROUP BY
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/	
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -56,9 +56,9 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserGroups" datasource="#arguments.dsn#">
         		SELECT
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
 					, COUNT(userGroupMemberID) memberCount
 				FROM userGroups 
@@ -68,9 +68,9 @@ Copyright 2012 Ryan Guill
 				WHERE
 					userGroups.userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />  
 				GROUP BY
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/	
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -93,16 +93,16 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qAddUserGroup" datasource="#arguments.dsn#">
         		INSERT INTO userGroups
 				(
-					  userGroupID	/*  - char(35) */
-					, userGroupName	/*  - varchar (50)*/
-					, userGroupDesc	/*  - varchar (250)*/
+					  userGroupID	 --  char(35) 
+					, userGroupName	 --  varchar (50)
+					, userGroupDesc	 --  varchar (250)
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserGroupID#" /> /* userGroupID */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupName#" /> /* userGroupName */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupDesc#" /> /* userGroupDesc */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserGroupID#" />  -- userGroupID 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupName#" />  -- userGroupName 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupDesc#" />  -- userGroupDesc 
 					
 				)        	
         	</cfquery>
@@ -127,11 +127,11 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qUpdateUserGroup" datasource="#arguments.dsn#">
         		UPDATE userGroups
 				SET
-					  userGroupName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupName#" />	/*  - varchar (50)*/
-					, userGroupDesc = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupDesc#" />	/*  - varchar (250)*/
+					  userGroupName = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupName#" />	 --  varchar (50)
+					, userGroupDesc = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userGroupDesc#" />	 --  varchar (250)
 					
 				WHERE
-					userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	/*  - char(35) */
+					userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	 --  char(35) 
         	
         	</cfquery>
         <cfcatch>
@@ -157,7 +157,7 @@ Copyright 2012 Ryan Guill
 					FROM
 						userGroups
 					WHERE
-						userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	/*  - char(35) */
+						userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	 --  char(35) 
 	        	
 	        	</cfquery>
 	        <cfcatch>
@@ -181,17 +181,17 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserGroupMembers" datasource="#arguments.dsn#">
         		SELECT
-					  userGroupMembers.userGroupMemberID	/*  - char(35) */
-					, userGroupMembers.userID		/*  - char(35) */
-					, userGroupMembers.userGroupID		/*  - char(35) */
+					  userGroupMembers.userGroupMemberID	 --  char(35) 
+					, userGroupMembers.userID		 --  char(35) 
+					, userGroupMembers.userGroupID		 --  char(35) 
 					
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname		/*  - varchar (50)*/
-					, users.lastname		/*  - varchar (50)*/
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname		 --  varchar (50)
+					, users.lastname		 --  varchar (50)
 					
 				FROM userGroupMembers 
         		INNER
@@ -201,7 +201,7 @@ Copyright 2012 Ryan Guill
 					JOIN users 
 					ON userGroupMembers.userID = users.userID
 				WHERE
-					userGroupMembers.userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	/*  - char(35) */
+					userGroupMembers.userGroupID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />	 --  char(35) 
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -221,17 +221,17 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserGroupsForUserID" datasource="#arguments.dsn#">
         		SELECT
-					  userGroupMembers.userGroupMemberID	/*  - char(35) */
-					, userGroupMembers.userID		/*  - char(35) */
-					, userGroupMembers.userGroupID		/*  - char(35) */
+					  userGroupMembers.userGroupMemberID	 --  char(35) 
+					, userGroupMembers.userID		 --  char(35) 
+					, userGroupMembers.userGroupID		 --  char(35) 
 					
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname		/*  - varchar (50)*/
-					, users.lastname		/*  - varchar (50)*/
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname		 --  varchar (50)
+					, users.lastname		 --  varchar (50)
 					
 				FROM userGroupMembers 
         		INNER
@@ -241,7 +241,7 @@ Copyright 2012 Ryan Guill
 					JOIN users 
 					ON userGroupMembers.userID = users.userID
 				WHERE
-					userGroupMembers.userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	/*  - char(35) */
+					userGroupMembers.userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	 --  char(35) 
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -261,9 +261,9 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetAvailableUserGroupsForUserID" datasource="#arguments.dsn#">
         		SELECT
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
 					, COUNT(userGroupMemberID) memberCount
 				FROM userGroups 
@@ -281,9 +281,9 @@ Copyright 2012 Ryan Guill
 							userGroupMembers.userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />
 					)  
 				GROUP BY
-					  userGroups.userGroupID	/*  - char(35) */
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/	
+					  userGroups.userGroupID	 --  char(35) 
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -303,17 +303,17 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserGroupMemberByUserGroupMemberID" datasource="#arguments.dsn#">
         		SELECT
-					  userGroupMembers.userGroupMemberID	/*  - char(35) */
-					, userGroupMembers.userID		/*  - char(35) */
-					, userGroupMembers.userGroupID		/*  - char(35) */
+					  userGroupMembers.userGroupMemberID	 --  char(35) 
+					, userGroupMembers.userID		 --  char(35) 
+					, userGroupMembers.userGroupID		 --  char(35) 
 					
-					, userGroups.userGroupName	/*  - varchar (50)*/
-					, userGroups.userGroupDesc	/*  - varchar (250)*/
+					, userGroups.userGroupName	 --  varchar (50)
+					, userGroups.userGroupDesc	 --  varchar (250)
 					
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname		/*  - varchar (50)*/
-					, users.lastname		/*  - varchar (50)*/
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname		 --  varchar (50)
+					, users.lastname		 --  varchar (50)
 					
 				FROM userGroupMembers 
         		INNER
@@ -323,7 +323,7 @@ Copyright 2012 Ryan Guill
 					JOIN users 
 					ON userGroupMembers.userID = users.userID
 				WHERE
-					userGroupMembers.userGroupMemberID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupMemberID#" />	/*  - char(35) */
+					userGroupMembers.userGroupMemberID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupMemberID#" />	 --  char(35) 
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -346,15 +346,15 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qAddUserToGroup" datasource="#arguments.dsn#">
         		INSERT INTO userGroupMembers
 				(
-					  userGroupMemberID	/*  - char(35) */
-					, userID		/*  - char(35) */
-					, userGroupID		/*  - char(35) */					
+					  userGroupMemberID	 --  char(35) 
+					, userID		 --  char(35) 
+					, userGroupID		 --  char(35) 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserGroupMemberID#" /> /* userGroupMemberID */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" /> /* userID */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" /> /* userGroupID */					
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserGroupMemberID#" />  -- userGroupMemberID 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />  -- userID 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupID#" />  -- userGroupID 					
 				)
         	</cfquery>
         <cfcatch>
@@ -377,7 +377,7 @@ Copyright 2012 Ryan Guill
         		DELETE
         		FROM userGroupMembers 
 				WHERE
-					userGroupMembers.userGroupMemberID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupMemberID#" />	/*  - char(35) */        	
+					userGroupMembers.userGroupMemberID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userGroupMemberID#" />	 --  char(35)         	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -396,16 +396,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetAllUsers" datasource="#arguments.dsn#">
         		SELECT
-					  users.userID	/*  - char(35) */
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname	/*  - varchar (50)*/
-					, users.lastname	/*  - varchar (50)*/
-					, users.createdBy	/*  - varchar (100)*/
-					, users.createdOn	/*  - datetime */
-					, users.lastUpdatedBy	/*  - varchar (100)*/
-					, users.lastUpdatedOn	/*  - datetime */
-					, users.passwordLastSetOn /* - datetime */
+					  users.userID	 --  char(35) 
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname	 --  varchar (50)
+					, users.lastname	 --  varchar (50)
+					, users.createdBy	 --  varchar (100)
+					, users.createdOn	 --  datetime 
+					, users.lastUpdatedBy	 --  varchar (100)
+					, users.lastUpdatedOn	 --  datetime 
+					, users.passwordLastSetOn  -- - datetime 
 					
 				FROM users
 				ORDER BY
@@ -430,16 +430,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetAllUsers" datasource="#arguments.dsn#">
         		SELECT
-					  users.userID	/*  - char(35) */
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname	/*  - varchar (50)*/
-					, users.lastname	/*  - varchar (50)*/
-					, users.createdBy	/*  - varchar (100)*/
-					, users.createdOn	/*  - datetime */
-					, users.lastUpdatedBy	/*  - varchar (100)*/
-					, users.lastUpdatedOn	/*  - datetime */
-					, users.passwordLastSetOn /* - datetime */
+					  users.userID	 --  char(35) 
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname	 --  varchar (50)
+					, users.lastname	 --  varchar (50)
+					, users.createdBy	 --  varchar (100)
+					, users.createdOn	 --  datetime 
+					, users.lastUpdatedBy	 --  varchar (100)
+					, users.lastUpdatedOn	 --  datetime 
+					, users.passwordLastSetOn  -- - datetime 
 					
 				FROM users
 				WHERE
@@ -472,16 +472,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserByUserID" datasource="#arguments.dsn#">
         		SELECT
-					  users.userID	/*  - char(35) */
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname	/*  - varchar (50)*/
-					, users.lastname	/*  - varchar (50)*/
-					, users.createdBy	/*  - varchar (100)*/
-					, users.createdOn	/*  - datetime */
-					, users.lastUpdatedBy	/*  - varchar (100)*/
-					, users.lastUpdatedOn	/*  - datetime */
-					, users.passwordLastSetOn /* - datetime */
+					  users.userID	 --  char(35) 
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname	 --  varchar (50)
+					, users.lastname	 --  varchar (50)
+					, users.createdBy	 --  varchar (100)
+					, users.createdOn	 --  datetime 
+					, users.lastUpdatedBy	 --  varchar (100)
+					, users.lastUpdatedOn	 --  datetime 
+					, users.passwordLastSetOn  -- - datetime 
 					
 				FROM users
 				WHERE
@@ -505,16 +505,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetUserByUsername" datasource="#arguments.dsn#">
         		SELECT
-					  users.userID	/*  - char(35) */
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname	/*  - varchar (50)*/
-					, users.lastname	/*  - varchar (50)*/
-					, users.createdBy	/*  - varchar (100)*/
-					, users.createdOn	/*  - datetime */
-					, users.lastUpdatedBy	/*  - varchar (100)*/
-					, users.lastUpdatedOn	/*  - datetime */
-					, users.passwordLastSetOn /* - datetime */
+					  users.userID	 --  char(35) 
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname	 --  varchar (50)
+					, users.lastname	 --  varchar (50)
+					, users.createdBy	 --  varchar (100)
+					, users.createdOn	 --  datetime 
+					, users.lastUpdatedBy	 --  varchar (100)
+					, users.lastUpdatedOn	 --  datetime 
+					, users.passwordLastSetOn  -- - datetime 
 					
 				FROM users
 				WHERE
@@ -540,16 +540,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qAuthenticateUser" datasource="#arguments.dsn#">
         		SELECT
-					  users.userID	/*  - char(35) */
-					, users.username	/*  - varchar (100)*/
-					, users.email		/*  - varchar (255)*/
-					, users.firstname	/*  - varchar (50)*/
-					, users.lastname	/*  - varchar (50)*/
-					, users.createdBy	/*  - varchar (100)*/
-					, users.createdOn	/*  - datetime */
-					, users.lastUpdatedBy	/*  - varchar (100)*/
-					, users.lastUpdatedOn	/*  - datetime */
-					, users.passwordLastSetOn /* - datetime */
+					  users.userID	 --  char(35) 
+					, users.username	 --  varchar (100)
+					, users.email		 --  varchar (255)
+					, users.firstname	 --  varchar (50)
+					, users.lastname	 --  varchar (50)
+					, users.createdBy	 --  varchar (100)
+					, users.createdOn	 --  datetime 
+					, users.lastUpdatedBy	 --  varchar (100)
+					, users.lastUpdatedOn	 --  datetime 
+					, users.passwordLastSetOn  -- - datetime 
 					
 				FROM users
 				WHERE
@@ -583,33 +583,33 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qAddUser" datasource="#arguments.dsn#">
         		INSERT INTO users
 				(
-					  userID	/*  - char(35) */
-					, username	/*  - varchar (100)*/
-					, email		/*  - varchar (255)*/
-					, firstname	/*  - varchar (50)*/
-					, lastname	/*  - varchar (50)*/
-					, password  /*	- varchar (100*/
-					, createdBy	/*  - varchar (100)*/
-					, createdOn	/*  - datetime */
-					, lastUpdatedBy	/*  - varchar (100)*/
-					, lastUpdatedOn	/*  - datetime */
-					, passwordLastSetOn /* - datetime */
+					  userID	 --  char(35) 
+					, username	 --  varchar (100)
+					, email		 --  varchar (255)
+					, firstname	 --  varchar (50)
+					, lastname	 --  varchar (50)
+					, password  /*	- varchar (100
+					, createdBy	 --  varchar (100)
+					, createdOn	 --  datetime 
+					, lastUpdatedBy	 --  varchar (100)
+					, lastUpdatedOn	 --  datetime 
+					, passwordLastSetOn  -- - datetime 
 					
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserID#" /> /* userID */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.username#" /> /* username */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" /> /* email */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.firstname#" /> /* firstname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.lastname#" /> /* lastname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#hashPassword(arguments.password)#" /> /* password*/
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdBy#" /> /* createdBy */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" /> /* createdOn */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdBy#" /> /* lastUpdatedBy */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" /> /* lastUpdatedOn */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" /> /* passwordLastSetOn */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#nextUserID#" />  -- userID 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.username#" />  -- username 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />  -- email 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.firstname#" />  -- firstname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.lastname#" />  -- lastname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#hashPassword(arguments.password)#" />  -- password
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdBy#" />  -- createdBy 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" />  -- createdOn 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdBy#" />  -- lastUpdatedBy 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" />  -- lastUpdatedOn 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#currentTimestamp#" />  -- passwordLastSetOn 
 					
 				)
         	</cfquery>
@@ -638,14 +638,14 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qUpdateUser" datasource="#arguments.dsn#">
         		UPDATE users
 				SET
-					  username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.username#" />	/*  - varchar (100)*/
-					, email = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />		/*  - varchar (255)*/
-					, firstname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.firstname#" />	/*  - varchar (50)*/
-					, lastname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.lastname#" />	/*  - varchar (50)*/
-					, lastUpdatedBy = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.updatedBy#" />	/*  - varchar (100)*/
-					, lastUpdatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />	/*  - datetime */					
+					  username = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.username#" />	 --  varchar (100)
+					, email = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.email#" />		 --  varchar (255)
+					, firstname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.firstname#" />	 --  varchar (50)
+					, lastname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.lastname#" />	 --  varchar (50)
+					, lastUpdatedBy = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.updatedBy#" />	 --  varchar (100)
+					, lastUpdatedOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />	 --  datetime 					
 				WHERE
-					userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	/*  - char(35) */
+					userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	 --  char(35) 
         	
         	</cfquery>
         <cfcatch>
@@ -669,10 +669,10 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qUpdateUser" datasource="#arguments.dsn#">
         		UPDATE users
 				SET
-					  password = <cfqueryparam cfsqltype="cf_sql_varchar" value="#hashPassword(arguments.password)#" />	/*  - varchar (100)*/
-					, passwordLastSetOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />	/*  - datetime */					
+					  password = <cfqueryparam cfsqltype="cf_sql_varchar" value="#hashPassword(arguments.password)#" />	 --  varchar (100)
+					, passwordLastSetOn = <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />	 --  datetime 					
 				WHERE
-					userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	/*  - char(35) */
+					userID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userID#" />	 --  char(35) 
         	
         	</cfquery>
         <cfcatch>

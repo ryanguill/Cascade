@@ -27,13 +27,13 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetValidationCodeForServerID" datasource="#application.config.dsn#">
         		SELECT
-					  remotevalidationcodes.serverid		/*  - CHAR (35)*/
-					, remotevalidationcodes.validationcode	/*  - CHAR (40)*/
-					, remotevalidationcodes.createdbyuserid	/*  - CHAR (35)*/
-					, remotevalidationcodes.createdbyusername	/*  - VARCHAR (100)*/
-					, remotevalidationcodes.createdbyuserfullname	/*  - VARCHAR (100)*/
-					, remotevalidationcodes.createdbyuseremail	/*  - VARCHAR (255)*/
-					, remotevalidationcodes.createdon		/*  - TIMESTAMP (26)*/
+					  remotevalidationcodes.serverid		 --  CHAR (35)
+					, remotevalidationcodes.validationcode	 --  CHAR (40)
+					, remotevalidationcodes.createdbyuserid	 --  CHAR (35)
+					, remotevalidationcodes.createdbyusername	 --  VARCHAR (100)
+					, remotevalidationcodes.createdbyuserfullname	 --  VARCHAR (100)
+					, remotevalidationcodes.createdbyuseremail	 --  VARCHAR (255)
+					, remotevalidationcodes.createdon		 --  TIMESTAMP (26)
 					
 				FROM remotevalidationcodes
 				WHERE
@@ -84,23 +84,23 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qCreateValidationCodeForServerID" datasource="#application.config.dsn#">
         		INSERT INTO remotevalidationcodes
 				(
-					  serverid		/*  - CHAR (35)*/
-					, validationcode	/*  - CHAR (40)*/
-					, createdbyuserid	/*  - CHAR (35)*/
-					, createdbyusername	/*  - VARCHAR (100)*/
-					, createdbyuserfullname	/*  - VARCHAR (100)*/
-					, createdbyuseremail	/*  - VARCHAR (255)*/
-					, createdon		/*  - TIMESTAMP (26)*/
+					  serverid		 --  CHAR (35)
+					, validationcode	 --  CHAR (40)
+					, createdbyuserid	 --  CHAR (35)
+					, createdbyusername	 --  VARCHAR (100)
+					, createdbyuserfullname	 --  VARCHAR (100)
+					, createdbyuseremail	 --  VARCHAR (255)
+					, createdon		 --  TIMESTAMP (26)
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#" /> /* serverid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#validationcode#" /> /* validationcode */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.createdbyuserid#" /> /* createdbyuserid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyusername#" /> /* createdbyusername */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyuserfullname#" /> /* createdbyuserfullname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyuseremail#" /> /* createdbyuseremail */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" /> /* createdon */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#" />  -- serverid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#validationcode#" />  -- validationcode 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.createdbyuserid#" />  -- createdbyuserid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyusername#" />  -- createdbyusername 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyuserfullname#" />  -- createdbyuserfullname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.createdbyuseremail#" />  -- createdbyuseremail 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- createdon 
 				)        	
         	</cfquery>
         <cfcatch>
@@ -119,16 +119,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetRemoteServers" datasource="#application.config.dsn#">
         		SELECT
-					  remoteservers.serverid			/*  - CHAR (35)*/
-					, remoteservers.servername			/*  - VARCHAR (255)*/
-					, remoteservers.serverurl			/*  - VARCHAR (255)*/
-					, remoteservers.validationcode		/*  - CHAR (40)*/
-					, remoteservers.serverversion			/*  - VARCHAR (10)*/
-					, remoteservers.configuredbyuserid		/*  - CHAR (35)*/
-					, remoteservers.configuredbyusername		/*  - VARCHAR (100)*/
-					, remoteservers.configuredbyuserfullname	/*  - VARCHAR (100)*/
-					, remoteservers.configuredbyuseremail		/*  - VARCHAR (255)*/
-					, remoteservers.configuredon			/*  - TIMESTAMP (26)*/
+					  remoteservers.serverid			 --  CHAR (35)
+					, remoteservers.servername			 --  VARCHAR (255)
+					, remoteservers.serverurl			 --  VARCHAR (255)
+					, remoteservers.validationcode		 --  CHAR (40)
+					, remoteservers.serverversion			 --  VARCHAR (10)
+					, remoteservers.configuredbyuserid		 --  CHAR (35)
+					, remoteservers.configuredbyusername		 --  VARCHAR (100)
+					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
+					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
+					, remoteservers.configuredon			 --  TIMESTAMP (26)
 					
 				FROM remoteservers
 				ORDER BY remoteservers.servername 		
@@ -153,16 +153,16 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetRemoteServerByServerID" datasource="#application.config.dsn#">
         		SELECT
-					  remoteservers.serverid			/*  - CHAR (35)*/
-					, remoteservers.servername			/*  - VARCHAR (255)*/
-					, remoteservers.serverurl			/*  - VARCHAR (255)*/
-					, remoteservers.validationcode		/*  - CHAR (40)*/
-					, remoteservers.serverversion			/*  - VARCHAR (10)*/
-					, remoteservers.configuredbyuserid		/*  - CHAR (35)*/
-					, remoteservers.configuredbyusername		/*  - VARCHAR (100)*/
-					, remoteservers.configuredbyuserfullname	/*  - VARCHAR (100)*/
-					, remoteservers.configuredbyuseremail		/*  - VARCHAR (255)*/
-					, remoteservers.configuredon			/*  - TIMESTAMP (26)*/
+					  remoteservers.serverid			 --  CHAR (35)
+					, remoteservers.servername			 --  VARCHAR (255)
+					, remoteservers.serverurl			 --  VARCHAR (255)
+					, remoteservers.validationcode		 --  CHAR (40)
+					, remoteservers.serverversion			 --  VARCHAR (10)
+					, remoteservers.configuredbyuserid		 --  CHAR (35)
+					, remoteservers.configuredbyusername		 --  VARCHAR (100)
+					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
+					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
+					, remoteservers.configuredon			 --  TIMESTAMP (26)
 					
 				FROM remoteservers
 				WHERE
@@ -199,30 +199,30 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qRegisterRemoteServer" datasource="#application.config.dsn#">
         		INSERT INTO remoteservers
 				(
-					  serverid			/*  - CHAR (35)*/
-					, servername			/*  - VARCHAR (255)*/
-					, serverurl			/*  - VARCHAR (255)*/
-					, validationcode		/*  - CHAR (40)*/
-					, serverversion			/*  - VARCHAR (10)*/
-					, configuredbyuserid		/*  - CHAR (35)*/
-					, configuredbyusername		/*  - VARCHAR (100)*/
-					, configuredbyuserfullname	/*  - VARCHAR (100)*/
-					, configuredbyuseremail		/*  - VARCHAR (255)*/
-					, configuredon			/*  - TIMESTAMP (26)*/
+					  serverid			 --  CHAR (35)
+					, servername			 --  VARCHAR (255)
+					, serverurl			 --  VARCHAR (255)
+					, validationcode		 --  CHAR (40)
+					, serverversion			 --  VARCHAR (10)
+					, configuredbyuserid		 --  CHAR (35)
+					, configuredbyusername		 --  VARCHAR (100)
+					, configuredbyuserfullname	 --  VARCHAR (100)
+					, configuredbyuseremail		 --  VARCHAR (255)
+					, configuredon			 --  TIMESTAMP (26)
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#" /> /* serverid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.servername#" /> /* servername */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.serverurl#" /> /* serverurl */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#replaceNoCase(arguments.validationcode,"-","","all")#" /> /* validationcode */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.serverversion#" /> /* serverversion */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.configuredbyuserid#" /> /* configuredbyuserid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyusername#" /> /* configuredbyusername */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuserfullname#" /> /* configuredbyuserfullname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuseremail#" /> /* configuredbyuseremail */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" /> /* configuredon */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#" />  -- serverid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.servername#" />  -- servername 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.serverurl#" />  -- serverurl 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#replaceNoCase(arguments.validationcode,"-","","all")#" />  -- validationcode 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.serverversion#" />  -- serverversion 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.configuredbyuserid#" />  -- configuredbyuserid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyusername#" />  -- configuredbyusername 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuserfullname#" />  -- configuredbyuserfullname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuseremail#" />  -- configuredbyuseremail 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- configuredon 
 					
 				)
 

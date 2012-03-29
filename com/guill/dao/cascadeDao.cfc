@@ -24,29 +24,29 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetAllArchives" datasource="#arguments.dsn#">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
-					, archives.archiveshahash	/*  - CHAR (40)*/
-					, archives.buildsystemname	/*  - VARCHAR (255)*/
-					, archives.applicationname	/*  - VARCHAR (255)*/
-					, archives.versionname		/*  - VARCHAR (50)*/
-					, archives.projectname		/*  - VARCHAR (255)*/
-					, archives.projectnumber		/*  - VARCHAR (50)*/
-					, archives.ticketnumber		/*  - VARCHAR (150)*/
-					, archives.changereason		/*  - VARCHAR (50)*/
-					, archives.author		/*  - VARCHAR (255)*/
-					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
-					, archives.buildbyuserid		/*  - CHAR (35)*/
-					, archives.buildbyusername	/*  - VARCHAR (100)*/
-					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
-					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
-					, archives.buildon		/*  - TIMESTAMP (26)*/
-					, archives.builddir		/*  - VARCHAR (1000)*/
-					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, archives.filecount		/*  - INTEGER (10)*/
-					, archives.isnativebuild		/*  - INTEGER (10)*/
-					, archives.isbackuparchive	/*  - INTEGER (10)*/
-					, archives.isObsolete		/*  - INTEGER (10)*/	
-					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
+					, archives.archiveshahash	-- CHAR (40)
+					, archives.buildsystemname	-- VARCHAR (255)
+					, archives.applicationname	-- VARCHAR (255)
+					, archives.versionname		-- VARCHAR (50)
+					, archives.projectname		-- VARCHAR (255)
+					, archives.projectnumber		-- VARCHAR (50)
+					, archives.ticketnumber		-- VARCHAR (150)
+					, archives.changereason		-- VARCHAR (50)
+					, archives.author		-- VARCHAR (255)
+					, archives.changedescription	-- LONG VARCHAR (32700)
+					, archives.buildbyuserid		-- CHAR (35)
+					, archives.buildbyusername	-- VARCHAR (100)
+					, archives.buildbyuserfullname	-- VARCHAR (100)
+					, archives.buildbyuseremail	-- VARCHAR (255)
+					, archives.buildon		-- TIMESTAMP (26)
+					, archives.builddir		-- VARCHAR (1000)
+					, archives.deployDirSuggestions		-- VARCHAR (5000)
+					, archives.filecount		-- INTEGER (10)
+					, archives.isnativebuild		-- INTEGER (10)
+					, archives.isbackuparchive	-- INTEGER (10)
+					, archives.isObsolete		-- INTEGER (10)	
+					, archives.backupforarchiveid	-- CHAR (35)
 					
 				FROM archives  
 				ORDER BY
@@ -70,11 +70,11 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qGetApplicationNames" datasource="#arguments.dsn#">
         		SELECT
 					  count(*) cnt
-					, archives.applicationname	/*  - VARCHAR (255)*/
+					, archives.applicationname	-- VARCHAR (255)
 					
 				FROM archives  
 				GROUP BY 
-					archives.applicationname	/*  - VARCHAR (255)*/
+					archives.applicationname	-- VARCHAR (255)
 				ORDER BY
 					archives.applicationName DESC        	
         	</cfquery>
@@ -120,103 +120,103 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qSearchArchives" datasource="#arguments.dsn#" result="result">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
-					, archives.archiveshahash	/*  - CHAR (40)*/
-					, archives.buildsystemname	/*  - VARCHAR (255)*/
-					, archives.applicationname	/*  - VARCHAR (255)*/
-					, archives.versionname		/*  - VARCHAR (50)*/
-					, archives.projectname		/*  - VARCHAR (255)*/
-					, archives.projectnumber		/*  - VARCHAR (50)*/
-					, archives.ticketnumber		/*  - VARCHAR (150)*/
-					, archives.changereason		/*  - VARCHAR (50)*/
-					, archives.author		/*  - VARCHAR (255)*/
-					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
-					, archives.buildbyuserid		/*  - CHAR (35)*/
-					, archives.buildbyusername	/*  - VARCHAR (100)*/
-					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
-					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
-					, archives.buildon		/*  - TIMESTAMP (26)*/
-					, archives.builddir		/*  - VARCHAR (1000)*/
-					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, archives.filecount		/*  - INTEGER (10)*/
-					, archives.isnativebuild		/*  - INTEGER (10)*/
-					, archives.isbackuparchive	/*  - INTEGER (10)*/
-					, archives.isObsolete		/*  - INTEGER (10)*/	
-					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
+					, archives.archiveshahash	-- CHAR (40)
+					, archives.buildsystemname	-- VARCHAR (255)
+					, archives.applicationname	-- VARCHAR (255)
+					, archives.versionname		-- VARCHAR (50)
+					, archives.projectname		-- VARCHAR (255)
+					, archives.projectnumber		-- VARCHAR (50)
+					, archives.ticketnumber		-- VARCHAR (150)
+					, archives.changereason		-- VARCHAR (50)
+					, archives.author		-- VARCHAR (255)
+					, archives.changedescription	-- LONG VARCHAR (32700)
+					, archives.buildbyuserid		-- CHAR (35)
+					, archives.buildbyusername	-- VARCHAR (100)
+					, archives.buildbyuserfullname	-- VARCHAR (100)
+					, archives.buildbyuseremail	-- VARCHAR (255)
+					, archives.buildon		-- TIMESTAMP (26)
+					, archives.builddir		-- VARCHAR (1000)
+					, archives.deployDirSuggestions		-- VARCHAR (5000)
+					, archives.filecount		-- INTEGER (10)
+					, archives.isnativebuild		-- INTEGER (10)
+					, archives.isbackuparchive	-- INTEGER (10)
+					, archives.isObsolete		-- INTEGER (10)	
+					, archives.backupforarchiveid	-- CHAR (35)
 					
 				FROM archives  
 				WHERE 1 = 1
 				<cfif arguments.archiveID NEQ -1>
-					AND archiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
+					AND archiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
 				</cfif>
 				<cfif arguments.archiveshahash NEQ -1>
-					AND archiveshahash LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.archiveshahash#%" />	/*  - CHAR (40)*/
+					AND archiveshahash LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.archiveshahash#%" />	-- CHAR (40)
 				</cfif>
 				<cfif arguments.buildsystemname NEQ -1>	
-					AND upper(buildsystemname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.buildsystemname)#%" />	/*  - VARCHAR (255)*/
+					AND upper(buildsystemname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.buildsystemname)#%" />	-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.applicationname NEQ -1>	
-					AND applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.applicationname#%" />	/*  - VARCHAR (255)*/
+					AND applicationname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.applicationname#%" />	-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.versionname NEQ -1>	
-					AND versionname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.versionname#%" />		/*  - VARCHAR (50)*/
+					AND versionname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.versionname#%" />		-- VARCHAR (50)
 				</cfif>
 				<cfif arguments.projectname NEQ -1>	
-					AND projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectname#%" />		/*  - VARCHAR (255)*/
+					AND projectname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectname#%" />		-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.projectnumber NEQ -1>	
-					AND projectnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectnumber#%" />		/*  - VARCHAR (50)*/
+					AND projectnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.projectnumber#%" />		-- VARCHAR (50)
 				</cfif>
 				<cfif arguments.ticketnumber NEQ -1>	
-					AND ticketnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.ticketnumber#%" />		/*  - VARCHAR (150)*/
+					AND ticketnumber LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.ticketnumber#%" />		-- VARCHAR (150)
 				</cfif>
 				<cfif arguments.changereason NEQ -1>	
-					AND changereason LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.changereason#%" />		/*  - VARCHAR (50)*/
+					AND changereason LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.changereason#%" />		-- VARCHAR (50)
 				</cfif>
 				<cfif arguments.author NEQ -1>	
-					AND author LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.author#%" />		/*  - VARCHAR (255)*/
+					AND author LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.author#%" />		-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.changedescription NEQ -1>	
-					AND changedescription LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.changedescription#%" />	/*  - LONG VARCHAR (32700)*/
+					AND changedescription LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#arguments.changedescription#%" />	-- LONG VARCHAR (32700)
 				</cfif>
 				<cfif arguments.buildbyuserid NEQ -1>	
-					AND buildbyuserid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.buildbyuserid#%" />		/*  - CHAR (35)*/
+					AND buildbyuserid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.buildbyuserid#%" />		-- CHAR (35)
 				</cfif>
 				<cfif arguments.buildbyusername NEQ -1>	
-					AND buildbyusername LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyusername#%" />	/*  - VARCHAR (100)*/
+					AND buildbyusername LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyusername#%" />	-- VARCHAR (100)
 				</cfif>
 				<cfif arguments.buildbyuserfullname NEQ -1>	
-					AND buildbyuserfullname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyuserfullname#%" />	/*  - VARCHAR (100)*/
+					AND buildbyuserfullname LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyuserfullname#%" />	-- VARCHAR (100)
 				</cfif>
 				<cfif arguments.buildbyuseremail NEQ -1>	
-					AND buildbyuseremail LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyuseremail#%" />	/*  - VARCHAR (255)*/
+					AND buildbyuseremail LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.buildbyuseremail#%" />	-- VARCHAR (255)
 				</cfif>
 				<cfif dateFormat(arguments.buildonafter,"yyyymmdd") NEQ "19700101">	
-					AND buildonafter => <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.buildonafter#" />		/*  - TIMESTAMP (26)*/
+					AND buildonafter => <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.buildonafter#" />		-- TIMESTAMP (26)
 				</cfif>
 				<cfif dateFormat(arguments.buildonbefore,"yyyymmdd") NEQ "19700101">	
-					AND buildonbefore <= <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.buildonbefore#" />		/*  - TIMESTAMP (26)*/
+					AND buildonbefore <= <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.buildonbefore#" />		-- TIMESTAMP (26)
 				</cfif>
 				<cfif arguments.builddir NEQ -1>	
-					AND builddir LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.builddir#%" />		/*  - VARCHAR (1000)*/
+					AND builddir LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.builddir#%" />		-- VARCHAR (1000)
 				</cfif>
 				<cfif arguments.deployDirSuggestions NEQ -1>	
-					AND deployDirSuggestions LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.deployDirSuggestions#%" />		/*  - VARCHAR (5000)*/
+					AND deployDirSuggestions LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#arguments.deployDirSuggestions#%" />		-- VARCHAR (5000)
 				</cfif>
 				<cfif arguments.filecount NEQ -1>	
-					AND filecount = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />		/*  - INTEGER (10)*/
+					AND filecount = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />		-- INTEGER (10)
 				</cfif>
 				<cfif arguments.isnativebuild NEQ -1>	
-					AND isnativebuild = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" />		/*  - INTEGER (10)*/
+					AND isnativebuild = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" />		-- INTEGER (10)
 				</cfif>
 				<cfif arguments.isbackuparchive NEQ -1>	
-					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
+					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	-- INTEGER (10)
 				</cfif>
 				<cfif arguments.isObsolete NEQ -1>	
-					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />	/*  - INTEGER (10)*/
+					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />	-- INTEGER (10)
 				</cfif>
 				<cfif arguments.backupforarchiveid NEQ -1>	
-					AND backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.backupforarchiveid#%" />	/*  - CHAR (35)*/
+					AND backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.backupforarchiveid#%" />	-- CHAR (35)
 				</cfif>
 				ORDER BY
 					archives.buildOn DESC        	
@@ -244,65 +244,65 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qSearchArchives" datasource="#arguments.dsn#" result="result">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
-					, archives.archiveshahash	/*  - CHAR (40)*/
-					, archives.buildsystemname	/*  - VARCHAR (255)*/
-					, archives.applicationname	/*  - VARCHAR (255)*/
-					, archives.versionname		/*  - VARCHAR (50)*/
-					, archives.projectname		/*  - VARCHAR (255)*/
-					, archives.projectnumber		/*  - VARCHAR (50)*/
-					, archives.ticketnumber		/*  - VARCHAR (150)*/
-					, archives.changereason		/*  - VARCHAR (50)*/
-					, archives.author		/*  - VARCHAR (255)*/
-					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
-					, archives.buildbyuserid		/*  - CHAR (35)*/
-					, archives.buildbyusername	/*  - VARCHAR (100)*/
-					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
-					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
-					, archives.buildon		/*  - TIMESTAMP (26)*/
-					, archives.builddir		/*  - VARCHAR (1000)*/
-					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, archives.filecount		/*  - INTEGER (10)*/
-					, archives.isnativebuild		/*  - INTEGER (10)*/
-					, archives.isbackuparchive	/*  - INTEGER (10)*/
-					, archives.isObsolete		/*  - INTEGER (10)*/	
-					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
+					, archives.archiveshahash	-- CHAR (40)
+					, archives.buildsystemname	-- VARCHAR (255)
+					, archives.applicationname	-- VARCHAR (255)
+					, archives.versionname		-- VARCHAR (50)
+					, archives.projectname		-- VARCHAR (255)
+					, archives.projectnumber		-- VARCHAR (50)
+					, archives.ticketnumber		-- VARCHAR (150)
+					, archives.changereason		-- VARCHAR (50)
+					, archives.author		-- VARCHAR (255)
+					, archives.changedescription	-- LONG VARCHAR (32700)
+					, archives.buildbyuserid		-- CHAR (35)
+					, archives.buildbyusername	-- VARCHAR (100)
+					, archives.buildbyuserfullname	-- VARCHAR (100)
+					, archives.buildbyuseremail	-- VARCHAR (255)
+					, archives.buildon		-- TIMESTAMP (26)
+					, archives.builddir		-- VARCHAR (1000)
+					, archives.deployDirSuggestions		-- VARCHAR (5000)
+					, archives.filecount		-- INTEGER (10)
+					, archives.isnativebuild		-- INTEGER (10)
+					, archives.isbackuparchive	-- INTEGER (10)
+					, archives.isObsolete		-- INTEGER (10)	
+					, archives.backupforarchiveid	-- CHAR (35)
 					
 				FROM archives  
 				WHERE 1 = 1
 			
 				<cfif arguments.applicationname NEQ -1>	
-					AND upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.applicationname)#%" />	/*  - VARCHAR (255)*/
+					AND upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.applicationname)#%" />	-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.projectname NEQ -1>	
-					AND upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.projectname)#%" />		/*  - VARCHAR (255)*/
+					AND upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.projectname)#%" />		-- VARCHAR (255)
 				</cfif>
 				
 				<cfif arguments.author NEQ -1>	
-					AND upper(author) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.author)#%" />		/*  - VARCHAR (255)*/
+					AND upper(author) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.author)#%" />		-- VARCHAR (255)
 				</cfif>
 				<cfif arguments.isbackuparchive NEQ 1>	
-					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	/*  - INTEGER (10)*/
+					AND isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	-- INTEGER (10)
 				</cfif>
 				<cfif arguments.isObsolete NEQ 1>	
-					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	/*  - INTEGER (10)*/
+					AND isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="0" />	-- INTEGER (10)
 				</cfif>
 				
 				
 				<cfif len(trim(arguments.searchString))>
 					AND
 						(
-							   upper(archiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />		/*  - CHAR (35)*/
-							OR upper(archiveshahash) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	/*  - CHAR (40)*/
-							OR upper(backupforarchiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	/*  - CHAR (35)*/
-							OR upper(deployDirSuggestions) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (5000)*/
-							OR upper(changedescription) LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#ucase(arguments.searchString)#%" />	/*  - LONG VARCHAR (32700)*/
-							OR upper(changereason) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
-							OR upper(versionname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
-							OR upper(projectnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (50)*/
-							OR upper(ticketnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (150)*/
-							OR upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />	/*  - VARCHAR (255)*/
-							OR upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		/*  - VARCHAR (255)*/
+							   upper(archiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />		-- CHAR (35)
+							OR upper(archiveshahash) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	-- CHAR (40)
+							OR upper(backupforarchiveid) LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#ucase(arguments.searchString)#%" />	-- CHAR (35)
+							OR upper(deployDirSuggestions) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (5000)
+							OR upper(changedescription) LIKE <cfqueryparam cfsqltype="cf_sql_longvarchar" value="%#ucase(arguments.searchString)#%" />	-- LONG VARCHAR (32700)
+							OR upper(changereason) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (50)
+							OR upper(versionname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (50)
+							OR upper(projectnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (50)
+							OR upper(ticketnumber) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (150)
+							OR upper(applicationname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />	-- VARCHAR (255)
+							OR upper(projectname) LIKE <cfqueryparam cfsqltype="cf_sql_varchar" value="%#ucase(arguments.searchString)#%" />		-- VARCHAR (255)
 						)
 				</cfif>
 				
@@ -328,29 +328,29 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveByArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
-					, archives.archiveshahash	/*  - CHAR (40)*/
-					, archives.buildsystemname	/*  - VARCHAR (255)*/
-					, archives.applicationname	/*  - VARCHAR (255)*/
-					, archives.versionname		/*  - VARCHAR (50)*/
-					, archives.projectname		/*  - VARCHAR (255)*/
-					, archives.projectnumber		/*  - VARCHAR (50)*/
-					, archives.ticketnumber		/*  - VARCHAR (150)*/
-					, archives.changereason		/*  - VARCHAR (50)*/
-					, archives.author		/*  - VARCHAR (255)*/
-					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
-					, archives.buildbyuserid		/*  - CHAR (35)*/
-					, archives.buildbyusername	/*  - VARCHAR (100)*/
-					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
-					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
-					, archives.buildon		/*  - TIMESTAMP (26)*/
-					, archives.builddir		/*  - VARCHAR (1000)*/
-					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, archives.filecount		/*  - INTEGER (10)*/
-					, archives.isnativebuild		/*  - INTEGER (10)*/
-					, archives.isbackuparchive	/*  - INTEGER (10)*/
-					, archives.isObsolete		/*  - INTEGER (10)*/	
-					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
+					, archives.archiveshahash	-- CHAR (40)
+					, archives.buildsystemname	-- VARCHAR (255)
+					, archives.applicationname	-- VARCHAR (255)
+					, archives.versionname		-- VARCHAR (50)
+					, archives.projectname		-- VARCHAR (255)
+					, archives.projectnumber		-- VARCHAR (50)
+					, archives.ticketnumber		-- VARCHAR (150)
+					, archives.changereason		-- VARCHAR (50)
+					, archives.author		-- VARCHAR (255)
+					, archives.changedescription	-- LONG VARCHAR (32700)
+					, archives.buildbyuserid		-- CHAR (35)
+					, archives.buildbyusername	-- VARCHAR (100)
+					, archives.buildbyuserfullname	-- VARCHAR (100)
+					, archives.buildbyuseremail	-- VARCHAR (255)
+					, archives.buildon		-- TIMESTAMP (26)
+					, archives.builddir		-- VARCHAR (1000)
+					, archives.deployDirSuggestions		-- VARCHAR (5000)
+					, archives.filecount		-- INTEGER (10)
+					, archives.isnativebuild		-- INTEGER (10)
+					, archives.isbackuparchive	-- INTEGER (10)
+					, archives.isObsolete		-- INTEGER (10)	
+					, archives.backupforarchiveid	-- CHAR (35)
 					
 				FROM archives 
 				WHERE
@@ -376,7 +376,7 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGearchArchivesByApplicationNameNonObsolete" datasource="#arguments.dsn#">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
 				FROM archives 
 				WHERE
 					upper(archives.applicationname) = <cfqueryparam cfsqltype="cf_sql_varchar" value="#ucase(arguments.applicationName)#" />
@@ -403,29 +403,29 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveByArchiveSHAHash" datasource="#arguments.dsn#">
         		SELECT
-					  archives.archiveid		/*  - CHAR (35)*/
-					, archives.archiveshahash	/*  - CHAR (40)*/
-					, archives.buildsystemname	/*  - VARCHAR (255)*/
-					, archives.applicationname	/*  - VARCHAR (255)*/
-					, archives.versionname		/*  - VARCHAR (50)*/
-					, archives.projectname		/*  - VARCHAR (255)*/
-					, archives.projectnumber		/*  - VARCHAR (50)*/
-					, archives.ticketnumber		/*  - VARCHAR (150)*/
-					, archives.changereason		/*  - VARCHAR (50)*/
-					, archives.author		/*  - VARCHAR (255)*/
-					, archives.changedescription	/*  - LONG VARCHAR (32700)*/
-					, archives.buildbyuserid		/*  - CHAR (35)*/
-					, archives.buildbyusername	/*  - VARCHAR (100)*/
-					, archives.buildbyuserfullname	/*  - VARCHAR (100)*/
-					, archives.buildbyuseremail	/*  - VARCHAR (255)*/
-					, archives.buildon		/*  - TIMESTAMP (26)*/
-					, archives.builddir		/*  - VARCHAR (1000)*/
-					, archives.deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, archives.filecount		/*  - INTEGER (10)*/
-					, archives.isnativebuild		/*  - INTEGER (10)*/
-					, archives.isbackuparchive	/*  - INTEGER (10)*/
-					, archives.isObsolete		/*  - INTEGER (10)*/	
-					, archives.backupforarchiveid	/*  - CHAR (35)*/
+					  archives.archiveid		-- CHAR (35)
+					, archives.archiveshahash	-- CHAR (40)
+					, archives.buildsystemname	-- VARCHAR (255)
+					, archives.applicationname	-- VARCHAR (255)
+					, archives.versionname		-- VARCHAR (50)
+					, archives.projectname		-- VARCHAR (255)
+					, archives.projectnumber		-- VARCHAR (50)
+					, archives.ticketnumber		-- VARCHAR (150)
+					, archives.changereason		-- VARCHAR (50)
+					, archives.author		-- VARCHAR (255)
+					, archives.changedescription	-- LONG VARCHAR (32700)
+					, archives.buildbyuserid		-- CHAR (35)
+					, archives.buildbyusername	-- VARCHAR (100)
+					, archives.buildbyuserfullname	-- VARCHAR (100)
+					, archives.buildbyuseremail	-- VARCHAR (255)
+					, archives.buildon		-- TIMESTAMP (26)
+					, archives.builddir		-- VARCHAR (1000)
+					, archives.deployDirSuggestions		-- VARCHAR (5000)
+					, archives.filecount		-- INTEGER (10)
+					, archives.isnativebuild		-- INTEGER (10)
+					, archives.isbackuparchive	-- INTEGER (10)
+					, archives.isObsolete		-- INTEGER (10)	
+					, archives.backupforarchiveid	-- CHAR (35)
 					
 				FROM archives 
 				WHERE
@@ -473,55 +473,55 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qCreateArchive" datasource="#arguments.dsn#">
         		INSERT INTO archives
 				(
-					  archiveid		/*  - CHAR (35)*/
-					, archiveshahash	/*  - CHAR (40)*/
-					, buildsystemname	/*  - VARCHAR (255)*/
-					, applicationname	/*  - VARCHAR (255)*/
-					, versionname		/*  - VARCHAR (50)*/
-					, projectname		/*  - VARCHAR (255)*/
-					, projectnumber		/*  - VARCHAR (50)*/
-					, ticketnumber		/*  - VARCHAR (150)*/
-					, changereason		/*  - VARCHAR (50)*/
-					, author		/*  - VARCHAR (255)*/
-					, changedescription	/*  - LONG VARCHAR (32700)*/
-					, buildbyuserid		/*  - CHAR (35)*/
-					, buildbyusername	/*  - VARCHAR (100)*/
-					, buildbyuserfullname	/*  - VARCHAR (100)*/
-					, buildbyuseremail	/*  - VARCHAR (255)*/
-					, buildon		/*  - TIMESTAMP (26)*/
-					, builddir		/*  - VARCHAR (1000)*/
-					, deployDirSuggestions		/*  - VARCHAR (5000)*/
-					, filecount		/*  - INTEGER (10)*/
-					, isnativebuild		/*  - INTEGER (10)*/
-					, isbackuparchive	/*  - INTEGER (10)*/
-					, isObsolete		/*  - INTEGER (10)*/	
-					, backupforarchiveid	/*  - CHAR (35)*/		
+					  archiveid		-- CHAR (35)
+					, archiveshahash	-- CHAR (40)
+					, buildsystemname	-- VARCHAR (255)
+					, applicationname	-- VARCHAR (255)
+					, versionname		-- VARCHAR (50)
+					, projectname		-- VARCHAR (255)
+					, projectnumber		-- VARCHAR (50)
+					, ticketnumber		-- VARCHAR (150)
+					, changereason		-- VARCHAR (50)
+					, author		-- VARCHAR (255)
+					, changedescription	-- LONG VARCHAR (32700)
+					, buildbyuserid		-- CHAR (35)
+					, buildbyusername	-- VARCHAR (100)
+					, buildbyuserfullname	-- VARCHAR (100)
+					, buildbyuseremail	-- VARCHAR (255)
+					, buildon		-- TIMESTAMP (26)
+					, builddir		-- VARCHAR (1000)
+					, deployDirSuggestions		-- VARCHAR (5000)
+					, filecount		-- INTEGER (10)
+					, isnativebuild		-- INTEGER (10)
+					, isbackuparchive	-- INTEGER (10)
+					, isObsolete		-- INTEGER (10)	
+					, backupforarchiveid	-- CHAR (35)		
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" /> /* archiveshahash */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" /> /* buildsystemname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.applicationname#" /> /* applicationname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.versionname#" /> /* versionname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectname#" /> /* projectname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectnumber#" /> /* projectnumber */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.ticketnumber#" /> /* ticketnumber */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.changereason#" /> /* changereason */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.author#" /> /* author */
-					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.changedescription#" /> /* changedescription */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.buildbyuserid#" /> /* buildbyuserid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyusername#" /> /* buildbyusername */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyuserfullname#" /> /* buildbyuserfullname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyuseremail#" /> /* buildbyuseremail */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" /> /* buildon */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.builddir#" /> /* builddir */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployDirSuggestions#" /> /* deployDirSuggestions */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" /> /* filecount */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" /> /* isnativebuild */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" /> /* isbackuparchive */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" /> /* isObsolete */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupforarchiveid#" /> /* backupforarchiveid */					
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />  -- archiveshahash 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" />  -- buildsystemname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.applicationname#" />  -- applicationname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.versionname#" />  -- versionname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectname#" />  -- projectname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectnumber#" />  -- projectnumber 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.ticketnumber#" />  -- ticketnumber 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.changereason#" />  -- changereason 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.author#" />  -- author 
+					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.changedescription#" />  -- changedescription 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.buildbyuserid#" />  -- buildbyuserid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyusername#" />  -- buildbyusername 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyuserfullname#" />  -- buildbyuserfullname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildbyuseremail#" />  -- buildbyuseremail 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- buildon 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.builddir#" />  -- builddir 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployDirSuggestions#" />  -- deployDirSuggestions 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />  -- filecount 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" />  -- isnativebuild 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />  -- isbackuparchive 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />  -- isObsolete 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupforarchiveid#" />  -- backupforarchiveid 					
 				)
         	</cfquery>
         <cfcatch>
@@ -543,7 +543,7 @@ Copyright 2012 Ryan Guill
         		DELETE
 				FROM archives
 				WHERE
-					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -565,7 +565,7 @@ Copyright 2012 Ryan Guill
         		UPDATE archives
 				SET isObsolete = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isObsolete#" />
 				WHERE
-					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -611,23 +611,23 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qUpdateArchive" datasource="#arguments.dsn#">
         		UPDATE archives
 				SET
-					  archiveshahash = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />	/*  - CHAR (40)*/
-					, buildsystemname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" />	/*  - VARCHAR (255)*/
-					, applicationname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.applicationname#" />	/*  - VARCHAR (255)*/
-					, versionname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.versionname#" />		/*  - VARCHAR (50)*/
-					, projectname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectname#" />		/*  - VARCHAR (255)*/
-					, projectnumber = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectnumber#" />		/*  - VARCHAR (50)*/
-					, ticketnumber = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.ticketnumber#" />		/*  - VARCHAR (150)*/
-					, changereason = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.changereason#" />		/*  - VARCHAR (50)*/
-					, author = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.author#" />		/*  - VARCHAR (255)*/
-					, changedescription = <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.changedescription#" />	/*  - LONG VARCHAR (32700)*/
-					, builddir = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.builddir#" />		/*  - VARCHAR (1000)*/
-					, filecount = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />		/*  - INTEGER (10)*/
-					, isnativebuild = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" />		/*  - INTEGER (10)*/
-					, isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	/*  - INTEGER (10)*/
-					, backupforarchiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupforarchiveid#" />	/*  - CHAR (35)*/
+					  archiveshahash = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />	-- CHAR (40)
+					, buildsystemname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" />	-- VARCHAR (255)
+					, applicationname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.applicationname#" />	-- VARCHAR (255)
+					, versionname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.versionname#" />		-- VARCHAR (50)
+					, projectname = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectname#" />		-- VARCHAR (255)
+					, projectnumber = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.projectnumber#" />		-- VARCHAR (50)
+					, ticketnumber = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.ticketnumber#" />		-- VARCHAR (150)
+					, changereason = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.changereason#" />		-- VARCHAR (50)
+					, author = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.author#" />		-- VARCHAR (255)
+					, changedescription = <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.changedescription#" />	-- LONG VARCHAR (32700)
+					, builddir = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.builddir#" />		-- VARCHAR (1000)
+					, filecount = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.filecount#" />		-- INTEGER (10)
+					, isnativebuild = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isnativebuild#" />		-- INTEGER (10)
+					, isbackuparchive = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.isbackuparchive#" />	-- INTEGER (10)
+					, backupforarchiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupforarchiveid#" />	-- CHAR (35)
 				WHERE
-					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		/*  - CHAR (35)*/
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
         	
         	</cfquery>
         <cfcatch>
@@ -649,14 +649,14 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetFilesForArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  archivefiles.fileid	/*  - CHAR (35)*/
-					, archivefiles.archiveid	/*  - CHAR (35)*/
-					, archivefiles.fileshahash	/*  - CHAR (40)*/
-					, archivefiles.filepath	/*  - VARCHAR (255)*/
+					  archivefiles.fileid	-- CHAR (35)
+					, archivefiles.archiveid	-- CHAR (35)
+					, archivefiles.fileshahash	-- CHAR (40)
+					, archivefiles.filepath	-- VARCHAR (255)
 					
 				FROM archivefiles
 				WHERE
-					 archiveFiles.archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />	/*  - CHAR (35)*/    	
+					 archiveFiles.archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />	-- CHAR (35)    	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -677,14 +677,14 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetFileForFileID" datasource="#arguments.dsn#">
         		SELECT
-					  archivefiles.fileid	/*  - CHAR (35)*/
-					, archivefiles.archiveid	/*  - CHAR (35)*/
-					, archivefiles.fileshahash	/*  - CHAR (40)*/
-					, archivefiles.filepath	/*  - VARCHAR (255)*/
+					  archivefiles.fileid	-- CHAR (35)
+					, archivefiles.archiveid	-- CHAR (35)
+					, archivefiles.fileshahash	-- CHAR (40)
+					, archivefiles.filepath	-- VARCHAR (255)
 					
 				FROM archivefiles
 				WHERE
-					 archiveFiles.fileid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileid#" />	/*  - CHAR (35)*/    	
+					 archiveFiles.fileid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileid#" />	-- CHAR (35)    	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -705,14 +705,14 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetFileForFileSHAHash" datasource="#arguments.dsn#">
         		SELECT
-					  archivefiles.fileid	/*  - CHAR (35)*/
-					, archivefiles.archiveid	/*  - CHAR (35)*/
-					, archivefiles.fileshahash	/*  - CHAR (40)*/
-					, archivefiles.filepath	/*  - VARCHAR (255)*/
+					  archivefiles.fileid	-- CHAR (35)
+					, archivefiles.archiveid	-- CHAR (35)
+					, archivefiles.fileshahash	-- CHAR (40)
+					, archivefiles.filepath	-- VARCHAR (255)
 					
 				FROM archivefiles
 				WHERE
-					 archiveFiles.fileshahash = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileshahash#" />	/*  - CHAR (35)*/    	
+					 archiveFiles.fileshahash = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileshahash#" />	-- CHAR (35)    	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -736,18 +736,18 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qInsertArchiveFile" datasource="#arguments.dsn#">
         		INSERT INTO archivefiles
 				(
-					  fileid	/*  - CHAR (35)*/
-					, archiveid	/*  - CHAR (35)*/
-					, fileshahash	/*  - CHAR (40)*/
-					, filepath	/*  - VARCHAR (255)*/
+					  fileid	-- CHAR (35)
+					, archiveid	-- CHAR (35)
+					, fileshahash	-- CHAR (40)
+					, filepath	-- VARCHAR (255)
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#fileid#" /> /* fileid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileshahash#" /> /* fileshahash */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filepath#" /> /* filepath */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#fileid#" />  -- fileid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.fileshahash#" />  -- fileshahash 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.filepath#" />  -- filepath 
 					
 				)
         	</cfquery>
@@ -769,24 +769,24 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetDeploymentsForArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  archivedeployments.deploymentid			/*  - CHAR (35)*/
-					, archivedeployments.archiveid			/*  - CHAR (35)*/
-					, archivedeployments.archiveshahash		/*  - CHAR (40)*/
-					, archivedeployments.buildsystemname		/*  - VARCHAR (255)*/
-					, archiveDeployments.deployedSystemName		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedbyuserid		/*  - CHAR (35)*/
-					, archivedeployments.deployedbyusername		/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuserfullname	/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuseremail		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedon			/*  - TIMESTAMP (26)*/
-					, archivedeployments.deploymentdir			/*  - VARCHAR (1000)*/
-					, archivedeployments.deploymentNotes		/* - long varchar */
-					, archivedeployments.wasbackuptaken		/*  - INTEGER (10)*/
-					, archivedeployments.backupArchiveID		/*  - CHAR (35)*/
+					  archivedeployments.deploymentid			-- CHAR (35)
+					, archivedeployments.archiveid			-- CHAR (35)
+					, archivedeployments.archiveshahash		-- CHAR (40)
+					, archivedeployments.buildsystemname		-- VARCHAR (255)
+					, archiveDeployments.deployedSystemName		-- VARCHAR (255)
+					, archivedeployments.deployedbyuserid		-- CHAR (35)
+					, archivedeployments.deployedbyusername		-- VARCHAR (100)
+					, archivedeployments.deployedbyuserfullname	-- VARCHAR (100)
+					, archivedeployments.deployedbyuseremail		-- VARCHAR (255)
+					, archivedeployments.deployedon			-- TIMESTAMP (26)
+					, archivedeployments.deploymentdir			-- VARCHAR (1000)
+					, archivedeployments.deploymentNotes		 -- - long varchar 
+					, archivedeployments.wasbackuptaken		-- INTEGER (10)
+					, archivedeployments.backupArchiveID		-- CHAR (35)
 					
 				FROM archivedeployments 
 				WHERE
-					archiveDeployments.archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />			/*  - CHAR (35)*/
+					archiveDeployments.archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />			-- CHAR (35)
         		ORDER BY
 					archiveDeployments.deployedOn DESC
         	</cfquery>
@@ -808,24 +808,24 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetDeploymentsForDeploymentID" datasource="#arguments.dsn#">
         		SELECT
-					  archivedeployments.deploymentid			/*  - CHAR (35)*/
-					, archivedeployments.archiveid			/*  - CHAR (35)*/
-					, archivedeployments.archiveshahash		/*  - CHAR (40)*/
-					, archivedeployments.buildsystemname		/*  - VARCHAR (255)*/
-					, archiveDeployments.deployedSystemName		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedbyuserid		/*  - CHAR (35)*/
-					, archivedeployments.deployedbyusername		/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuserfullname	/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuseremail		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedon			/*  - TIMESTAMP (26)*/
-					, archivedeployments.deploymentdir			/*  - VARCHAR (1000)*/
-					, archivedeployments.deploymentNotes		/* - long varchar */
-					, archivedeployments.wasbackuptaken		/*  - INTEGER (10)*/
-					, archivedeployments.backupArchiveID		/*  - CHAR (35)*/
+					  archivedeployments.deploymentid			-- CHAR (35)
+					, archivedeployments.archiveid			-- CHAR (35)
+					, archivedeployments.archiveshahash		-- CHAR (40)
+					, archivedeployments.buildsystemname		-- VARCHAR (255)
+					, archiveDeployments.deployedSystemName		-- VARCHAR (255)
+					, archivedeployments.deployedbyuserid		-- CHAR (35)
+					, archivedeployments.deployedbyusername		-- VARCHAR (100)
+					, archivedeployments.deployedbyuserfullname	-- VARCHAR (100)
+					, archivedeployments.deployedbyuseremail		-- VARCHAR (255)
+					, archivedeployments.deployedon			-- TIMESTAMP (26)
+					, archivedeployments.deploymentdir			-- VARCHAR (1000)
+					, archivedeployments.deploymentNotes		 -- - long varchar 
+					, archivedeployments.wasbackuptaken		-- INTEGER (10)
+					, archivedeployments.backupArchiveID		-- CHAR (35)
 					
 				FROM archivedeployments 
 				WHERE
-					archiveDeployments.deploymentid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" />			/*  - CHAR (35)*/
+					archiveDeployments.deploymentid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" />			-- CHAR (35)
         		ORDER BY
 					archiveDeployments.deployedOn DESC
         	</cfquery>
@@ -847,20 +847,20 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetAllDeployments" datasource="#arguments.dsn#">
         		SELECT
-					  archivedeployments.deploymentid			/*  - CHAR (35)*/
-					, archivedeployments.archiveid			/*  - CHAR (35)*/
-					, archivedeployments.archiveshahash		/*  - CHAR (40)*/
-					, archivedeployments.buildsystemname		/*  - VARCHAR (255)*/
-					, archiveDeployments.deployedSystemName		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedbyuserid		/*  - CHAR (35)*/
-					, archivedeployments.deployedbyusername		/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuserfullname	/*  - VARCHAR (100)*/
-					, archivedeployments.deployedbyuseremail		/*  - VARCHAR (255)*/
-					, archivedeployments.deployedon			/*  - TIMESTAMP (26)*/
-					, archivedeployments.deploymentdir			/*  - VARCHAR (1000)*/
-					, archivedeployments.deploymentNotes		/* - long varchar */
-					, archivedeployments.wasbackuptaken		/*  - INTEGER (10)*/
-					, archivedeployments.backupArchiveID		/*  - CHAR (35)*/
+					  archivedeployments.deploymentid			-- CHAR (35)
+					, archivedeployments.archiveid			-- CHAR (35)
+					, archivedeployments.archiveshahash		-- CHAR (40)
+					, archivedeployments.buildsystemname		-- VARCHAR (255)
+					, archiveDeployments.deployedSystemName		-- VARCHAR (255)
+					, archivedeployments.deployedbyuserid		-- CHAR (35)
+					, archivedeployments.deployedbyusername		-- VARCHAR (100)
+					, archivedeployments.deployedbyuserfullname	-- VARCHAR (100)
+					, archivedeployments.deployedbyuseremail		-- VARCHAR (255)
+					, archivedeployments.deployedon			-- TIMESTAMP (26)
+					, archivedeployments.deploymentdir			-- VARCHAR (1000)
+					, archivedeployments.deploymentNotes		 -- - long varchar 
+					, archivedeployments.wasbackuptaken		-- INTEGER (10)
+					, archivedeployments.backupArchiveID		-- CHAR (35)
 					
 				FROM archivedeployments 
         		ORDER BY
@@ -898,37 +898,37 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qCreateDeployment" datasource="#arguments.dsn#">
         		INSERT INTO archivedeployments
 				(
-					  deploymentid			/*  - CHAR (35)*/
-					, archiveid			/*  - CHAR (35)*/
-					, archiveshahash		/*  - CHAR (40)*/
-					, buildsystemname		/*  - VARCHAR (255)*/
-					, deployedSystemname		/*  - VARCHAR (255)*/
-					, deployedbyuserid		/*  - CHAR (35)*/
-					, deployedbyusername		/*  - VARCHAR (100)*/
-					, deployedbyuserfullname	/*  - VARCHAR (100)*/
-					, deployedbyuseremail		/*  - VARCHAR (255)*/
-					, deployedon			/*  - TIMESTAMP (26)*/
-					, deploymentdir			/*  - VARCHAR (1000)*/
-					, deploymentnotes			/*  - long varchar*/
-					, wasbackuptaken		/*  - INTEGER (10)*/
-					, backupArchiveID		/*  - CHAR (35)*/					
+					  deploymentid			-- CHAR (35)
+					, archiveid			-- CHAR (35)
+					, archiveshahash		-- CHAR (40)
+					, buildsystemname		-- VARCHAR (255)
+					, deployedSystemname		-- VARCHAR (255)
+					, deployedbyuserid		-- CHAR (35)
+					, deployedbyusername		-- VARCHAR (100)
+					, deployedbyuserfullname	-- VARCHAR (100)
+					, deployedbyuseremail		-- VARCHAR (255)
+					, deployedon			-- TIMESTAMP (26)
+					, deploymentdir			-- VARCHAR (1000)
+					, deploymentnotes			-- long varchar
+					, wasbackuptaken		-- INTEGER (10)
+					, backupArchiveID		-- CHAR (35)					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentID#" /> /* deploymentid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" /> /* archiveshahash */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" /> /* buildsystemname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedSystemname#" /> /* deployedsystemname */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deployedbyuserid#" /> /* deployedbyuserid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyusername#" /> /* deployedbyusername */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyuserfullname#" /> /* deployedbyuserfullname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyuseremail#" /> /* deployedbyuseremail */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.deployedon#" /> /* deployedon */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deploymentdir#" /> /* deploymentdir */
-					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.deploymentnotes#" /> /* deploymentdir */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.wasbackuptaken#" /> /* wasbackuptaken */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupArchiveID#" /> /* backupArchiveID */					
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentID#" />  -- deploymentid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />  -- archiveshahash 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" />  -- buildsystemname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedSystemname#" />  -- deployedsystemname 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deployedbyuserid#" />  -- deployedbyuserid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyusername#" />  -- deployedbyusername 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyuserfullname#" />  -- deployedbyuserfullname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedbyuseremail#" />  -- deployedbyuseremail 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.deployedon#" />  -- deployedon 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deploymentdir#" />  -- deploymentdir 
+					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.deploymentnotes#" />  -- deploymentdir 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.wasbackuptaken#" />  -- wasbackuptaken 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backupArchiveID#" />  -- backupArchiveID 					
 				)        	
         	</cfquery>
         <cfcatch>
@@ -958,28 +958,28 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qInsertDeploymentFileManifest" datasource="#arguments.dsn#">
         		INSERT INTO deploymentfilesmanifest
 				(
-					  deploymentfilemanifestid	/*  - CHAR (35)*/
-					, deploymentid			/*  - CHAR (35)*/
-					, archiveid			/*  - CHAR (35)*/
-					, deployedsystemname		/*  - VARCHAR (255)*/
-					, archivefileid			/*  - CHAR (35)*/
-					, deployedfilepath		/*  - VARCHAR (255)*/
-					, backuparchiveid		/*  - CHAR (35)*/
-					, backuparchivefileid		/*  - CHAR (35)*/
-					, previousfileshahash		/*  - CHAR (40)*/
+					  deploymentfilemanifestid	-- CHAR (35)
+					, deploymentid			-- CHAR (35)
+					, archiveid			-- CHAR (35)
+					, deployedsystemname		-- VARCHAR (255)
+					, archivefileid			-- CHAR (35)
+					, deployedfilepath		-- VARCHAR (255)
+					, backuparchiveid		-- CHAR (35)
+					, backuparchivefileid		-- CHAR (35)
+					, previousfileshahash		-- CHAR (40)
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentfilemanifestid#" /> /* deploymentfilemanifestid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" /> /* deploymentid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedsystemname#" /> /* deployedsystemname */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archivefileid#" /> /* archivefileid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedfilepath#" /> /* deployedfilepath */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchiveid#" /> /* backuparchiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchivefileid#" /> /* backuparchivefileid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.previousfileshahash#" /> /* previousfileshahash */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentfilemanifestid#" />  -- deploymentfilemanifestid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" />  -- deploymentid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedsystemname#" />  -- deployedsystemname 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archivefileid#" />  -- archivefileid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.deployedfilepath#" />  -- deployedfilepath 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchiveid#" />  -- backuparchiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchivefileid#" />  -- backuparchivefileid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.previousfileshahash#" />  -- previousfileshahash 
 					
 				)
   	
@@ -1001,26 +1001,26 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetDeploymentFilesManifestForDeploymentID" datasource="#arguments.dsn#">
         		SELECT
-					  deploymentfilesmanifest.deploymentfilemanifestid	/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deploymentid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.archiveid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deployedsystemname		/*  - VARCHAR (255)*/
-					, deploymentfilesmanifest.archivefileid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deployedfilepath		/*  - VARCHAR (255)*/
-					, deploymentfilesmanifest.backuparchiveid		/*  - CHAR (35)*/
-					, deploymentfilesmanifest.backuparchivefileid		/*  - CHAR (35)*/
-					, deploymentfilesmanifest.previousfileshahash		/*  - CHAR (40)*/
+					  deploymentfilesmanifest.deploymentfilemanifestid	-- CHAR (35)
+					, deploymentfilesmanifest.deploymentid			-- CHAR (35)
+					, deploymentfilesmanifest.archiveid			-- CHAR (35)
+					, deploymentfilesmanifest.deployedsystemname		-- VARCHAR (255)
+					, deploymentfilesmanifest.archivefileid			-- CHAR (35)
+					, deploymentfilesmanifest.deployedfilepath		-- VARCHAR (255)
+					, deploymentfilesmanifest.backuparchiveid		-- CHAR (35)
+					, deploymentfilesmanifest.backuparchivefileid		-- CHAR (35)
+					, deploymentfilesmanifest.previousfileshahash		-- CHAR (40)
 					
-					, archivefiles.archiveid	/*  - CHAR (35)*/
-					, archivefiles.fileshahash	/*  - CHAR (40)*/
-					, archivefiles.filepath	/*  - VARCHAR (255)*/
+					, archivefiles.archiveid	-- CHAR (35)
+					, archivefiles.fileshahash	-- CHAR (40)
+					, archivefiles.filepath	-- VARCHAR (255)
 					
 				FROM deploymentfilesmanifest
 				INNER
 					JOIN archiveFiles
 					ON deploymentFilesManifest.archiveFileID = archiveFiles.fileID
 				WHERE
-					deploymentfilesmanifest.deploymentid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" /> /* deploymentid */
+					deploymentfilesmanifest.deploymentid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.deploymentid#" />  -- deploymentid 
         	
         	</cfquery>
         <cfcatch>
@@ -1040,26 +1040,26 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetDeploymentFilesManifestForArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  deploymentfilesmanifest.deploymentfilemanifestid	/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deploymentid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.archiveid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deployedsystemname		/*  - VARCHAR (255)*/
-					, deploymentfilesmanifest.archivefileid			/*  - CHAR (35)*/
-					, deploymentfilesmanifest.deployedfilepath		/*  - VARCHAR (255)*/
-					, deploymentfilesmanifest.backuparchiveid		/*  - CHAR (35)*/
-					, deploymentfilesmanifest.backuparchivefileid		/*  - CHAR (35)*/
-					, deploymentfilesmanifest.previousfileshahash		/*  - CHAR (40)*/
+					  deploymentfilesmanifest.deploymentfilemanifestid	-- CHAR (35)
+					, deploymentfilesmanifest.deploymentid			-- CHAR (35)
+					, deploymentfilesmanifest.archiveid			-- CHAR (35)
+					, deploymentfilesmanifest.deployedsystemname		-- VARCHAR (255)
+					, deploymentfilesmanifest.archivefileid			-- CHAR (35)
+					, deploymentfilesmanifest.deployedfilepath		-- VARCHAR (255)
+					, deploymentfilesmanifest.backuparchiveid		-- CHAR (35)
+					, deploymentfilesmanifest.backuparchivefileid		-- CHAR (35)
+					, deploymentfilesmanifest.previousfileshahash		-- CHAR (40)
 
-					, archivefiles.archiveid	/*  - CHAR (35)*/
-					, archivefiles.fileshahash	/*  - CHAR (40)*/
-					, archivefiles.filepath	/*  - VARCHAR (255)*/
+					, archivefiles.archiveid	-- CHAR (35)
+					, archivefiles.fileshahash	-- CHAR (40)
+					, archivefiles.filepath	-- VARCHAR (255)
 					
 				FROM deploymentfilesmanifest
 				INNER
 					JOIN archiveFiles
 					ON deploymentFilesManifest.archiveFileID = archiveFiles.fileID
 				WHERE
-					deploymentfilesmanifest.archiveID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveID#" /> /* archiveID */
+					deploymentfilesmanifest.archiveID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveID#" />  -- archiveID 
         	
         	</cfquery>
         <cfcatch>
@@ -1080,17 +1080,17 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveCertificationsForArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  archivecertifications.certificationid		/*  - CHAR (35)*/
-					, archivecertifications.archiveid			/*  - CHAR (35)*/
-					, archivecertifications.archiveshahash		/*  - CHAR (40)*/
-					, archivecertifications.userid			/*  - CHAR (35)*/
-					, archivecertifications.userfullname			/*  - VARCHAR (100)*/
-					, archivecertifications.useremail			/*  - VARCHAR (255)*/
-					, archivecertifications.certificationtypename		/*  - VARCHAR (25)*/
-					, archivecertifications.certificationnotes		/*  - LONG VARCHAR (32700)*/
-					, archivecertifications.certificationhash		/*  - CHAR (40)*/
-					, archivecertifications.certificationon		/*  - TIMESTAMP (26)*/
-					, archivecertifications.certificationsystemname	/*  - VARCHAR (255)*/
+					  archivecertifications.certificationid		-- CHAR (35)
+					, archivecertifications.archiveid			-- CHAR (35)
+					, archivecertifications.archiveshahash		-- CHAR (40)
+					, archivecertifications.userid			-- CHAR (35)
+					, archivecertifications.userfullname			-- VARCHAR (100)
+					, archivecertifications.useremail			-- VARCHAR (255)
+					, archivecertifications.certificationtypename		-- VARCHAR (25)
+					, archivecertifications.certificationnotes		-- LONG VARCHAR (32700)
+					, archivecertifications.certificationhash		-- CHAR (40)
+					, archivecertifications.certificationon		-- TIMESTAMP (26)
+					, archivecertifications.certificationsystemname	-- VARCHAR (255)
 					
 				FROM archivecertifications 
 				WHERE
@@ -1116,17 +1116,17 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveCertificationForCertificationID" datasource="#arguments.dsn#">
         		SELECT
-					  archivecertifications.certificationid		/*  - CHAR (35)*/
-					, archivecertifications.archiveid			/*  - CHAR (35)*/
-					, archivecertifications.archiveshahash		/*  - CHAR (40)*/
-					, archivecertifications.userid			/*  - CHAR (35)*/
-					, archivecertifications.userfullname			/*  - VARCHAR (100)*/
-					, archivecertifications.useremail			/*  - VARCHAR (255)*/
-					, archivecertifications.certificationtypename		/*  - VARCHAR (25)*/
-					, archivecertifications.certificationnotes		/*  - LONG VARCHAR (32700)*/
-					, archivecertifications.certificationhash		/*  - CHAR (40)*/
-					, archivecertifications.certificationon		/*  - TIMESTAMP (26)*/
-					, archivecertifications.certificationsystemname	/*  - VARCHAR (255)*/
+					  archivecertifications.certificationid		-- CHAR (35)
+					, archivecertifications.archiveid			-- CHAR (35)
+					, archivecertifications.archiveshahash		-- CHAR (40)
+					, archivecertifications.userid			-- CHAR (35)
+					, archivecertifications.userfullname			-- VARCHAR (100)
+					, archivecertifications.useremail			-- VARCHAR (255)
+					, archivecertifications.certificationtypename		-- VARCHAR (25)
+					, archivecertifications.certificationnotes		-- LONG VARCHAR (32700)
+					, archivecertifications.certificationhash		-- CHAR (40)
+					, archivecertifications.certificationon		-- TIMESTAMP (26)
+					, archivecertifications.certificationsystemname	-- VARCHAR (255)
 					
 				FROM archivecertifications 
 				WHERE
@@ -1163,32 +1163,32 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qInsertArchiveCertification" datasource="#arguments.dsn#">
         		INSERT INTO archivecertifications
 				(
-					  certificationid		/*  - CHAR (35)*/
-					, archiveid			/*  - CHAR (35)*/
-					, archiveshahash		/*  - CHAR (40)*/
-					, userid			/*  - CHAR (35)*/
-					, userfullname			/*  - VARCHAR (100)*/
-					, useremail			/*  - VARCHAR (255)*/
-					, certificationtypename		/*  - VARCHAR (25)*/
-					, certificationnotes		/*  - LONG VARCHAR (32700)*/
-					, certificationhash		/*  - CHAR (40)*/
-					, certificationon		/*  - TIMESTAMP (26)*/
-					, certificationsystemname	/*  - VARCHAR (255)*/
+					  certificationid		-- CHAR (35)
+					, archiveid			-- CHAR (35)
+					, archiveshahash		-- CHAR (40)
+					, userid			-- CHAR (35)
+					, userfullname			-- VARCHAR (100)
+					, useremail			-- VARCHAR (255)
+					, certificationtypename		-- VARCHAR (25)
+					, certificationnotes		-- LONG VARCHAR (32700)
+					, certificationhash		-- CHAR (40)
+					, certificationon		-- TIMESTAMP (26)
+					, certificationsystemname	-- VARCHAR (255)
 					
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.certificationid#" /> /* certificationid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" /> /* archiveshahash */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userid#" /> /* userid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userfullname#" /> /* userfullname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.useremail#" /> /* useremail */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationtypename#" /> /* certificationtypename */
-					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.certificationnotes#" /> /* certificationnotes */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.certificationhash#" /> /* certificationhash */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.certificationon#" /> /* certificationon */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationsystemname#" /> /* certificationsystemname */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.certificationid#" />  -- certificationid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />  -- archiveshahash 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userid#" />  -- userid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.userfullname#" />  -- userfullname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.useremail#" />  -- useremail 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationtypename#" />  -- certificationtypename 
+					, <cfqueryparam cfsqltype="cf_sql_longvarchar" value="#arguments.certificationnotes#" />  -- certificationnotes 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.certificationhash#" />  -- certificationhash 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.certificationon#" />  -- certificationon 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationsystemname#" />  -- certificationsystemname 
 					
 				)
         	</cfquery>
@@ -1231,18 +1231,18 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveLog" datasource="#arguments.dsn#" maxrows="#arguments.maxrows#">
         		SELECT
-					  archivelog.logid			/*  - CHAR (35)*/
-					, archivelog.archiveid		/*  - CHAR (35)*/
-					, archivelog.archiveshahash	/*  - CHAR (40)*/
-					, archivelog.buildsystemname	/*  - VARCHAR (255)*/
-					, archivelog.logSystemName	/*  - VARCHAR (255)*/
-					, archivelog.logaction		/*  - VARCHAR (50)*/
-					, archivelog.deployflag		/*  - INTEGER (10)*/
-					, archivelog.backupcreatedflag	/*  - INTEGER (10)*/
-					, archivelog.backuparchiveid	/*  - CHAR (35)*/
-					, archivelog.userid		/*  - CHAR (35)*/
-					, archivelog.logmessage		/*  - VARCHAR (1000)*/
-					, archivelog.logdatetime		/*  - TIMESTAMP (26)*/
+					  archivelog.logid			-- CHAR (35)
+					, archivelog.archiveid		-- CHAR (35)
+					, archivelog.archiveshahash	-- CHAR (40)
+					, archivelog.buildsystemname	-- VARCHAR (255)
+					, archivelog.logSystemName	-- VARCHAR (255)
+					, archivelog.logaction		-- VARCHAR (50)
+					, archivelog.deployflag		-- INTEGER (10)
+					, archivelog.backupcreatedflag	-- INTEGER (10)
+					, archivelog.backuparchiveid	-- CHAR (35)
+					, archivelog.userid		-- CHAR (35)
+					, archivelog.logmessage		-- VARCHAR (1000)
+					, archivelog.logdatetime		-- TIMESTAMP (26)
 					
 				FROM archivelog 
 				ORDER BY logdatetime desc
@@ -1266,18 +1266,18 @@ Copyright 2012 Ryan Guill
         <cftry>
         	<cfquery name="qGetArchiveLogForArchiveID" datasource="#arguments.dsn#">
         		SELECT
-					  archivelog.logid			/*  - CHAR (35)*/
-					, archivelog.archiveid		/*  - CHAR (35)*/
-					, archivelog.archiveshahash	/*  - CHAR (40)*/
-					, archivelog.buildsystemname	/*  - VARCHAR (255)*/
-					, archivelog.logSystemName	/*  - VARCHAR (255)*/
-					, archivelog.logaction		/*  - VARCHAR (50)*/
-					, archivelog.deployflag		/*  - INTEGER (10)*/
-					, archivelog.backupcreatedflag	/*  - INTEGER (10)*/
-					, archivelog.backuparchiveid	/*  - CHAR (35)*/
-					, archivelog.userid		/*  - CHAR (35)*/
-					, archivelog.logmessage		/*  - VARCHAR (1000)*/
-					, archivelog.logdatetime		/*  - TIMESTAMP (26)*/
+					  archivelog.logid			-- CHAR (35)
+					, archivelog.archiveid		-- CHAR (35)
+					, archivelog.archiveshahash	-- CHAR (40)
+					, archivelog.buildsystemname	-- VARCHAR (255)
+					, archivelog.logSystemName	-- VARCHAR (255)
+					, archivelog.logaction		-- VARCHAR (50)
+					, archivelog.deployflag		-- INTEGER (10)
+					, archivelog.backupcreatedflag	-- INTEGER (10)
+					, archivelog.backuparchiveid	-- CHAR (35)
+					, archivelog.userid		-- CHAR (35)
+					, archivelog.logmessage		-- VARCHAR (1000)
+					, archivelog.logdatetime		-- TIMESTAMP (26)
 					
 				FROM archivelog
 				WHERE archiveID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveID#" />
@@ -1313,33 +1313,33 @@ Copyright 2012 Ryan Guill
         	<cfquery name="qInsertArchiveLog" datasource="#arguments.dsn#">
         		INSERT INTO archivelog
 				(
-					  logid			/*  - CHAR (35)*/
-					, archiveid		/*  - CHAR (35)*/
-					, archiveshahash	/*  - CHAR (40)*/
-					, buildsystemname	/*  - VARCHAR (255)*/
-					, logSystemName	/*  - VARCHAR (255)*/
-					, logaction		/*  - VARCHAR (50)*/
-					, deployflag		/*  - INTEGER (10)*/
-					, backupcreatedflag	/*  - INTEGER (10)*/
-					, backuparchiveid	/*  - CHAR (35)*/
-					, userid		/*  - CHAR (35)*/
-					, logmessage		/*  - VARCHAR (1000)*/
-					, logdatetime		/*  - TIMESTAMP (26)*/	
+					  logid			-- CHAR (35)
+					, archiveid		-- CHAR (35)
+					, archiveshahash	-- CHAR (40)
+					, buildsystemname	-- VARCHAR (255)
+					, logSystemName	-- VARCHAR (255)
+					, logaction		-- VARCHAR (50)
+					, deployflag		-- INTEGER (10)
+					, backupcreatedflag	-- INTEGER (10)
+					, backuparchiveid	-- CHAR (35)
+					, userid		-- CHAR (35)
+					, logmessage		-- VARCHAR (1000)
+					, logdatetime		-- TIMESTAMP (26)	
 				)
 				VALUES
 				(
-					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.logID#" /> /* logid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" /> /* archiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" /> /* archiveshahash */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" /> /* buildsystemname */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logSystemName#" /> /* logSystemName */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logaction#" /> /* logaction */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.deployflag#" /> /* deployflag */
-					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.backupcreatedflag#" /> /* backupcreatedflag */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchiveid#" /> /* backuparchiveid */
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userid#" /> /* userid */
-					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logmessage#" /> /* logmessage */
-					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.logDateTime#" /> /* logdatetime */
+					  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.logID#" />  -- logid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />  -- archiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveshahash#" />  -- archiveshahash 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.buildsystemname#" />  -- buildsystemname 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logSystemName#" />  -- logSystemName 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logaction#" />  -- logaction 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.deployflag#" />  -- deployflag 
+					, <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.backupcreatedflag#" />  -- backupcreatedflag 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.backuparchiveid#" />  -- backuparchiveid 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.userid#" />  -- userid 
+					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.logmessage#" />  -- logmessage 
+					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#arguments.logDateTime#" />  -- logdatetime 
 				)        	
         	</cfquery>
         <cfcatch>
