@@ -195,11 +195,11 @@ Copyright 2012 Ryan Guill
 													<cfif NOT url.includeHidden>
 														<cfif left(variables.results.name,1) EQ ".">
 															<!--- cf8 doesnt have cfcontinue, so have to use an old hack - if we ever drop support for cf8, change this back to cfcontinue instead --->
-															<cfthrow type="cfcontinue_hack" />
+															<cfthrow type="cfcontinue_hack"/><!---  message="hidden filename #variables.results.name#"  --->
 														</cfif>
 														<cfloop from="1" to="#listLen(variables.results.directory,application.settings.pathSeperator)#" index="i">
 															<cfif left(listGetAt(variables.results.directory,i,application.settings.pathSeperator),1) EQ ".">
-																<cfthrow type="cfcontinue_hack" />
+																<cfthrow type="cfcontinue_hack" /><!---  message="hidden directory #variables.results.directory#" --->
 															</cfif>
 														</cfloop>
 													</cfif>
@@ -207,7 +207,7 @@ Copyright 2012 Ryan Guill
 													<cfif listLen(url.excludeExtensions)>
 														<cfset url.excludeExtensions = replaceNoCase(url.excludeExtensions,".","","all") />
 														<cfif listContainsNoCase(url.excludeExtensions,listLast(variables.results.name,"."))>
-															<cfthrow type="cfcontinue_hack" />
+															<cfthrow type="cfcontinue_hack" /><!---  message="excluded extension #variables.results.name#" --->
 														</cfif>
 													</cfif>
 													

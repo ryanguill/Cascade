@@ -135,8 +135,6 @@ Copyright 2012 Ryan Guill
         	
         	</cfquery>
         <cfcatch>
-        	<cfdump var="#variables.instance#" />
-			<cfabort />
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
         <cfrethrow />
         </cfcatch>
