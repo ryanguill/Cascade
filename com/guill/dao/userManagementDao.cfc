@@ -588,7 +588,7 @@ Copyright 2012 Ryan Guill
 					, email		 --  varchar (255)
 					, firstname	 --  varchar (50)
 					, lastname	 --  varchar (50)
-					, password  /*	- varchar (100
+					, password   -- varchar (100
 					, createdBy	 --  varchar (100)
 					, createdOn	 --  datetime 
 					, lastUpdatedBy	 --  varchar (100)
