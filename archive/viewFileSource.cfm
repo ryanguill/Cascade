@@ -68,7 +68,7 @@ Copyright 2012 Ryan Guill
 	
 	<cfset variables.newLine = chr(10) />
 	
-	<cfset variables.data = listToArray(variables.fileContent,variables.newline,true,true) />
+	<cfset variables.data = listToArray(variables.fileContent,variables.newline,true) />
 	<cfset variables.totalLines = arrayLen(variables.data) />
 	
 </cfsilent>

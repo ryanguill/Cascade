@@ -49,6 +49,15 @@ Copyright 2012 Ryan Guill
 		<cfset local.fileObj = createObject("java","java.io.File") />
 		
 		<cfset application.settings.pathSeperator = local.fileObj.separator />
+		
+		<cfif application.settings.pathSeperator EQ "/" >
+			<cfset application.settings.antiPathSeperator = "\" />
+		<cfelseif application.settings.pathSeperator EQ "\" >
+			<cfset application.settings.antiPathSeperator = "/" />
+		<cfelse>
+			<cfset application.settings.antiPathSeperator = "" />
+		</cfif>
+		
 		<cfset application.settings.showFirstXCharsOfSHA = 10 />
 		
 		<cfset application.objs.global = createObject("component","#application.settings.appMapping#.com.guill.global") />

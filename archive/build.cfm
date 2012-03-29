@@ -48,6 +48,7 @@ Copyright 2012 Ryan Guill
 		<cfset url.dir = listDeleteAt(expandPath(application.settings.appBaseDir),variables.appBaseDirDepth,application.settings.pathSeperator) & application.settings.pathSeperator />
 	<cfelse>
 		
+		<cfset url.dir = replaceNoCase(url.dir,application.settings.antiPathSeperator,application.settings.pathSeperator,"all") />
 	
 		<cfif directoryExists(url.dir)>
 			<cfset variables.showFiles = true />
