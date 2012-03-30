@@ -114,6 +114,7 @@ Copyright 2012 Ryan Guill
 		<cfargument name="isbackuparchive" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="isObsolete" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="backupForArchiveID" type="string" required="true" hint="pass -1 to ignore" />
+		<cfargument name="minimumCertificationID" type="string" required="true" hint="pass -1 to ignore" />
 		
 		<cfset var qSearchArchives = "" />
 		
@@ -144,7 +145,7 @@ Copyright 2012 Ryan Guill
 					, archives.isObsolete		-- INTEGER (10)	
 					, archives.backupforarchiveid	-- CHAR (35)
 					
-				FROM archives  
+				FROM archives
 				WHERE 1 = 1
 				<cfif arguments.archiveID NEQ -1>
 					AND archiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)

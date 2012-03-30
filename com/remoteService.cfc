@@ -129,7 +129,7 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
 					, remoteservers.configuredon			 --  TIMESTAMP (26)
-					
+					, remoteservers.minimumCertificationID			--  CHAR (35)
 				FROM remoteservers
 				ORDER BY remoteservers.servername 		
         	
@@ -161,7 +161,7 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
 					, remoteservers.configuredon			 --  TIMESTAMP (26)
-					
+					, remoteservers.minimumCertificationID			--  CHAR (35)
 				FROM remoteservers
 				WHERE
 					remoteServers.serverID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverID#" />
@@ -185,7 +185,8 @@ Copyright 2012 Ryan Guill
 		<cfargument name="configuredbyusername" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="configuredbyuserfullname" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="configuredbyuseremail" type="String" required="true" hint=" - VARCHAR (255)" />
-		
+		<cfargument name="minimumCertificationID" type="String" required="true" hint=" - CHAR (35)" />
+				
 		<cfset var qRegisterRemoteServer = "" />
 		<cfset var qRemoteServer = getRemoteServerByServerID(arguments.serverID) />
 		
@@ -207,7 +208,7 @@ Copyright 2012 Ryan Guill
 					, configuredbyuserfullname	 --  VARCHAR (100)
 					, configuredbyuseremail		 --  VARCHAR (255)
 					, configuredon			 --  TIMESTAMP (26)
-					
+					, minimumCertificationID			--  CHAR (35)
 				)
 				VALUES
 				(
@@ -221,6 +222,7 @@ Copyright 2012 Ryan Guill
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuserfullname#" />  -- configuredbyuserfullname 
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuseremail#" />  -- configuredbyuseremail 
 					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- configuredon 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.minimumCertificationID#" />  -- minimumCertificationID 
 					
 				)
 
@@ -256,6 +258,7 @@ Copyright 2012 Ryan Guill
 	<cffunction name="getAvailableArchives" access="remote" returntype="query" output="false" hint="">
     	<cfargument name="serverID" type="string" required="true" />
 		<cfargument name="validationCode" type="string" required="True" />
+		<cfargument name="minimumCertificationID" type="String" requried="false" default="-1" />
     	
    		<cfset var qArchives = ""/>
 		<cfset var validationCheck = checkValidationCode(arguments.serverID,arguments.validationCode) />
@@ -290,10 +293,30 @@ Copyright 2012 Ryan Guill
 			<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="isObsolete" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="backupForArchiveID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
+			<cfinvokeargument name="minimumCertificationID" value="#arguments.minimumCertificationID#" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 		</cfinvoke>
     	
     <cfreturn qArchives />
     </cffunction>
+	
+	<cffunction name="getCertificationLevels" access="remote" returntype="query" output="false" hint="">
+    	<cfargument name="serverID" type="string" required="true" />
+		<cfargument name="validationCode" type="string" required="True" />
+    	
+		<cfset var qCertificationTypes = ""/>
+		<cfset var validationCheck = checkValidationCode(arguments.serverID,arguments.validationCode) />
+		
+		<cfif NOT validationCheck>
+			<cfset throwNotValid() />
+		</cfif>
+		
+		<cfinvoke component="#application.daos.referenceTables#" method="getAllCertificationTypes" returnvariable="qCertificationTypes">
+			<cfinvokeargument name="dsn" value="#application.config.dsn#" />
+		</cfinvoke>
+    	
+	<cfreturn qCertificationTypes/>
+    </cffunction>
+
 	
 	<cffunction name="getAllInfoForArchive" access="remote" returntype="struct" output="false">
     	<cfargument name="serverID" type="string" required="true" />

@@ -521,6 +521,10 @@ Copyright 2012 Ryan Guill
 					, configuredByUserFullname		varchar(100)	NOT NULL
 					, configuredByUserEmail			varchar(255)	NOT NULL
 					, configuredOn					timestamp		NOT NULL
+					
+					--added for version 1.1
+					, minimumCertificationID		char(35)		NOT NULL
+					
 				
 					, PRIMARY KEY (serverID)					
 				)
