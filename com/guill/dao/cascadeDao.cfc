@@ -538,10 +538,67 @@ Copyright 2012 Ryan Guill
     	<cfargument name="archiveID" type="string" required="true" />
 		
 		<cfset var qDeleteArchive = "" />
+		<cfset var qDeleteArchiveLog = "" />
+		<cfset var qDeleteArchiveCertifications = "" />
+		<cfset var qDeleteArchiveDeployments = "" />
+		<cfset var qDeleteArchiveDeploymentFilesManifest = "" />
+		
         <cftry>
         	<cfquery name="qDeleteArchive" datasource="#arguments.dsn#">
         		DELETE
 				FROM archives
+				WHERE
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+        <cftry>
+        	<cfquery name="qDeleteArchiveLog" datasource="#arguments.dsn#">
+        		DELETE
+				FROM archiveLog
+				WHERE
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+        <cftry>
+        	<cfquery name="qDeleteArchiveCertifications" datasource="#arguments.dsn#">
+        		DELETE
+				FROM archiveCertifications
+				WHERE
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+        <cftry>
+        	<cfquery name="qDeleteArchiveDeployments" datasource="#arguments.dsn#">
+        		DELETE
+				FROM archiveDeployments
+				WHERE
+					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+        <cftry>
+        	<cfquery name="qDeleteArchiveDeploymentFilesManifest" datasource="#arguments.dsn#">
+        		DELETE
+				FROM deploymentFilesManifest
 				WHERE
 					archiveid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.archiveid#" />		-- CHAR (35)
         	</cfquery>
