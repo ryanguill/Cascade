@@ -59,6 +59,7 @@ Copyright 2012 Ryan Guill
 		</cfif>
 		
 		<cfset application.settings.showFirstXCharsOfSHA = 10 />
+		<cfset application.settings.zipMimeTypes = "application/zip,application/x-zip,application/x-zip-compressed" />
 		
 		<cfset application.objs.global = createObject("component","#application.settings.appMapping#.com.guill.global") />
 		
