@@ -36,15 +36,22 @@ Copyright 2012 Ryan Guill
 	</cfif>
 	
 	<cftry>
-	<cfinvoke webservice="#variables.server.serverURL#" method="getAvailableArchives" returnvariable="variables.archives">
-	<!---<cfinvoke component="#application.objs.remoteService#" method="getAvailableArchives" returnvariable="variables.archives">--->
-		<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
-		<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
-	</cfinvoke>
+		<cfinvoke webservice="#variables.server.serverURL#" method="getAvailableArchives" returnvariable="variables.archives" timeout="15">
+		<!---<cfinvoke component="#application.objs.remoteService#" method="getAvailableArchives" returnvariable="variables.archives">--->
+			<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
+			<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
+		</cfinvoke>
 	<cfcatch>
-		<cfdump var="#variables#" />
-		<cfdump var="#application.config.cascadeID#" />
-		<cfabort />
+		
+		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+			<cfinvokeargument name="messageType" value="Error" />
+			<cfinvokeargument name="messageText" value="The remote server #variables.server.serverName# is not currently available." />
+			<cfinvokeargument name="messageDetail" value="The error code returned was: #cfcatch.message#" />
+		</cfinvoke>
+		
+		<cflocation url="#application.settings.appBaseDir#/remote/browse.cfm" />
+		
 	</cfcatch>
 	</cftry>
 
