@@ -84,6 +84,15 @@ Copyright 2012 Ryan Guill
 			<cfset session.tempFormVars.buildStep2Form.deployDirSuggestions = replaceNoCase(variables.archive.deployDirSuggestions,",",variables.newline,"all") />	
 		</cfif>
 	</cfif>
+	
+	<cfinvoke component="#application.daos.cascade#" method="getApplicationNames" returnvariable="variables.qApplicationNames">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+	</cfinvoke>
+	
+	<cfinvoke component="#application.daos.cascade#" method="getProjectNames" returnvariable="variables.qProjectNames">
+		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+	</cfinvoke>
+	
 
 </cfsilent>
 
@@ -96,15 +105,33 @@ Copyright 2012 Ryan Guill
 			<title>#application.settings.appTitle#</title>
 		</cfoutput>
 		
-		<script type="text/javascript">
-		/*
-			Event.observe(window, 'load', init, false);
-	
-			function init() {
+		<cfoutput>
+			<script type="text/javascript">
+						
+				$(function() {
+					var applicationNames = [
+						<cfloop query="variables.qApplicationNames">
+							<cfif variables.qApplicationNames.currentRow NEQ 1>,</cfif>"#variables.qApplicationNames.applicationName#"
+						</cfloop>
+					];
+					$( "##applicationName" ).autocomplete({
+						source: applicationNames
+					});
+				});	
+						
+				$(function() {
+					var projectNames = [
+						<cfloop query="variables.qProjectNames">
+							<cfif variables.qProjectNames.currentRow NEQ 1>,</cfif>"#variables.qProjectNames.projectName#"
+						</cfloop>
+					];
+					$( "##projectName" ).autocomplete({
+						source: projectNames
+					});
+				});	
 			
-			}		
-		*/	
-		</script>
+			</script>
+		</cfoutput>
 		
 		<style type="text/css">
 	
