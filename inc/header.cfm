@@ -19,7 +19,7 @@ Copyright 2012 Ryan Guill
 			<div id="header">
 				<cfoutput>
 					<div id="hTitle">
-						<h1>#application.settings.appTitle# - #application.config.serverName#</h1>
+						<h1>#application.settings.appTitle# v#application.config.cascadeVersion# - #application.config.serverName#</h1>
 					</div>
 					<div id="hMenu">					
 						<ul>

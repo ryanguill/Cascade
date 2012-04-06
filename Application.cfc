@@ -27,9 +27,6 @@ Copyright 2012 Ryan Guill
  
  		<cfset var local = structNew() />
  
- 		<cfset variables.instance = structNew() />
-		<cfset variables.instance.initComplete = false />
-		
 		<cfset application.settings = structNew() />
 		<cfset application.settings.appBaseDir = "/cascade" />
 		<cfset application.settings.appMapping = "cascade" />	
@@ -40,12 +37,14 @@ Copyright 2012 Ryan Guill
 		<cfset application.settings.timeFormat = "HH:mm" />
 		<cfset application.settings.never = createDateTime(1970,1,1,0,0,0) />
 		
+		<cfset application.settings.forceReinit = false />
+		
+		
+		<!--- DONT MESS WITH THIS UNLESS YOU REALLY KNOW WHAT YOU'RE DOING --->
+		<cfset application.settings.latestCascadeVersion = "1.1" />
+		
 		<cfset application.daos = structNew() />
 	
-		<cfset application.daos.cascade = createObject("component","#application.settings.appMapping#.com.guill.dao.cascadeDao") />
-		<cfset application.daos.userManagement = createObject("component","#application.settings.appMapping#.com.guill.dao.userManagementDao") />
-		<cfset application.daos.referenceTables = createObject("component","#application.settings.appMapping#.com.guill.dao.referenceTablesDao") />
-		
 		<cfset local.fileObj = createObject("java","java.io.File") />
 		
 		<cfset application.settings.pathSeperator = local.fileObj.separator />
@@ -59,6 +58,7 @@ Copyright 2012 Ryan Guill
 		</cfif>
 		
 		<cfset application.settings.showFirstXCharsOfSHA = 10 />
+		<cfset application.settings.zipMimeTypes = "application/zip,application/x-zip,application/x-zip-compressed" />
 		
 		<cfset application.objs.global = createObject("component","#application.settings.appMapping#.com.guill.global") />
 		
@@ -69,11 +69,33 @@ Copyright 2012 Ryan Guill
 			
 			<!--- lots of code expects the dsn to be in the settings, so copy it over there --->
 			<cfset application.settings.dsn = application.config.dsn />
+			
+			<cfset application.daos.upgrade = createObject("component","#application.settings.appMapping#.com.guill.dao.upgradeDao") />
+			
+			<cfif application.settings.latestCascadeVersion NEQ application.daos.upgrade.getCurrentVersion(application.config.dsn)>
+				<cfset application.config.cascadeVersion = application.daos.upgrade.performUpgrades(application.config.dsn,application.settings.latestCascadeVersion) />
+				
+				<cfset application.objs.global.createConfigXML(application.config) />
+				
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/action.cfm" />
+					<cfinvokeargument name="messageType" value="Information" />
+					<cfinvokeargument name="messageText" value="CASCADE Successfully Upgraded to version #application.config.cascadeVersion#!" />
+				</cfinvoke>
+				
+				<cfset application.settings.forceReinit = true />
+			</cfif>
+			
 		<cfelse>
 			<cfset application.daos.install = createObject("component","#application.settings.appMapping#.com.guill.dao.installDao") />
 		</cfif>
 		
+		<cfset application.daos.cascade = createObject("component","#application.settings.appMapping#.com.guill.dao.cascadeDao") />
+		<cfset application.daos.userManagement = createObject("component","#application.settings.appMapping#.com.guill.dao.userManagementDao") />
+		<cfset application.daos.referenceTables = createObject("component","#application.settings.appMapping#.com.guill.dao.referenceTablesDao") />
+		
 		<cfset application.objs.remoteService = createObject("component","#application.settings.appMapping#.com.remoteService") />
+		
 				
  	<cfreturn true />
 	</cffunction>
@@ -88,8 +110,6 @@ Copyright 2012 Ryan Guill
 	<cffunction	name="OnRequestStart" access="public" returntype="boolean" output="false">
  		<cfargument name="targetPage" type="string" required="true" />
  
- 		
- 
  		<cfif cgi.server_port NEQ "80">
 			<cfparam name="request.currentPage" default="http://#cgi.server_name#:#cgi.server_port##cgi.script_name#?#cgi.query_string#" />
 			<cfparam name="request.baseLink" default="http://#cgi.server_name#:#cgi.server_port#" />
@@ -98,7 +118,7 @@ Copyright 2012 Ryan Guill
 			<cfparam name="request.baseLink" default="http://#cgi.server_name#" />
 		</cfif>
 		
-		<cfif structKeyExists(url,"reinit") AND url.reinit EQ "true">
+		<cfif (structKeyExists(url,"reinit") AND url.reinit EQ "true") OR application.settings.forceReinit>
 			<cfset OnApplicationStart() />
 		</cfif>	
 		
@@ -107,8 +127,6 @@ Copyright 2012 Ryan Guill
 		</cfif>		
 		
 		<cfset session.login.setCurrentPage(request.currentPage) />
-		
-		
 	
  	<cfreturn true />
 	</cffunction>

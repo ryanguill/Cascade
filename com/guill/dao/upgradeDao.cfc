@@ -1,6 +1,6 @@
 <cfcomponent>
 
-	<cffunction name="performUpgrades" access="public" returntype="boolean" output="false" hint="">
+	<cffunction name="performUpgrades" access="public" returntype="string" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />
     	<cfargument name="targetVersion" type="string" requried="true" />
 		
@@ -25,10 +25,8 @@
 			<cfset currentVersion = getCurrentVersion(arguments.dsn) />
 		</cfloop>
 		
-    <cfreturn true />
+    <cfreturn currentVersion />
     </cffunction>
-
-
 
 	<cffunction name="getCurrentVersion" access="public" returntype="numeric" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />
@@ -41,7 +39,7 @@
 				FROM
 					cascadeConfig
 				WHERE
-					configKey = <cfqueryparam cfsqltype="CASCADEVERSION" />        	
+					configKey = <cfqueryparam cfsqltype="cf_sql_varchar" value="CASCADEVERSION" />        	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -69,7 +67,7 @@
 				SET
 					configValue = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.newVersion#" />
 				WHERE
-					configKey = <cfqueryparam cfsqltype="CASCADEVERSION" />        	
+					configKey = <cfqueryparam cfsqltype="cf_sql_varchar" value="CASCADEVERSION" />        	      	
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
@@ -89,10 +87,8 @@
         <cftry>
         	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
         		ALTER TABLE remoteServers
-				{
-					ADD COLUMN 
-						minimumCertificationID		char(35)		NOT NULL DEFAULT ''
-				}
+				ADD COLUMN 
+					minimumCertificationID		char(35)		NOT NULL DEFAULT ''
         	
         	</cfquery>
         <cfcatch>

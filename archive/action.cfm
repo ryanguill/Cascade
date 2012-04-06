@@ -781,7 +781,7 @@ Copyright 2012 Ryan Guill
 			
 			<cfset variables.tempFilePath = variables.tempDir & createUUID() & ".zip" />
 			
-			<cffile action="upload" accept="application/zip,application/x-zip,application/x-zip-compressed" destination="#variables.tempFilePath#" filefield="archiveZip" nameconflict="makeUnique" result="variables.tempZipFileResult" /> 
+			<cffile action="upload" accept="#application.settings.zipMimeTypes#" destination="#variables.tempFilePath#" filefield="archiveZip" nameconflict="makeUnique" result="variables.tempZipFileResult" /> 
 		
 			<cftry>
 				<!--- get the manifest --->
