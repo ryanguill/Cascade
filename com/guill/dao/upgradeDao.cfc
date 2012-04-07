@@ -89,8 +89,17 @@
         		ALTER TABLE remoteServers
 				ADD COLUMN 
 					  minimumCertificationID		char(35)		NOT NULL DEFAULT ''
-					, minimumCertificationName		varchar(25)		NOT NULL DEFAULT ''
-        	
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+        <cftry>
+        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
+        		ALTER TABLE remoteServers
+				ADD COLUMN 
+					  minimumCertificationName		varchar(25)		NOT NULL DEFAULT ''
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
