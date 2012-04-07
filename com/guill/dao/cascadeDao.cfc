@@ -87,6 +87,32 @@ Copyright 2012 Ryan Guill
     <cfreturn qGetApplicationNames />
     </cffunction>
 	
+	<cffunction name="getProjectNames" access="public" returntype="query" output="false" hint="">
+    	<cfargument name="dsn" type="string" required="True" />
+    	
+		<cfset var qGetProjectNames = "" />
+		
+        <cftry>
+        	<cfquery name="qGetProjectNames" datasource="#arguments.dsn#">
+        		SELECT
+					  count(*) cnt
+					, archives.projectname	-- VARCHAR (255)
+					
+				FROM archives  
+				GROUP BY 
+					archives.projectname	-- VARCHAR (255)
+				ORDER BY
+					archives.projectname DESC        	
+        	</cfquery>
+        <cfcatch>
+        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+        <cfrethrow />
+        </cfcatch>
+        </cftry>
+		
+    <cfreturn qGetProjectNames />
+    </cffunction>
+	
 	
 	<cffunction name="searchArchives" access="public" returntype="query" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />

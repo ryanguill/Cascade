@@ -28,11 +28,13 @@ Copyright 2012 Ryan Guill
 		<!--- Javascript Files --->
 		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/prototype.js"></script>
 		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/global.js"></script>
+		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery-ui-1.8.18.custom.min.js"></script>
 		
 		
 		<!--- CSS Files --->
 		<link rel="stylesheet" media="screen" href="#application.settings.appBaseDir#/inc/css/main.css" />
-		
+		<link type="text/css" href="#application.settings.appBaseDir#/inc/css/flick/jquery-ui-1.8.18.custom.css" rel="Stylesheet" />
 		
 	</cfoutput>
 	<!-- END HEAD -->

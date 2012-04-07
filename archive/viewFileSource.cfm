@@ -38,7 +38,7 @@ Copyright 2012 Ryan Guill
 		<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveID=#url.archiveID#" />
 	</cfif>
 	
-	<cfinvoke component="cascade.com.guill.dao.cascadeDao" method="getFileForFileID" returnvariable="variables.file">
+	<cfinvoke component="#application.daos.cascade#" method="getFileForFileID" returnvariable="variables.file">
 		<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
 		<cfinvokeargument name="fileID" value="#url.fileID#" />	<!---Type:String Hint:  - CHAR (35) --->
 	</cfinvoke>
