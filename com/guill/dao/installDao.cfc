@@ -525,6 +525,11 @@ Copyright 2012 Ryan Guill
 					--added for version 1.1
 					, minimumCertificationID		char(35)		NOT NULL
 					, minimumCertificationName		varchar(25)		NOT NULL
+					, updatedByUserID				char(35)		NOT NULL
+					, updatedByUserName				varchar(100)	NOT NULL
+					, updatedByUserFullname			varchar(100)	NOT NULL
+					, updatedByUserEmail			varchar(255)	NOT NULL
+					, updatedOn						timestamp		NOT NULL
 					
 				
 					, PRIMARY KEY (serverID)					
