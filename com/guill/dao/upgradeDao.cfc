@@ -160,7 +160,7 @@
         	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
         		ALTER TABLE remoteServers
 				ADD COLUMN 
-					updatedOn					timestamp		NOT NULL DEFAULT ''
+					updatedOn					timestamp		NOT NULL DEFAULT '1970-01-01 00:00:00'
         	</cfquery>
         <cfcatch>
         	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
