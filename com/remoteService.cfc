@@ -130,6 +130,7 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
 					, remoteservers.configuredon			 --  TIMESTAMP (26)
 					, remoteservers.minimumCertificationID			--  CHAR (35)
+					, remoteservers.minimumCertificationName			--  VARCHAR (25)					
 				FROM remoteservers
 				ORDER BY remoteservers.servername 		
         	
@@ -162,6 +163,7 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
 					, remoteservers.configuredon			 --  TIMESTAMP (26)
 					, remoteservers.minimumCertificationID			--  CHAR (35)
+					, remoteservers.minimumCertificationName			--  VARCHAR (25)
 				FROM remoteservers
 				WHERE
 					remoteServers.serverID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverID#" />
@@ -186,6 +188,7 @@ Copyright 2012 Ryan Guill
 		<cfargument name="configuredbyuserfullname" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="configuredbyuseremail" type="String" required="true" hint=" - VARCHAR (255)" />
 		<cfargument name="minimumCertificationID" type="String" required="true" hint=" - CHAR (35)" />
+		<cfargument name="minimumCertificationName" type="String" required="true" hint=" - VARCHAR (25)" />
 				
 		<cfset var qRegisterRemoteServer = "" />
 		<cfset var qRemoteServer = getRemoteServerByServerID(arguments.serverID) />
@@ -209,6 +212,7 @@ Copyright 2012 Ryan Guill
 					, configuredbyuseremail		 --  VARCHAR (255)
 					, configuredon			 --  TIMESTAMP (26)
 					, minimumCertificationID			--  CHAR (35)
+					, minimumCertificationName			--  VARCHAR (25)
 				)
 				VALUES
 				(
@@ -223,6 +227,7 @@ Copyright 2012 Ryan Guill
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuseremail#" />  -- configuredbyuseremail 
 					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- configuredon 
 					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.minimumCertificationID#" />  -- minimumCertificationID 
+					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.minimumCertificationName#" />  -- minimumCertificationName 
 					
 				)
 
