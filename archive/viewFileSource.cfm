@@ -92,15 +92,15 @@ Copyright 2012 Ryan Guill
 		
 			function copyCodeArea_show () 
 			{
-				$('copyCodeArea').show();
-				$('copyCodeArea_show_link').hide();
-				$('codeTextArea').select();
+				$('#copyCodeArea').show();
+				$('#copyCodeArea_show_link').hide();
+				$('#codeTextArea').select();
 			}
 		
 			function copyCodeArea_hide () 
 			{
-				$('copyCodeArea').hide();
-				$('copyCodeArea_show_link').show();
+				$('#copyCodeArea').hide();
+				$('#copyCodeArea_show_link').show();
 			}
 			
 		</script>

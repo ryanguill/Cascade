@@ -104,6 +104,12 @@ Copyright 2012 Ryan Guill
 							
 							<h3 class="sectionTitle">Browse Archives</h3>
 							
+							<cfif len(trim(variables.server.minimumCertificationID))>
+								<p>Showing archives with a certification level of ____ or higher</p>
+							<cfelse>
+								<p>Showing all archives regardless of certification level</p>
+							</cfif>
+							
 							<div class="contentSection">
 							<table width="100%" class="dataTable">
 								<tr>

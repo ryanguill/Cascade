@@ -524,6 +524,7 @@ Copyright 2012 Ryan Guill
 					
 					--added for version 1.1
 					, minimumCertificationID		char(35)		NOT NULL
+					, minimumCertificationName		varchar(25)		NOT NULL
 					
 				
 					, PRIMARY KEY (serverID)					

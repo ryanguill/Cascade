@@ -88,7 +88,8 @@
         	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
         		ALTER TABLE remoteServers
 				ADD COLUMN 
-					minimumCertificationID		char(35)		NOT NULL DEFAULT ''
+					  minimumCertificationID		char(35)		NOT NULL DEFAULT ''
+					, minimumCertificationName		varchar(25)		NOT NULL DEFAULT ''
         	
         	</cfquery>
         <cfcatch>
