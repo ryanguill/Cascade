@@ -73,7 +73,7 @@ Copyright 2012 Ryan Guill
 			<cfset application.daos.upgrade = createObject("component","#application.settings.appMapping#.com.guill.dao.upgradeDao") />
 			
 			<cfif application.settings.latestCascadeVersion NEQ application.daos.upgrade.getCurrentVersion(application.config.dsn)>
-				<cfset application.config.cascadeVersion = application.daos.upgrade.performUpgrades(application.config.dsn,application.settings.latestCascadeVersion) />
+				<cfset application.config.cascadeVersion = application.daos.upgrade.performUpgrades(application.config.dsn,application.settings.latestCascadeVersion,application.settings.appMapping) />
 				
 				<cfset application.objs.global.createConfigXML(application.config) />
 				

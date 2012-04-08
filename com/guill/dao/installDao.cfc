@@ -522,16 +522,6 @@ Copyright 2012 Ryan Guill
 					, configuredByUserEmail			varchar(255)	NOT NULL
 					, configuredOn					timestamp		NOT NULL
 					
-					--added for version 1.1
-					, minimumCertificationID		char(35)		NOT NULL DEFAULT ''
-					, minimumCertificationName		varchar(25)		NOT NULL DEFAULT ''
-					, updatedByUserID				char(35)		NOT NULL DEFAULT ''
-					, updatedByUserName				varchar(100)	NOT NULL DEFAULT ''
-					, updatedByUserFullname			varchar(100)	NOT NULL DEFAULT ''
-					, updatedByUserEmail			varchar(255)	NOT NULL DEFAULT ''
-					, updatedOn						timestamp		NOT NULL DEFAULT '1970-01-01 00:00:00'
-					
-				
 					, PRIMARY KEY (serverID)					
 				)
 				
@@ -545,6 +535,39 @@ Copyright 2012 Ryan Guill
 	<cfreturn true />
 	</cffunction>
 	
+	<!--- added in version 1.1 --->
+	<cffunction name="createTable_remoteServer_certificationTypes" access="public" returntype="boolean" output="false" hint="">
+		<cfargument name="dsn" type="String" required="True" />
+		
+		<cfset var qCreateTable_remoteServer_certificationTypes = "" />
+		
+		<cftry>
+			<cfquery name="qCreateTable_remoteServer_certificationTypes" datasource="#arguments.dsn#">
+				
+				CREATE 
+					TABLE remoteServer_certificationTypes
+				(
+					  serverID						CHAR(35)		NOT NULL
+					, certificationTypeID			INTEGER			NOT NULL
+					, certificationTypeName			VARCHAR(25)		NOT NULL				
+					, sort							INTEGER			NOT NULL
+					, certificationTypeDesc			VARCHAR(250)	NOT NULL
+					, certificationtypeAbbr			VARCHAR(15)		NOT NULL	
+					, activeFlag					INTEGER			NOT NULL			
+					, includeInRemoteArchiveSearch	INTEGER			NOT NULL
+				
+					, PRIMARY KEY (serverID, certificationTypeID)					
+				)
+				
+			</cfquery>
+		<cfcatch>
+			<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
+		<cfrethrow />
+		</cfcatch>
+		</cftry>
+		
+	<cfreturn true />
+	</cffunction>
 	
 
 </cfcomponent>

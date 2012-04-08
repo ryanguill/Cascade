@@ -128,9 +128,7 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyusername		 --  VARCHAR (100)
 					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
-					, remoteservers.configuredon			 --  TIMESTAMP (26)
-					, remoteservers.minimumCertificationID			--  CHAR (35)
-					, remoteservers.minimumCertificationName			--  VARCHAR (25)					
+					, remoteservers.configuredon			 --  TIMESTAMP (26)					
 				FROM remoteservers
 				ORDER BY remoteservers.servername 		
         	
@@ -162,8 +160,6 @@ Copyright 2012 Ryan Guill
 					, remoteservers.configuredbyuserfullname	 --  VARCHAR (100)
 					, remoteservers.configuredbyuseremail		 --  VARCHAR (255)
 					, remoteservers.configuredon			 --  TIMESTAMP (26)
-					, remoteservers.minimumCertificationID			--  CHAR (35)
-					, remoteservers.minimumCertificationName			--  VARCHAR (25)
 				FROM remoteservers
 				WHERE
 					remoteServers.serverID = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverID#" />
@@ -298,13 +294,13 @@ Copyright 2012 Ryan Guill
 			<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="isObsolete" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="backupForArchiveID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
-			<cfinvokeargument name="minimumCertificationID" value="#arguments.minimumCertificationID#" />	<!---Type:numeric Hint: pass -1 to ignore. --->
+			<cfinvokeargument name="includeCertificationIDList" value="-1" /> <!---Type:string Hint:pass -1 to ignore, otherwise pass a comma delim list of certification IDs to include--->
 		</cfinvoke>
     	
     <cfreturn qArchives />
     </cffunction>
 	
-	<cffunction name="getCertificationLevels" access="remote" returntype="query" output="false" hint="">
+	<cffunction name="getCertificationTypes" access="remote" returntype="query" output="false" hint="">
     	<cfargument name="serverID" type="string" required="true" />
 		<cfargument name="validationCode" type="string" required="True" />
     	

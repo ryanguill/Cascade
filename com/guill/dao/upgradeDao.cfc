@@ -3,6 +3,7 @@
 	<cffunction name="performUpgrades" access="public" returntype="string" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />
     	<cfargument name="targetVersion" type="string" requried="true" />
+		<cfargument name="appMapping" type="string" required="true" />
 		
 		<cfset var currentVersion = getCurrentVersion(arguments.dsn) />
 		
@@ -11,7 +12,7 @@
 			<cfswitch expression="#currentVersion#">
 				<cfcase value="1.0">
 					
-					<cfset upgradeTo_1_1(arguments.dsn) />
+					<cfset upgradeTo_1_1(arguments.dsn,arguments.appMapping) />
 					
 					<cfset updateVersion(arguments.dsn,"1.1") />
 					
@@ -80,93 +81,13 @@
 
 	<cffunction name="upgradeTo_1_1" access="private" returntype="boolean" output="false" hint="">
     	<cfargument name="dsn" type="string" required="True" />
+    	<cfargument name="appMapping" type="string" required="True" />
     	
 		<cfset var local = structNew() />
+		<cfset var local.installDao = createObject("component","#arguments.appMapping#.com.guill.dao.installDao") />
 		
-		<!--- alter remotes --->
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					minimumCertificationID		char(35)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					minimumCertificationName		varchar(25)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry> 
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					updatedByUserID				char(35)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					updatedByUserName			varchar(100)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					updatedByUserFullname		varchar(100)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					updatedByUserEmail			varchar(255)		NOT NULL DEFAULT ''
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
-		
-        <cftry>
-        	<cfquery name="local.qAlterRemoteServers" datasource="#arguments.dsn#">
-        		ALTER TABLE remoteServers
-				ADD COLUMN 
-					updatedOn					timestamp		NOT NULL DEFAULT '1970-01-01 00:00:00'
-        	</cfquery>
-        <cfcatch>
-        	<cfthrow message="Query failed. Message: #cfcatch.Message# Detail: #cfcatch.Detail#" />
-        <cfrethrow />
-        </cfcatch>
-        </cftry>
+		<!--- create remoteServers_certificationTypes --->
+		<cfset local.installDao.createTable_remoteServer_certificationTypes(arguments.dsn) />	
 
     <cfreturn true />
     </cffunction>

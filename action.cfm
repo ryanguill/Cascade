@@ -297,6 +297,9 @@ Copyright 2012 Ryan Guill
 			<cfset application.daos.install.createTable_remoteValidationCodes(application.config.dsn) />
 			<cfset application.daos.install.createTable_remoteServers(application.config.dsn) />
 			
+			<!--- added in 1.1 --->
+			<cfset application.daos.install.createTable_remoteServer_certificationTypes(application.config.dsn) />
+			
 			<cfloop collection="#application.config#" item="key">
 				<cfset application.daos.cascade.setConfigValue(application.config.dsn,key,application.config[key]) />
 			</cfloop>			
