@@ -259,7 +259,7 @@ Copyright 2012 Ryan Guill
 	<cffunction name="getAvailableArchives" access="remote" returntype="query" output="false" hint="">
     	<cfargument name="serverID" type="string" required="true" />
 		<cfargument name="validationCode" type="string" required="True" />
-		<cfargument name="minimumCertificationID" type="String" requried="false" default="-1" />
+		<cfargument name="includeCertificationIDList" type="String" requried="false" default="-1" />
     	
    		<cfset var qArchives = ""/>
 		<cfset var validationCheck = checkValidationCode(arguments.serverID,arguments.validationCode) />
