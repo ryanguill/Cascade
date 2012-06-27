@@ -95,7 +95,9 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
+			/*Event.observe(window, 'load', init, false);*/
+	
+			$( init );
 	
 			function init() {
 				archiveFilesTable_hide();

@@ -104,7 +104,8 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
+			$( init );
+
 	
 			function init() {
 				archiveFilesTable_hide();
@@ -134,7 +135,6 @@ Copyright 2012 Ryan Guill
 				$('#certificationFormDiv').hide();
 				$('#certificationFormDiv_show_link').show();
 			}		
-		
 		</script>
 		
 		<style type="text/css">
