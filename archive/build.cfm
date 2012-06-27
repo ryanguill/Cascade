@@ -80,11 +80,7 @@ Copyright 2012 Ryan Guill
 		</cfoutput>
 		
 		<script type="text/javascript">
-			Event.observe(window, 'load', init, false);
-	
-			function init() {
 			
-			}		
 			
 			function selectAll () {
 				$$('.filecheckbox').each(function(s){s.checked = true});				

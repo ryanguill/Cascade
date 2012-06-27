@@ -95,7 +95,9 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
+			/*Event.observe(window, 'load', init, false);*/
+	
+			$( init );
 	
 			function init() {
 				archiveFilesTable_hide();
@@ -104,26 +106,26 @@ Copyright 2012 Ryan Guill
 		
 			function archiveFilesTable_show ( )
 			{
-				$('archiveFilesTable_show_link').hide();
-				$('archiveFilesTable').show();
+				$('#archiveFilesTable_show_link').hide();
+				$('#archiveFilesTable').show();
 			}
 		
 			function archiveFilesTable_hide ( )
 			{
-				$('archiveFilesTable_show_link').show();
-				$('archiveFilesTable').hide();
+				$('#archiveFilesTable_show_link').show();
+				$('#archiveFilesTable').hide();
 			}
 			
 			function certificationFormDiv_show()
 			{
-				$('certificationFormDiv').show();
-				$('certificationFormDiv_show_link').hide();	
+				$('#certificationFormDiv').show();
+				$('#certificationFormDiv_show_link').hide();	
 			}
 			
 			function certificationFormDiv_hide()
 			{
-				$('certificationFormDiv').hide();
-				$('certificationFormDiv_show_link').show();
+				$('#certificationFormDiv').hide();
+				$('#certificationFormDiv_show_link').show();
 			}		
 		
 		</script>
