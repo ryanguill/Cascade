@@ -40,6 +40,7 @@ Copyright 2012 Ryan Guill
 		<!---<cfinvoke component="#application.objs.remoteService#" method="getAvailableArchives" returnvariable="variables.archives">--->
 			<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
 			<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
+			<cfinvokeargument name="includeCertificationIDList" value="-1" />
 		</cfinvoke>
 	<cfcatch>
 		
@@ -104,7 +105,7 @@ Copyright 2012 Ryan Guill
 							
 							<h3 class="sectionTitle">Browse Archives</h3>
 							
-							<cfif len(trim(variables.server.minimumCertificationID))>
+							<cfif 0>
 								<p>Showing archives with a certification level of ____ or higher</p>
 							<cfelse>
 								<p>Showing all archives regardless of certification level</p>

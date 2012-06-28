@@ -183,8 +183,6 @@ Copyright 2012 Ryan Guill
 		<cfargument name="configuredbyusername" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="configuredbyuserfullname" type="String" required="true" hint=" - VARCHAR (100)" />
 		<cfargument name="configuredbyuseremail" type="String" required="true" hint=" - VARCHAR (255)" />
-		<cfargument name="minimumCertificationID" type="String" required="true" hint=" - CHAR (35)" />
-		<cfargument name="minimumCertificationName" type="String" required="true" hint=" - VARCHAR (25)" />
 				
 		<cfset var qRegisterRemoteServer = "" />
 		<cfset var qRemoteServer = getRemoteServerByServerID(arguments.serverID) />
@@ -207,8 +205,6 @@ Copyright 2012 Ryan Guill
 					, configuredbyuserfullname	 --  VARCHAR (100)
 					, configuredbyuseremail		 --  VARCHAR (255)
 					, configuredon			 --  TIMESTAMP (26)
-					, minimumCertificationID			--  CHAR (35)
-					, minimumCertificationName			--  VARCHAR (25)
 				)
 				VALUES
 				(
@@ -222,8 +218,6 @@ Copyright 2012 Ryan Guill
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuserfullname#" />  -- configuredbyuserfullname 
 					, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.configuredbyuseremail#" />  -- configuredbyuseremail 
 					, <cfqueryparam cfsqltype="cf_sql_timestamp" value="#now()#" />  -- configuredon 
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.minimumCertificationID#" />  -- minimumCertificationID 
-					, <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.minimumCertificationName#" />  -- minimumCertificationName 
 					
 				)
 
@@ -294,7 +288,7 @@ Copyright 2012 Ryan Guill
 			<cfinvokeargument name="isbackuparchive" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="isObsolete" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 			<cfinvokeargument name="backupForArchiveID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
-			<cfinvokeargument name="includeCertificationIDList" value="-1" /> <!---Type:string Hint:pass -1 to ignore, otherwise pass a comma delim list of certification IDs to include--->
+			<cfinvokeargument name="includeCertificationIDList" value="#arguments.includeCertificationIDList#" /> <!---Type:string Hint:pass -1 to ignore, otherwise pass a comma delim list of certification IDs to include--->
 		</cfinvoke>
     	
     <cfreturn qArchives />
