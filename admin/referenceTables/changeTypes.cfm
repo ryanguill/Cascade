@@ -53,23 +53,17 @@ Copyright 2012 Ryan Guill
 		</cfoutput>
 		
 		<script type="text/javascript">
-		
-			Event.observe(window, 'load', init, false);
-	
-			function init() {
 			
-			}		
-		
 			function showUpdateRow ( _rowID )
 			{
-				Element.hide('displayRow_' + _rowID);
-				Element.show('updateRow_' + _rowID);
+				$('#displayRow_' + _rowID).hide();
+				$('#updateRow_' + _rowID).show();
 			}
 		
 			function hideUpdateRow ( _rowID )
 			{
-				Element.show('displayRow_' + _rowID);
-				Element.hide('updateRow_' + _rowID);
+				$('#displayRow_' + _rowID).show();
+				$('#updateRow_' + _rowID).hide();
 			}
 			
 		</script>

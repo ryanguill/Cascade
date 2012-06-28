@@ -95,8 +95,6 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			/*Event.observe(window, 'load', init, false);*/
-	
 			$( init );
 	
 			function init() {

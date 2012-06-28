@@ -131,13 +131,7 @@ Copyright 2012 Ryan Guill
 		</cfoutput>
 		
 		<script type="text/javascript">
-		
-			Event.observe(window, 'load', init, false);
-	
-			function init() {
-				
-			}		
-					
+			
 		</script>
 		
 		<style type="text/css">

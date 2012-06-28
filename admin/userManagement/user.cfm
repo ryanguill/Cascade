@@ -62,14 +62,14 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
+			$( init );
 	
 			function init() {
-				$('showPasswords').observe('change',showPasswords_onChange);
-				$('password2').observe('keyup',checkPasswords);
-				$('password').observe('keyup',checkPasswords);
-				$('password2').observe('blur',checkPasswords);
-				$('password').observe('blur',checkPasswords);
+				$('#showPasswords').bind('change',showPasswords_onChange);
+				$('#password2').bind('keyup',checkPasswords);
+				$('#password').bind('keyup',checkPasswords);
+				$('#password2').bind('blur',checkPasswords);
+				$('#password').bind('blur',checkPasswords);
 				
 				
 				showPasswords_onChange();	
@@ -78,36 +78,34 @@ Copyright 2012 Ryan Guill
 			
 			function showPasswords_onChange ( )
 			{
-				if ( $('showPasswords').checked == true )
+				if ( $('#showPasswords').is(':checked') )
 				{
-					$('password').type = 'text';
-					$('password2').type = 'text';
+					$('#password').get(0).type = 'text';
+					$('#password2').get(0).type = 'text';
 				}
 				else
 				{
-					$('password').type = 'password';
-					$('password2').type = 'password';
-				
+					$('#password').get(0).type = 'password';
+					$('#password2').get(0).type = 'password';
 				}
 			}
-			
 			
 			function checkPasswords(){
 				doPasswordsMatch = true;
 				
-				if ($('password').value.length > 0 && $('password2').value.length > 0) {
-					if ($('password').value != $('password2').value) {
+				if ($('#password').val().length > 0 && $('#password2').val().length > 0) {
+					if ($('#password').val() != $('#password2').val()) {
 						doPasswordsMatch = false;
 					}
 				}
 			
 				if ( !doPasswordsMatch )
 				{
-					$('password2_cell').addClassName('fail');
+					$('#password2_cell').addClass('fail');
 				}
 				else
 				{
-					$('password2_cell').removeClassName('fail');
+					$('#password2_cell').removeClass('fail');
 				}
 				
 			}
@@ -115,27 +113,27 @@ Copyright 2012 Ryan Guill
 		
 			function showUpdateUserForm ()
 			{
-				Element.show('updateUserDiv');
-				Element.hide('showUpdateUserFormLink');
+				$('#updateUserDiv').show();
+				$('#showUpdateUserFormLink').hide();
 			}
 		
 			function hideUpdateUserForm ()
 			{
-				Element.hide('updateUserDiv');
-				Element.show('showUpdateUserFormLink');
+				$('#updateUserDiv').hide();
+				$('#showUpdateUserFormLink').show();
 			}
 			
 			<cfif variables.availableUserGroups.recordCount>
 				function showAddGroupToUserForm ()
 				{
-					Element.show('addGroupToUserDiv');
-					Element.hide('showAddGroupToUserLink');
+					$('#addGroupToUserDiv').show();
+					$('#showAddGroupToUserLink').hide();
 				}
 				
 				function hideAddGroupToUserForm ()
 				{
-					Element.hide('addGroupToUserDiv');
-					Element.show('showAddGroupToUserLink');
+					$('#addGroupToUserDiv').hide();
+					$('#showAddGroupToUserLink').show();
 				}
 			</cfif>
 			

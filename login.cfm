@@ -45,15 +45,14 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
+			$( init );
 	
 			function init() {
 				<cfif len(trim(url.username))>
-					$('password').focus();
+					$('#password').focus();
 				<cfelse>
-					$('username').focus();
+					$('#username').focus();
 				</cfif>
-					
 			}		
 			
 		</script>
