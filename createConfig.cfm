@@ -62,82 +62,82 @@ Copyright 2012 Ryan Guill
 		
 		<script type="text/javascript">
 		
-			Event.observe(window, 'load', init, false);
-			
+			$( init );
+		
 			function init() {
-				$('showPasswords').observe('change',showPasswords_onChange);
-				$('password2').observe('keyup',checkPasswords);
-				$('password').observe('keyup',checkPasswords);
-				$('firstname').observe('keyup',onAdminNameChanges);
-				$('lastname').observe('keyup',onAdminNameChanges);
-				$('dsnName').observe('keyup',onDSNNameChange);
+				$('#showPasswords').bind('change',showPasswords_onChange);
+				$('#password2').bind('keyup',checkPasswords);
+				$('#password').bind('keyup',checkPasswords);
+				$('#firstname').bind('keyup',onAdminNameChanges);
+				$('#lastname').bind('keyup',onAdminNameChanges);
+				$('#dsnName').bind('keyup',onDSNNameChange);
 				
-				$('password2').observe('blur',checkPasswords);
-				$('password').observe('blur',checkPasswords);
-				$('firstname').observe('blur',onAdminNameChanges);
-				$('lastname').observe('blur',onAdminNameChanges);
+				$('#password2').bind('blur',checkPasswords);
+				$('#password').bind('blur',checkPasswords);
+				$('#firstname').bind('blur',onAdminNameChanges);
+				$('#lastname').bind('blur',onAdminNameChanges);
 				
-				$('databaseName').observe('keyup',onDatabaseFullPathChange);
-				$('databaseDirectory').observe('keyup',onDatabaseFullPathChange);
+				$('#databaseName').bind('keyup',onDatabaseFullPathChange);
+				$('#databaseDirectory').bind('keyup',onDatabaseFullPathChange);
 				
 				
 				
 				showPasswords_onChange();
 				onDatabaseFullPathChange();
 				
-				$('serverName').focus();
+				$('#serverName').focus();
 			}		
 			
 			function showPasswords_onChange ( )
 			{
-				if ( $('showPasswords').checked == true )
+				if ( $('#showPasswords').is(':checked') )
 				{
-					$('password').type = 'text';
-					$('password2').type = 'text';
-					$('cfAdminPassword').type = 'text';
+					$('#password').get(0).type = 'text';
+					$('#password2').get(0).type = 'text';
+					$('#cfAdminPassword').get(0).type = 'text';
 				}
 				else
 				{
-					$('password').type = 'password';
-					$('password2').type = 'password';
-					$('cfAdminPassword').type = 'password';
+					$('#password').get(0).type = 'password';
+					$('#password2').get(0).type = 'password';
+					$('#cfAdminPassword').get(0).type = 'password';
 				}
 			}
 			
 			function checkPasswords(){
 				doPasswordsMatch = true;
 				
-				if ($('password').value.length > 0 && $('password2').value.length > 0) {
-					if ($('password').value != $('password2').value) {
+				if ($('#password').val().length > 0 && $('#password2').val().length > 0) {
+					if ($('#password').val() != $('#password2').val()) {
 						doPasswordsMatch = false;
 					}
 				}
 			
 				if ( !doPasswordsMatch )
 				{
-					$('password2_cell').addClassName('fail');
+					$('#password2_cell').addClass('fail');
 				}
 				else
 				{
-					$('password2_cell').removeClassName('fail');
+					$('#password2_cell').removeClass('fail');
 				}
 				
 			}
 			
 			function onAdminNameChanges ( ) 
 			{
-				$('username').value = $('firstname').value.toLowerCase() + $('lastname').value.toLowerCase();
+				$('#username').val($('#firstname').val().toLowerCase() + $('#lastname').val().toLowerCase());
 				
 			}
 			
 			function onDSNNameChange ( )
 			{
-				$('databaseName').value = $('dsnName').value;
+				$('#databaseName').val($('#dsnName').val());
 			}
 			
 			function onDatabaseFullPathChange ( )
 			{
-				$('databaseFullPath').update($('databaseDirectory').value + $('databaseName').value);
+				$('#databaseFullPath').html($('#databaseDirectory').val() + $('#databaseName').val());
 			}
 			
 		</script>

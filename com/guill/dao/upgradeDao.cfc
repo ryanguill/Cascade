@@ -84,7 +84,7 @@
     	<cfargument name="appMapping" type="string" required="True" />
     	
 		<cfset var local = structNew() />
-		<cfset var local.installDao = createObject("component","#arguments.appMapping#.com.guill.dao.installDao") />
+		<cfset local.installDao = createObject("component","#arguments.appMapping#.com.guill.dao.installDao") />
 		
 		<!--- create remoteServers_certificationTypes --->
 		<cfset local.installDao.createTable_remoteServer_certificationTypes(arguments.dsn) />	

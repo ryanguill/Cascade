@@ -48,6 +48,7 @@ Copyright 2012 Ryan Guill
 		<cfinvokeargument name="isObsolete" value="0" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 		<cfinvokeargument name="backupForArchiveID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
 		<cfinvokeargument name="minimumCertificationID" value="-1" />	<!---Type:numeric Hint: pass -1 to ignore. --->
+		<cfinvokeargument name="includeCertificationIDList" value="-1" />	<!---Type:string pass -1 to ignore, otherwise pass a comma delim list of certification IDs to included. --->
 	</cfinvoke>
 
 	

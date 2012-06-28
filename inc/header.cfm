@@ -14,12 +14,15 @@ Copyright 2012 Ryan Guill
    limitations under the License.
  --->
 
-			<cfparam name="application.config.serverName" default="" />
 			<!-- BEGIN HEADER -->
 			<div id="header">
 				<cfoutput>
 					<div id="hTitle">
-						<h1>#application.settings.appTitle# v#application.config.cascadeVersion# - #application.config.serverName#</h1>
+						<h1>#application.settings.appTitle# 
+							<cfif structKeyExists(application.config,"serverName")>
+								v#application.config.cascadeVersion# - #application.config.serverName#
+							</cfif>
+						</h1>
 					</div>
 					<div id="hMenu">					
 						<ul>

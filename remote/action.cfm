@@ -116,6 +116,7 @@ Copyright 2012 Ryan Guill
 				<cfinvokeargument name="configuredbyuserfullname" value="#session.login.getFullname()#" />	<!---Type:String Hint:  - VARCHAR (100) --->
 				<cfinvokeargument name="configuredbyuseremail" value="#session.login.getEmail()#" />	<!---Type:String Hint:  - VARCHAR (255) --->
 				<cfinvokeargument name="minimumCertificationID" value="" />	<!---Type:String Hint:  - CHAR (35) --->
+				<cfinvokeargument name="minimumCertificationName" value="" />	<!---Type:String Hint:  - CHAR (25) --->
 			</cfinvoke>
 			
 			<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">

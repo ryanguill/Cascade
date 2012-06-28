@@ -140,7 +140,7 @@ Copyright 2012 Ryan Guill
 		<cfargument name="isbackuparchive" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="isObsolete" type="numeric" required="true" hint="pass -1 to ignore." />
 		<cfargument name="backupForArchiveID" type="string" required="true" hint="pass -1 to ignore" />
-		<cfargument name="includeCertificationIDList" type="string" required="true" hint="pass -1 to ignore, otherwise pass a comma delim list of certification IDs to include" />
+		<cfargument name="includeCertificationIDList" type="string" required="true" hint="pass -1 to ignore, otherwise pass a comma delim list of certification IDs to included" />
 		
 		<cfset var qSearchArchives = "" />
 		
