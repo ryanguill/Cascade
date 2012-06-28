@@ -767,11 +767,25 @@ Copyright 2012 Ryan Guill
 		
 		</cfcase>
 		
-		<cfcase value="uploadArchive">
+		<cfcase value="uploadArchive,replaceArchive">
 		
 			<cfif NOT session.login.isUserInGroup("upload")>
 				<cflocation url="#application.settings.appBaseDir#/index.cfm" />
 			</cfif>
+
+
+			<cfif form.action EQ "replaceArchive">
+				<cfif NOT structKeyExists(form,"previousArchiveID") OR NOT isValid("UUID",form.previousArchiveID)>
+					<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+						<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+						<cfinvokeargument name="messageType" value="Error" />
+						<cfinvokeargument name="messageText" value="previousArchiveID is required." />
+					</cfinvoke>
+
+					<cflocation url="#application.settings.appBaseDir#/" />
+				</cfif>
+			</cfif>
+			
 			
 			<!--- upload to a temp directory --->
 			<cfset variables.tempDir = application.config.archiveDirectory & application.settings.pathSeperator & "temp" & application.settings.pathSeperator />
@@ -798,10 +812,15 @@ Copyright 2012 Ryan Guill
 								
 			</cfcatch>
 			</cftry>
-			
+
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory##application.settings.pathSeperator##variables.tempZipFileResult.serverFile#" />				
-				<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+
+				<cfif form.action EQ "replaceArchive">
+					<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveid=#form.previousArchiveID#" />
+				<cfelse>
+					<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				</cfif>
 			</cfif>
 
 			<cftry>			
@@ -815,11 +834,41 @@ Copyright 2012 Ryan Guill
 				</cfinvoke>
 			</cfcatch>
 			</cftry>
+
+			<cfif session.messenger.hasAlerts()>				
+				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory##application.settings.pathSeperator##variables.tempZipFileResult.serverFile#" />				
+				<cfif form.action EQ "replaceArchive">
+					<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveid=#form.previousArchiveID#" />
+				<cfelse>
+					<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				</cfif>			
+			</cfif>
 			
+			<cfif form.action EQ "replaceArchive">
+				<!--- check to make sure that the uploaded archive is the same application name as the previous archive --->
+				<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.previousArchive">
+					<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+					<cfinvokeargument name="archiveID" value="#form.previousArchiveID#" />	<!---Type:string  --->
+				</cfinvoke>
+
+				<cfif trim(variables.previousArchive.applicationName) NEQ trim(variables.manifest.applicationName)>
+					<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+						<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+						<cfinvokeargument name="messageType" value="Error" />
+						<cfinvokeargument name="messageText" value="The replacement archive that was uploaded does not seem to be for the same application as the archive you are attempting to replace." />
+						<cfinvokeargument name="messageDetail" value="Previous Archive Application Name: #variables.previousArchive.applicationName#; Replacement Archive Application Name: #variables.manifest.applicationName#" />
+					</cfinvoke>
+				</cfif>
+
+			</cfif>
 			
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory##application.settings.pathSeperator##variables.tempZipFileResult.serverFile#" />				
-				<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				<cfif form.action EQ "replaceArchive">
+					<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveid=#form.previousArchiveID#" />
+				<cfelse>
+					<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				</cfif>			
 			</cfif>
 						
 			<!--- check to make sure we have everything. --->
@@ -864,7 +913,11 @@ Copyright 2012 Ryan Guill
 			
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory##application.settings.pathSeperator##variables.tempZipFileResult.serverFile#" />				
-				<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				<cfif form.action EQ "replaceArchive">
+					<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveid=#form.previousArchiveID#" />
+				<cfelse>
+					<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				</cfif>
 			</cfif>
 			
 			
@@ -884,7 +937,11 @@ Copyright 2012 Ryan Guill
 			
 			<cfif session.messenger.hasAlerts()>				
 				<cffile action="delete" file="#variables.tempZipFileResult.serverDirectory#application.settings.pathSeperator#variables.tempZipFileResult.serverFile#" />				
-				<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				<cfif form.action EQ "replaceArchive">
+					<cflocation url="#application.settings.appBaseDir#/archive/archive.cfm?archiveid=#form.previousArchiveID#" />
+				<cfelse>
+					<cflocation url="#application.settings.appBaseDir#/archive/upload.cfm" />				
+				</cfif>
 			</cfif>
 			
 			<!--- okay, we have everything, lets make sure that this archive isnt already in this system --->
@@ -1037,6 +1094,36 @@ Copyright 2012 Ryan Guill
 				<cfinvokeargument name="logmessage" value="#variables.archiveID# (#lcase(left(variables.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#) uploaded by #session.login.getUsername()#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
 				<cfinvokeargument name="logDateTime" value="#now()#" />
 			</cfinvoke>
+
+			<cfif form.action EQ "replaceArchive">
+
+				<cfinvoke component="#application.daos.cascade#" method="setArchiveIsObsolete">
+					<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+					<cfinvokeargument name="archiveID" value="#form.previousArchiveID#" />	<!---Type:String Hint:  - CHAR (35) --->
+					<cfinvokeargument name="isObsolete" value="1" />
+				</cfinvoke>
+				
+				<cfset variables.zipFilePath = application.config.archiveDirectory & application.settings.pathSeperator & form.previousArchiveID & ".zip" />
+				<cfset variables.archiveSHAHash = application.objs.global.getFileSHAHash(variables.zipFilePath) />
+				
+				<cfinvoke component="#application.daos.cascade#" method="insertArchiveLog">
+					<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
+					<cfinvokeargument name="archiveid" value="#form.previousArchiveID#" />	<!---Type:String Hint:  - CHAR (35) --->
+					<cfinvokeargument name="archiveshahash" value="#variables.archiveshahash#" />	<!---Type:String Hint:  - CHAR (40) --->
+					<cfinvokeargument name="buildsystemname" value="#variables.previousArchive.buildSystemName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+					<cfinvokeargument name="logSystemName" value="#application.config.serverName#" />	<!---Type:String Hint:  - VARCHAR (255) --->
+					<cfinvokeargument name="logaction" value="OBSOLETEARCHIVE" />	<!---Type:String Hint:  - VARCHAR (50) --->
+					<cfinvokeargument name="deployflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+					<cfinvokeargument name="backupcreatedflag" value="0" />	<!---Type:Numeric Hint:  - INTEGER (10) --->
+					<cfinvokeargument name="backuparchiveid" value="" />	<!---Type:String Hint:  - CHAR (35) --->
+					<cfinvokeargument name="userid" value="#session.login.getUserID()#" />	<!---Type:String Hint:  - CHAR (35) --->
+					<cfinvokeargument name="logmessage" value="#form.previousArchiveID# (#lcase(left(variables.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#) version: #variables.previousArchive.versionName# set as obsolete by #session.login.getUsername()#" />	<!---Type:String Hint:  - VARCHAR (1000) --->
+					<cfinvokeargument name="logDateTime" value="#now()#" />
+				</cfinvoke>
+				
+				<cfset saveDataToManifest(variables.zipFilePath,variables.archive.archiveID) />
+
+			</cfif>
 
 			<cflocation url="#application.settings.appBasedir#/archive/archive.cfm?archiveID=#variables.archiveID#" />
 

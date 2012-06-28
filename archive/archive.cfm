@@ -135,6 +135,20 @@ Copyright 2012 Ryan Guill
 				$('#certificationFormDiv').hide();
 				$('#certificationFormDiv_show_link').show();
 			}		
+
+			function replaceArchiveFormDiv_show()
+			{
+				$('#replaceArchiveFormDiv').show();
+				$('#replaceArchiveFormDiv_show_link').hide();
+			}
+
+
+			function replaceArchiveFormDiv_hide()
+			{
+				$('#replaceArchiveFormDiv').hide();
+				$('#replaceArchiveFormDiv_show_link').show();
+			}
+
 		</script>
 		
 		<style type="text/css">
@@ -202,7 +216,34 @@ Copyright 2012 Ryan Guill
 							<cfif session.login.isUserInGroup("build") and variables.archive.buildSystemName EQ application.config.serverName>
 								<a href="#application.settings.appBaseDir#/archive/build.cfm?dir=#URLEncodedFormat(variables.archive.builddir)#&previousArchiveID=#variables.archive.archiveID#" class="bigButton">Re-Build This Archive (New Version)</a>
 							</cfif>
+
+							<cfif session.login.isUserInGroup("upload")>
+								<a href="javascript:replaceArchiveFormDiv_show();" id="replaceArchiveFormDiv_show_link" class="bigButton">Replace This Archive (New Version)</a>
+							</cfif>
 					
+						</div>
+
+						<div class="contentSection" id="replaceArchiveFormDiv" style="display:none;">
+							<h3 class="sectionTitle">Replace This Archive</h3>
+							<form action="action.cfm" method="post" enctype="multipart/form-data">
+								<table width="100%" class="formTable">
+									<tr>
+										<th width="150">
+											New Archive Zip:
+										</th>
+										<td>
+											<input type="file" name="archiveZip" id="archiveZip" size="100" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<input type="hidden" name="previousArchiveID" value="#variables.archive.archiveID#" />
+											<input type="hidden" name="action" value="replaceArchive" />
+											<input type="submit" value="Upload Archive" />
+										</td>
+									</tr>
+								</table>
+							</form>
 						</div>
 						
 						
