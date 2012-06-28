@@ -37,10 +37,8 @@ Copyright 2012 Ryan Guill
 	
 	<cfif variables.remoteService_certificationTypes.recordCount>
 		<cfset variables.certificationIDList = valueList(variables.remoteService.certificationID) />
-		<cfset variables.certificationTypes = valueList(variables.remoteService.certificationtypename) />
 	<cfelse>
-		<cfset variables.certificationIDList = -1 />
-		<cfset variables.certificationTypes = "" />
+		<cfset variables.certificationIDList = ""/>
 	</cfif>
 	
 	<cfif NOT variables.server.recordCount>
@@ -48,11 +46,9 @@ Copyright 2012 Ryan Guill
 	</cfif>
 	
 	<cftry>
-		<cfinvoke webservice="#variables.server.serverURL#" method="getAvailableArchives" returnvariable="variables.archives" timeout="15">
-		<!---<cfinvoke component="#application.objs.remoteService#" method="getAvailableArchives" returnvariable="variables.archives">--->
+		<cfinvoke webservice="#variables.server.serverURL#" method="getCertificationTypes" returnvariable="variables.certificationTypes" timeout="15">
 			<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
 			<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
-			<cfinvokeargument name="includeCertificationIDList" value="#variables.certificationIDList#" />
 		</cfinvoke>
 	<cfcatch>
 		
@@ -110,90 +106,54 @@ Copyright 2012 Ryan Guill
 						<div class="contentSection">
 							<h3>Server URL: #variables.server.serverURL#</h3>
 							
-							<h3 class="sectionTitle">Browse Archives</h3>
+							<h3 class="sectionTitle">Certification Types</h3>
 							
-							<cfif variables.certificationIDList NEQ -1>
-								<p>Showing archives with a certifications of #variables.certificationTypes#</p>
-							<cfelse>
-								<p>Showing all archives regardless of certification level</p>
-							</cfif>
-							<a href="remoteCertificationTypes.cfm?serverID=#url.serverID#">Manage Certification Types</a>
+							<p>If you do not select any certification types, all certification types will be shown.</p>
 							
-							<div class="contentSection">
-							<table width="100%" class="dataTable">
-								<tr>
-									<th width="300">
-										ID
-									</th>
-									<!---
-									<th width="100">
-										SHA
-									</th>
-									--->
-									<th>
-										Application
-									</th>
-									<th width="80">
-										Version
-									</th>
-									<th width="50" class="right">
-										Files
-									</th>
-									<th>
-										Build By
-									</th>
-									<th width="120" class="center">
-										Built On
-									</th>
-									<th width="170">
-										Built System
-									</th>
-								</tr>
-								<cfif variables.archives.recordCount>
-									<cfloop query="variables.archives">
-										<!--- check to see if we already have this archive in this system --->
-										<cfinvoke component="#application.daos.cascade#" method="getArchiveByArchiveID" returnvariable="variables.localArchive">
-											<cfinvokeargument name="dsn" value="#application.config.dsn#" />	<!---Type:string  --->
-											<cfinvokeargument name="archiveID" value="#variables.archives.archiveID#" />	<!---Type:string  --->
-										</cfinvoke>
-										
-										<tr <cfif variables.archives.currentRow MOD 2 EQ 0>class="alt"</cfif>>
-											<td class="monospace">
-												<a href="#application.settings.appBaseDir#/remote/archive.cfm?serverID=#url.serverID#&archiveID=#variables.archives.archiveID#">#variables.archives.archiveID#</a>
-											</td>
-											<!---
-											<td class="monospace">
-												<cftooltip tooltip="#lcase(variables.archives.archiveSHAHAsh)#">#lcase(left(variables.archives.archiveSHAHash,application.settings.showFirstXCharsOfSHA))#</cftooltip>
-											</td>
-											--->
-											<td class="<cfif variables.localArchive.recordCount>pass</cfif>">
-												#variables.archives.applicationName#
-											</td>
-											<td class="<cfif variables.localArchive.recordCount>pass<cfelseif variables.archives.isObsolete>fail</cfif>">
-												#variables.archives.versionName#
-											</td>
-											<td class="right">
-												#numberFormat(variables.archives.fileCount)#
+							<form action="action.cfm" method="post">
+								<table width="600" class="dataTable">
+									<tr>
+										<th width="50">
+											ID
+										</th>
+										<th>
+											CertificationType Name
+										</th>
+										<th>
+											CertificationType Description
+										</th>
+										<th>
+											Abbr
+										</th>
+										<th width="50">
+											Include
+										</th>
+									</tr>
+									<cfloop query="variables.certificationTypes">
+										<tr id="displayRow_#variables.certificationTypes.certificationTypeID#" <cfif variables.certificationTypes.currentRow MOD 2 EQ 0>class="alt"</cfif>>
+											<td>
+												#variables.certificationTypes.certificationTypeID#
 											</td>
 											<td>
-												#variables.archives.buildByUserFullname#
-											</td>
-											<td class="center">
-												#application.objs.global.formatDate(variables.archives.buildOn)# #application.objs.global.formatTime(variables.archives.buildOn)#
+												#variables.certificationTypes.certificationTypeName#
 											</td>
 											<td>
-												<cftooltip tooltip="#variables.archives.buildSystemName#">#left(variables.archives.buildSystemName,20)#<cfif len(variables.archives.buildSystemName) GT 20>...</cfif></a></cftooltip>
+												#variables.certificationTypes.certificationTypeDesc#
+											</td>
+											<td>
+												#variables.certificationTypes.certificationTypeAbbr#
+											</td>
+											<td>
+												<input type="checkbox" name="certid_#variables.certificationTypes.certificationTypeID#" <cfif listContains(variables.certificationIDList,variables.certificationTypes.certificationTypeID)>checked="true"</cfif> />
 											</td>
 										</tr>
 									</cfloop>
-								<cfelse>
-									<tr>
-										<td colspan="7">
-											<em>There are no archives available from this system.</em>
-										</td>
-									</tr>
-								</cfif>
-							</table>
+								</table>
+								
+								<input type="hidden" name="action" value="setRemoteServerCertificationTypes" />
+								<input type="hidden" name="serverID" value="#url.serverID#" />
+								<input type="submit" value="Update" />
+							</form>
 							
 						</div>
 					

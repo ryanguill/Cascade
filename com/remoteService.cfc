@@ -311,6 +311,100 @@ Copyright 2012 Ryan Guill
     	
 	<cfreturn qCertificationTypes/>
     </cffunction>
+	
+	<cffunction name="getRemoteServer_certificationTypes" access="public" returntype="query" output="false">
+    	<cfargument name="serverID" type="string" required="true" />
+		
+		<cfset var qRemoteServer_certificationTypes = "" />
+		
+		<cfquery name="qRemoteServer_certificationTypes" datasource="#application.config.dsn#">
+			SELECT
+				  remoteserver_certificationtypes.serverid			/*  - char(35)*/
+				, remoteserver_certificationtypes.certificationtypeid		/*  - integer(10)*/
+				, remoteserver_certificationtypes.certificationtypename		/*  - varchar(25)*/
+				, remoteserver_certificationtypes.sort				/*  - integer(10)*/
+				, remoteserver_certificationtypes.certificationtypedesc		/*  - varchar(250)*/
+				, remoteserver_certificationtypes.certificationtypeabbr		/*  - varchar(15)*/
+				, remoteserver_certificationtypes.activeflag			/*  - integer(10)*/
+				, remoteserver_certificationtypes.includeinremotearchivesearch	/*  - integer(10)*/
+			FROM remoteserver_certificationtypes
+			WHERE
+				serverid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#"/>	/* param 1 serverid */
+		</cfquery>
+		
+	<cfreturn qRemoteServer_certificationTypes />
+    </cffunction>
+
+	<cffunction name="setRemoteServer_certificationTypes" access="public" returntype="boolean" output="false">
+    	<cfargument name="serverID" type="string" required="true" />
+		<cfargument name="certificationTypes" type="query" required="true" />
+		
+		<cfset var qDeleteRemoteServer_certificationTypes = "" />
+		
+		<cfquery name="qDeleteRemoteServer_certificationTypes" datasource="#application.config.dsn#">
+			DELETE
+			FROM remoteserver_certificationtypes
+			WHERE
+				serverid = <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#"/>	/* param 1 serverid */
+		</cfquery>
+		
+		<cfloop query="arguments.certificationTypes">
+			<cfinvoke method="insertRemoteServer_certificationType">
+				<cfinvokeargument name="serverid" value="#arguments.serverid#" />	<!---Type:string Hint:  - char (35) --->
+				<cfinvokeargument name="certificationtypeid" value="#arguments.certificationTypes.certificationtypeid#" />	<!---Type:invalid type! integer Hint:  - integer (10) --->
+				<cfinvokeargument name="certificationtypename" value="#arguments.certificationTypes.certificationtypename#" />	<!---Type:string Hint:  - varchar (25) --->
+				<cfinvokeargument name="sort" value="#arguments.certificationTypes.sort#" />	<!---Type:invalid type! integer Hint:  - integer (10) --->
+				<cfinvokeargument name="certificationtypedesc" value="#arguments.certificationTypes.certificationtypedesc#" />	<!---Type:string Hint:  - varchar (250) --->
+				<cfinvokeargument name="certificationtypeabbr" value="#arguments.certificationTypes.certificationtypeabbr#" />	<!---Type:string Hint:  - varchar (15) --->
+				<cfinvokeargument name="activeflag" value="#arguments.certificationTypes.activeflag#" />	<!---Type:invalid type! integer Hint:  - integer (10) --->
+				<cfinvokeargument name="includeinremotearchivesearch" value="#arguments.certificationTypes.includeinremotearchivesearch#" />	<!---Type:invalid type! integer Hint:  - integer (10) --->
+			</cfinvoke>
+		</cfloop>
+		
+	<cfreturn true />
+    </cffunction>
+	
+	<cffunction name="insertRemoteServer_certificationType" access="private" returntype="boolean" output="false">
+    	<cfargument name="serverid" type="string" required="true" hint=" - char (35)" />
+		<cfargument name="certificationtypeid" type="invalid type! integer" required="true" hint=" - integer (10)" />
+		<cfargument name="certificationtypename" type="string" required="true" hint=" - varchar (25)" />
+		<cfargument name="sort" type="invalid type! integer" required="true" hint=" - integer (10)" />
+		<cfargument name="certificationtypedesc" type="string" required="true" hint=" - varchar (250)" />
+		<cfargument name="certificationtypeabbr" type="string" required="true" hint=" - varchar (15)" />
+		<cfargument name="activeflag" type="invalid type! integer" required="true" hint=" - integer (10)" />
+		<cfargument name="includeinremotearchivesearch" type="invalid type! integer" required="true" hint=" - integer (10)" />
+
+		<cfset var qInsertRemoteServer_certificationType = "" />
+        		
+        <cfquery name="qInsertRemoteServer_certificationType" datasource="#application.config.dsn#">
+        	insert into remoteserver_certificationtypes
+			(
+				  serverid			/*  - char(35)*/
+				, certificationtypeid		/*  - integer(10)*/
+				, certificationtypename		/*  - varchar(25)*/
+				, sort				/*  - integer(10)*/
+				, certificationtypedesc		/*  - varchar(250)*/
+				, certificationtypeabbr		/*  - varchar(15)*/
+				, activeflag			/*  - integer(10)*/
+				, includeinremotearchivesearch	/*  - integer(10)*/
+			)
+			values
+			(
+				  <cfqueryparam cfsqltype="cf_sql_char" value="#arguments.serverid#"/>	/* param 1 serverid */
+				, <cfqueryparam cfsqltype="" value="#arguments.certificationtypeid#"/>	/* param 2 certificationtypeid */
+				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationtypename#"/>	/* param 3 certificationtypename */
+				, <cfqueryparam cfsqltype="" value="#arguments.sort#"/>	/* param 4 sort */
+				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationtypedesc#"/>	/* param 5 certificationtypedesc */
+				, <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.certificationtypeabbr#"/>	/* param 6 certificationtypeabbr */
+				, <cfqueryparam cfsqltype="" value="#arguments.activeflag#"/>	/* param 7 activeflag */
+				, <cfqueryparam cfsqltype="" value="#arguments.includeinremotearchivesearch#"/>	/* param 8 includeinremotearchivesearch */
+			)
+        </cfquery>
+        	
+	<cfreturn true />
+    </cffunction>
+
+
 
 	
 	<cffunction name="getAllInfoForArchive" access="remote" returntype="struct" output="false">

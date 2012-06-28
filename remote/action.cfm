@@ -497,6 +497,10 @@ Copyright 2012 Ryan Guill
 
 		
 		</cfcase>
+		
+		<cfcase value="setRemoteServerCertificationTypes">
+		
+		</cfcase>
 						
 		<cfdefaultcase>
 			<cflocation url="#application.settings.appBaseDir#/" />
