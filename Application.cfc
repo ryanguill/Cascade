@@ -118,6 +118,8 @@ Copyright 2012 Ryan Guill
 			<cfparam name="request.baseLink" default="http://#cgi.server_name#" />
 		</cfif>
 		
+		<cfparam name="application.settings.forceReinit" default="false" />
+
 		<cfif (structKeyExists(url,"reinit") AND url.reinit EQ "true") OR application.settings.forceReinit>
 			<cfset OnApplicationStart() />
 		</cfif>	
