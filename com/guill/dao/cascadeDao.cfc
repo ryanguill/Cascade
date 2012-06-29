@@ -245,6 +245,19 @@ Copyright 2012 Ryan Guill
 				<cfif arguments.backupforarchiveid NEQ -1>	
 					AND backupforarchiveid LIKE <cfqueryparam cfsqltype="cf_sql_char" value="%#arguments.backupforarchiveid#%" />	-- CHAR (35)
 				</cfif>
+				<cfif arguments.includeCertificationIDList NEQ -1>
+					AND EXISTS (
+						SELECT 1 FROM 
+						archivecertifications c
+						
+					INNER
+						JOIN ref_certificationTypes t
+						ON c.certificationTypeName = t.certificationTypeName
+						AND t.certificationTypeID IN (<cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.includeCertificationIDList#" list="true" />)
+					WHERE
+						archives.archiveID = c.archiveID
+						)
+				</cfif>
 				ORDER BY
 					archives.buildOn DESC        	
         	</cfquery>

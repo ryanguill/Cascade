@@ -499,7 +499,96 @@ Copyright 2012 Ryan Guill
 		</cfcase>
 		
 		<cfcase value="setRemoteServerCertificationTypes">
+			<cfif NOT session.login.isUserInGroup("admin")>
+				<cflocation url="#application.settings.appBaseDir#/index.cfm" />
+			</cfif>		
 		
+			<!--- check all of the form variables --->
+			<cfif NOT structKeyExists(form,"serverID") OR NOT isValid("UUID",form.serverID)>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="Server ID is required." />
+				</cfinvoke>
+			</cfif>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/remote/index.cfm" />
+			</cfif>
+			
+			<cfparam name="form.certID" default="" />
+			
+			<!--- attempt to contact the remote url wsdl and check the validation code --->
+			<cfinvoke component="#application.objs.remoteService#" method="getRemoteServerByServerID" returnvariable="variables.server">
+				<cfinvokeargument name="serverID" value="#form.serverID#" />
+			</cfinvoke>
+					
+			<cfif NOT variables.server.recordCount>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="Invalid Server ID" />
+				</cfinvoke>
+			</cfif>		
+				
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/remote/index.cfm" />
+			</cfif>			
+			
+			<cftry>
+				<cfinvoke webservice="#variables.server.serverURL#" method="checkValidationCode" returnvariable="variables.checkValidationCodeRet">
+					<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
+					<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
+				</cfinvoke>
+			<cfcatch>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="The Server URL does not appear to be valid." />
+					<cfinvokeargument name="messageDetail" value="#cfcatch.message#" />
+				</cfinvoke>
+			</cfcatch>
+			</cftry>
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/remote/server.cfm?serverID=#form.serverID#" />
+			</cfif>
+			
+			<cfif NOT variables.checkValidationCodeRet>
+				<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
+					<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
+					<cfinvokeargument name="messageType" value="Error" />
+					<cfinvokeargument name="messageText" value="The validation code provided was rejected by the server." />
+					<cfinvokeargument name="messageDetail" value="Go to the remote server and provide this server's ID to get a new validation code." />
+				</cfinvoke>
+			</cfif>			
+			
+			<cfif session.messenger.hasAlerts()>
+				<cflocation url="#application.settings.appBaseDir#/remote/server.cfm?serverID=#form.serverID#" />
+			</cfif>
+
+			<cfinvoke webservice="#variables.server.serverURL#" method="getCertificationTypes" returnvariable="variables.certificationTypes" timeout="15">
+				<cfinvokeargument name="serverID" value="#application.config.cascadeID#" />
+				<cfinvokeargument name="validationCode" value="#variables.server.validationCode#" />
+			</cfinvoke>
+
+			<cfset queryAddColumn(variables.certificationTypes,"includeinremotearchivesearch","bit",arrayNew(1)) />
+
+			<cfloop query="variables.certificationTypes">
+				<cfif listContainsNoCase(form.certID,variables.certificationTypes.certificationTypeID)>
+					<cfset querySetCell(variables.certificationTypes,"includeinremotearchivesearch",1,variables.certificationTypes.currentRow) />
+				<cfelse>
+					<cfset querySetCell(variables.certificationTypes,"includeinremotearchivesearch",0,variables.certificationTypes.currentRow) />
+				</cfif>
+			</cfloop>
+
+			<cfinvoke component="#application.objs.remoteService#" method="setRemoteServer_certificationTypes">
+				<cfinvokeargument name="serverID" value="#form.serverID#" />
+				<cfinvokeargument name="certificationTypes" value="#variables.certificationTypes#" />
+			</cfinvoke>
+
+			<cflocation url="#application.settings.appBaseDir#/remote/server.cfm?serverID=#form.serverID#" />
+
 		</cfcase>
 						
 		<cfdefaultcase>

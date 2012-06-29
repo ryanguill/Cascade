@@ -35,10 +35,14 @@ Copyright 2012 Ryan Guill
 		<cfinvokeargument name="serverID" value="#url.serverID#" />
 	</cfinvoke>
 	
+	<cfset variables.certificationIDList = ""/>
+	
 	<cfif variables.remoteService_certificationTypes.recordCount>
-		<cfset variables.certificationIDList = valueList(variables.remoteService.certificationID) />
-	<cfelse>
-		<cfset variables.certificationIDList = ""/>
+		<cfloop query="variables.remoteService_certificationTypes">
+			<cfif variables.remoteService_certificationTypes.includeinremotearchivesearch>
+				<cfset variables.certificationIDList = listAppend(variables.certificationIDList,variables.remoteService_certificationTypes.certificationTypeID) />
+			</cfif>
+		</cfloop>
 	</cfif>
 	
 	<cfif NOT variables.server.recordCount>
@@ -109,6 +113,8 @@ Copyright 2012 Ryan Guill
 							<h3 class="sectionTitle">Certification Types</h3>
 							
 							<p>If you do not select any certification types, all certification types will be shown.</p>
+
+							#certificationIDList#
 							
 							<form action="action.cfm" method="post">
 								<table width="600" class="dataTable">
@@ -144,7 +150,7 @@ Copyright 2012 Ryan Guill
 												#variables.certificationTypes.certificationTypeAbbr#
 											</td>
 											<td>
-												<input type="checkbox" name="certid_#variables.certificationTypes.certificationTypeID#" <cfif listContains(variables.certificationIDList,variables.certificationTypes.certificationTypeID)>checked="true"</cfif> />
+												<input type="checkbox" name="certid" value="#variables.certificationTypes.certificationTypeID#" <cfif listContains(variables.certificationIDList,variables.certificationTypes.certificationTypeID)>checked="true"</cfif> />
 											</td>
 										</tr>
 									</cfloop>

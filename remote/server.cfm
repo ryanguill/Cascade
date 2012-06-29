@@ -35,14 +35,22 @@ Copyright 2012 Ryan Guill
 		<cfinvokeargument name="serverID" value="#url.serverID#" />
 	</cfinvoke>
 	
+	<cfset variables.certificationIDList = "" />
+	<cfset variables.certificationTypes = "" />
+
 	<cfif variables.remoteService_certificationTypes.recordCount>
-		<cfset variables.certificationIDList = valueList(variables.remoteService.certificationID) />
-		<cfset variables.certificationTypes = valueList(variables.remoteService.certificationtypename) />
-	<cfelse>
-		<cfset variables.certificationIDList = -1 />
-		<cfset variables.certificationTypes = "" />
+		<cfloop query="variables.remoteService_certificationTypes">
+			<cfif variables.remoteService_certificationTypes.includeinremotearchivesearch>
+				<cfset variables.certificationIDList = listAppend(variables.certificationIDList,variables.remoteService_certificationTypes.certificationTypeID) />
+				<cfset variables.certificationTypes = listAppend(variables.certificationTypes,variables.remoteService_certificationTypes.certificationtypename) />
+			</cfif>
+		</cfloop>
 	</cfif>
 	
+	<cfif NOT len(trim(variables.certificationIDList))>
+		<cfset variables.certificationIDList = "-1" />
+	</cfif>
+
 	<cfif NOT variables.server.recordCount>
 		<cflocation url="#application.settings.appBaseDir#/remote/index.cfm" />
 	</cfif>
@@ -56,6 +64,8 @@ Copyright 2012 Ryan Guill
 		</cfinvoke>
 	<cfcatch>
 		
+		<cfrethrow />
+
 		<cfinvoke component="#session.messenger#" method="setAlert" returnvariable="variables.setAlert">
 			<cfinvokeargument name="alertingTemplate" value="#application.settings.appBaseDir#/archive/action.cfm" />
 			<cfinvokeargument name="messageType" value="Error" />

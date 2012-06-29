@@ -277,7 +277,7 @@ Copyright 2012 Ryan Guill
 			<cfset application.config.adminUsername = form.username />
 			<cfset application.config.adminEmail = form.email />
 			<cfset application.config.archiveDirectory = form.archiveDirectory />
-			<cfset application.config.cascadeVersion = "1.0" />
+			<cfset application.config.cascadeVersion = application.settings.latestCascadeVersion />
 		
 			<cfset application.daos.install.createTable_cascadeConfig(application.config.dsn) />
 			<cfset application.daos.install.createTable_users(application.config.dsn) />
