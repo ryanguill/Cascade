@@ -83,10 +83,10 @@ Copyright 2012 Ryan Guill
 			
 			
 			function selectAll () {
-				$$('.filecheckbox').each(function(s){s.checked = true});				
+				$('.filecheckbox').each(function(){$(this).attr("checked",true);});				
 			}
 			function selectNone () {
-				$$('.filecheckbox').each(function(s){s.checked = false});				
+				$('.filecheckbox').each(function(){$(this).attr("checked",false);});				
 			}
 			
 			
