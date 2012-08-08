@@ -24,20 +24,26 @@ Copyright 2012 Ryan Guill
 		<cfloop from="1" to="#session.messenger.alertsLen()#" index="variables.i">
 			<cfswitch expression="#variables.alerts[variables.i].messageType#">
 				<cfcase value="Error">
-					<div class="notice clearfix">
-						<h2 class="alert">#variables.alerts[variables.i].messageText#</h2>
+					<div class="alert alert-error">
+						<h2>#variables.alerts[variables.i].messageText#</h2>
 						<p>#variables.alerts[variables.i].messageDetail#</p>
 					</div>
 				</cfcase>
 				<cfcase value="Warning">
-					<div class="notice clearfix">
-						<h2 class="alert">#variables.alerts[variables.i].messageText#</h2>
+					<div class="alert">
+						<h2>#variables.alerts[variables.i].messageText#</h2>
 						<p>#variables.alerts[variables.i].messageDetail#</p>
 					</div>
 				</cfcase>
 				<cfcase value="Information">
-					<div class="notice clearfix">
-						<h2 class="info">#variables.alerts[variables.i].messageText#</h2>
+					<div class="alert alert-info">
+						<h2>#variables.alerts[variables.i].messageText#</h2>
+						<p>#variables.alerts[variables.i].messageDetail#</p>
+					</div>
+				</cfcase>
+				<cfcase value="Success">
+					<div class="alert alert-success">
+						<h2>#variables.alerts[variables.i].messageText#</h2>
 						<p>#variables.alerts[variables.i].messageDetail#</p>
 					</div>
 				</cfcase>

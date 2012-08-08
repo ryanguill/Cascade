@@ -14,11 +14,21 @@ Copyright 2012 Ryan Guill
    limitations under the License.
  --->
 
+<cfoutput>
 
-		<!-- BEGIN FOOTER -->
-		<div id="lowerContainer">
-			<div id="footer">
-				&nbsp;
-			</div>
-		</div>
-		<!-- END FOOTER -->
+	<!-- BEGIN FOOTER -->
+	<footer>
+		&nbsp;
+	</footer>
+	<!-- END FOOTER -->
+	
+	<!-- Placed at the end of the document so the pages load faster -->
+    <cfif application.settings.serverEnviron EQ "PROD">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+	<cfelse>
+		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery.min.js"></script>
+		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery-ui.min.js"></script>
+	</cfif>
+    <script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/bootstrap.min.js"></script>
+</cfoutput>

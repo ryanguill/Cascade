@@ -23,8 +23,8 @@ Copyright 2012 Ryan Guill
 	
 </cfsilent>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		
 		<cfinclude template="#application.settings.appBaseDir#/inc/head.cfm" />
@@ -42,44 +42,45 @@ Copyright 2012 Ryan Guill
 		
 	</head>
 	<body>
-		<div id="container">
+		
 		
 			<cfinclude template="#application.settings.appBaseDir#/inc/header.cfm" />
 			
-			<div id="main" class="clearfix">
-				<cfinclude template="#application.settings.appBaseDir#/inc/nav.cfm" />
+			<div class="container" id="mainContainer">
+				<div class="row">
+					<cfinclude template="#application.settings.appBaseDir#/inc/nav.cfm" />
 				
-				<div id="content">
-					<cfinclude template="#application.settings.appBaseDir#/inc/notice.cfm" />
+					<div id="content" class="span9">
+				
+						<cfinclude template="#application.settings.appBaseDir#/inc/notice.cfm" />
 
-					<cfoutput>
+						<cfoutput>
 					
-						<div id="projectHeading">
-							<h1>Welcome to #application.settings.appTitle#</h1>
-						</div>
-						
-						<div class="contentSection">
-							<h2 class="sectionTitle">What would you like to do?</h2>
+							<div class="hero-unit">
+								<h1>Welcome to #application.settings.appTitle#</h1>
 							
-							<ul class="menuIndex">
-								<cfif session.login.isUserInGroup("build")>
-									<li><a href="#application.settings.appBaseDir#/archive/build.cfm">Build a New Archive</a></li>
-								</cfif>
-								<cfif session.login.isUserInGroup("Upload")>
-									<li><a href="#application.settings.appBaseDir#/archive/upload.cfm">Upload an Archive</a></li>
-								</cfif>
-								<li><a href="#application.settings.appBaseDir#/archive/browse.cfm">Browse Previously Built Archives</a></li>
+								<h2 class="sectionTitle">What would you like to do?</h2>
 								
-							</ul>
-							
-						</div>
-					
-					</cfoutput>
+								<ul class="nav nav-list">
+									<cfif session.login.isUserInGroup("build")>
+										<li><a href="#application.settings.appBaseDir#/archive/build.cfm">Build a New Archive</a></li>
+									</cfif>
+									<cfif session.login.isUserInGroup("Upload")>
+										<li><a href="#application.settings.appBaseDir#/archive/upload.cfm">Upload an Archive</a></li>
+									</cfif>
+									<li><a href="#application.settings.appBaseDir#/archive/browse.cfm">Browse Previously Built Archives</a></li>
+									
+								</ul>
+								
+							</div>
+						
+						</cfoutput>
+					</div>
+			
+		
+					<cfinclude template="#application.settings.appBaseDir#/inc/footer.cfm" />
 				</div>
 			</div>
-		</div>
-		
-		<cfinclude template="#application.settings.appBaseDir#/inc/footer.cfm" />
 		
 		
 	</body>

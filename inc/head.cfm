@@ -18,23 +18,41 @@ Copyright 2012 Ryan Guill
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
 	<meta http-equiv="EXPIRES" content="0">
-	<!---
 	<meta name="ROBOTS" content="NONE">
 	<meta name="GOOGLEBOT" content="NOARCHIVE">
-	--->
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	
 	<cfoutput>
-		<!--- Javascript Files --->
+		<!---
 		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/jquery-ui-1.8.18.custom.min.js"></script>
 
 		<script type="text/javascript" src="#application.settings.appBaseDir#/inc/js/global.js"></script>
 		
-		
-		<!--- CSS Files --->
 		<link rel="stylesheet" media="screen" href="#application.settings.appBaseDir#/inc/css/main.css" />
 		<link type="text/css" href="#application.settings.appBaseDir#/inc/css/flick/jquery-ui-1.8.18.custom.css" rel="Stylesheet" />
+		
+		--->
+		
+		<link rel="stylesheet" href="#application.settings.appBaseDir#/inc/css/bootstrap.min.css" />
+		<cfif application.settings.serverEnviron EQ "PROD">
+			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css" />
+		<cfelse>
+			<link rel="stylesheet" href="#application.settings.appBaseDir#/inc/css/jquery-ui.css" />
+		</cfif>
+		
+		 <style type="text/css">
+	      body {
+	        padding-top: 0px;
+	        padding-bottom: 40px;
+	      }
+		  ##mainContainer {
+		  	padding-top:60px;
+			}
+		
+	    </style>
+   
+		<link rel="stylesheet"href="#application.settings.appBaseDir#/inc/css/bootstrap-responsive.min.css" />
 		
 	</cfoutput>
 	<!-- END HEAD -->

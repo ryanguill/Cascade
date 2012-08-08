@@ -13,31 +13,32 @@ Copyright 2012 Ryan Guill
    See the License for the specific language governing permissions and
    limitations under the License.
  --->
-
-			<!-- BEGIN HEADER -->
-			<div id="header">
-				<cfoutput>
-					<div id="hTitle">
-						<h1>#application.settings.appTitle# 
-							<cfif structKeyExists(application.config,"serverName")>
-								v#application.config.cascadeVersion# - #application.config.serverName#
-							</cfif>
-						</h1>
-					</div>
-					<div id="hMenu">					
-						<ul>
-							<cfif session.login.isLoggedIn()>
-								<li><a href="#application.settings.appBaseDir#/">Home</a></li>							
-								<cfif session.login.isUserInGroup("ADMIN")>
-									<li><a href="#application.settings.appBaseDir#/admin/index.cfm">Admin</a></li>
-								</cfif>
-								<li><a href="#application.settings.appBaseDir#/remote/">Remote Servers</a></li>
-							<cfelseif cgi.SCRIPT_NAME NEQ "#application.settings.appBaseDir#/createConfig.cfm">
-								<li><a href="#application.settings.appBaseDir#/login.cfm">Login</a></li>	
-							</cfif>
-						</ul>
-					</div>
-				</cfoutput>
+ 
+ <cfoutput>
+	<div class="navbar">
+		<div class="navbar-inner navbar-fixed-top">
+			<div class="container">
+				<a class="brand" style="color: ##fff;" href="#application.settings.appBaseDir#/">
+					#application.settings.appTitle# 
+					<cfif structKeyExists(application.config,"serverName")>
+						v#application.config.cascadeVersion# - #application.config.serverName#
+					</cfif>
+				</a>
+				<ul class="nav pull-right">
+					<cfif session.login.isLoggedIn()>
+						<li><a href="#application.settings.appBaseDir#/">Home</a></li>							
+						<cfif session.login.isUserInGroup("ADMIN")>
+							<li><a href="#application.settings.appBaseDir#/admin/index.cfm">Admin</a></li>
+						</cfif>
+						<li><a href="#application.settings.appBaseDir#/remote/">Remote Servers</a></li>
+					<cfelseif cgi.SCRIPT_NAME NEQ "#application.settings.appBaseDir#/createConfig.cfm">
+						<li><a href="#application.settings.appBaseDir#/login.cfm">Login</a></li>	
+					</cfif>
+				</ul>
+				
 			</div>
-			<!-- END HEADER -->
+		</div>
+	</div>
+</cfoutput>
+
 			
