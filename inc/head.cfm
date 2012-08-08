@@ -53,6 +53,7 @@ Copyright 2012 Ryan Guill
 	    </style>
    
 		<link rel="stylesheet"href="#application.settings.appBaseDir#/inc/css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet"href="#application.settings.appBaseDir#/inc/css/custom.css" />
 		
 	</cfoutput>
 	<!-- END HEAD -->

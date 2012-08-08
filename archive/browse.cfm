@@ -54,8 +54,8 @@ Copyright 2012 Ryan Guill
 	
 </cfsilent>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
 		
 		<cfinclude template="#application.settings.appBaseDir#/inc/head.cfm" />
@@ -73,14 +73,15 @@ Copyright 2012 Ryan Guill
 		
 	</head>
 	<body>
-		<div id="container">
 		
-			<cfinclude template="#application.settings.appBaseDir#/inc/header.cfm" />
+		
+		<cfinclude template="#application.settings.appBaseDir#/inc/header.cfm" />
 			
-			<div id="main" class="clearfix">
+		<div class="container" id="mainContainer">
+			<div class="row">
 				<cfinclude template="#application.settings.appBaseDir#/inc/nav.cfm" />
 				
-				<div id="content">
+				<div id="content" class="span9">
 					<cfinclude template="#application.settings.appBaseDir#/inc/notice.cfm" />
 
 					<cfoutput>
