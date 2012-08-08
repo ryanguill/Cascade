@@ -2,3 +2,4 @@
 .settings/
 config.xml.cfm
 settings.xml
+*.sublime-*

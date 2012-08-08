@@ -621,7 +621,9 @@ Copyright 2012 Ryan Guill
         <cfrethrow />
         </cfcatch>
         </cftry>
-		
+		<!---
+		Dont delete deployment information anymore.
+
         <cftry>
         	<cfquery name="qDeleteArchiveDeployments" datasource="#arguments.dsn#">
         		DELETE
@@ -647,6 +649,7 @@ Copyright 2012 Ryan Guill
         <cfrethrow />
         </cfcatch>
         </cftry>
+        --->
 
     <cfreturn True />
     </cffunction>

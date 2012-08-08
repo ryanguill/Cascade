@@ -89,6 +89,7 @@ Copyright 2012 Ryan Guill
 								</cfif>
 								<li><a href="#application.settings.appBaseDir#/archive/browse.cfm">Browse Archives</a></li>
 								<li><a href="#application.settings.appBaseDir#/archive/search.cfm">Search Archives</a></li>
+								<li><a href="#application.settings.appBasedir#/archive/deployments.cfm">Deployment Report</a></li>
 							</ul>
 						</div>
 					</cfif>
