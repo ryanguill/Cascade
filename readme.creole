@@ -3,7 +3,7 @@
 Cascade is a ColdFusion application whose primary objective is to facilitate promotion of code from one place to another, securely and quickly. The goals for the project are:
 
 * create a portable archive of files
-* cryptographically sign the archives and their files to ensure security and protect against data corruption
+* hash the archives and their files to ensure security and protect against data corruption
 * manage the deployment of the archives against target systems
 * facilitate backups of existing files affected by the deployments
 * provide the ability to quickly revert a deployment
